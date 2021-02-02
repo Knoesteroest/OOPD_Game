@@ -3,5 +3,5 @@ public class Car {
     String model;
     int wheels;
     int doors;
-    int aantalInzittende = 4;
+    int aantalInzittenden = 3;
 }
