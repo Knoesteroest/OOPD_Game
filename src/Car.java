@@ -1,6 +1,6 @@
 public class Car {
     String name;
-    String modal;
+    String model;
     int wheels;
     int doors;
 }
