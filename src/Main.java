@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 
 public class Main extends JComponent {
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         JFrame mainFrame = new JFrame("Hello World");
         mainFrame.getContentPane().add(new Main());
         mainFrame.pack();
