@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="oopg-full">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../oopg/target/oopg-full.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
