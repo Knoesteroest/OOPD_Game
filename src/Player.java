@@ -7,7 +7,7 @@ import java.lang.reflect.Array;
 
 public class Player extends GameObject {
 
-    final int kleur = 0xFF0000FF;
+    int kleur = 0xFF0000FF;
     IntList pressedKeys = new IntList();
 
     public Player(float x, float y, float width, float height) {
@@ -17,7 +17,7 @@ public class Player extends GameObject {
     @Override
     public void update() {
         if (pressedKeys.size()>0) {
-            System.out.println(pressedKeys);
+            //System.out.println(pressedKeys);
             int lastKey = pressedKeys.get(pressedKeys.maxIndex());
             switch (lastKey) {
                 case UP:

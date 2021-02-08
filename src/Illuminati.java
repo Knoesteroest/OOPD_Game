@@ -21,6 +21,8 @@ public class Illuminati extends GameEngine{
 
         Player speler1 = new Player(450,450,25,25);
         addGameObject(speler1);
+        PowerUp koekje = new PowerUp(350,350,25,25, this);
+        addGameObject(koekje);
     }
 
     @Override
