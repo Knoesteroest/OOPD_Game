@@ -2,11 +2,12 @@ import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.view.View;
 
 
-//Illuminati titel voor het spel?
-public class Illuminati extends GameEngine{
+//MazeDash titel voor het spel?
+public class MazeDash extends GameEngine{
 
+    static MazeDash game;
     public static void main(String[] args) {
-        Illuminati game = new Illuminati();
+        game = new MazeDash();
         game.runSketch();
     }
 
