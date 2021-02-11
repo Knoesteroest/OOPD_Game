@@ -8,7 +8,7 @@ public class PowerUp extends GameObject implements ICollidableWithGameObjects {
     final int kleur = 0xFFFF1493;
     //private MazeDash world;
 
-    public PowerUp(float x, float y, float width, float height, MazeDash world) {
+    public PowerUp(float x, float y, float width, float height) {
         super(x, y, width, height);
         //this.world = world;
     }

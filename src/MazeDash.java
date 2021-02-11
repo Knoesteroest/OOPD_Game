@@ -20,9 +20,9 @@ public class MazeDash extends GameEngine{
         setView(view);
         size(schermBreedte, schermHoogte);
 
-        Player speler1 = new Player(450,450,25,25);
+        Player speler1 = new Player(450,450);
         addGameObject(speler1);
-        PowerUp koekje = new PowerUp(350,350,25,25, this);
+        PowerUp koekje = new PowerUp(350,350,25,25);
         addGameObject(koekje);
     }
 

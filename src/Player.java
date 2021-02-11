@@ -1,17 +1,21 @@
 import nl.han.ica.oopg.objects.GameObject;
+import nl.han.ica.oopg.objects.Sprite;
+import nl.han.ica.oopg.objects.SpriteObject;
 import processing.core.PGraphics;
 import processing.data.IntList;
 import processing.core.PConstants;
 
 import java.lang.reflect.Array;
 
-public class Player extends GameObject {
+public class Player extends SpriteObject {
 
     int kleur = 0xFF0000FF;
     IntList pressedKeys = new IntList();
 
-    public Player(float x, float y, float width, float height) {
-        super(x, y, width, height);
+    public Player(float x, float y) {
+        super(new Sprite("sprites/dude.png"));
+        this.x = x;
+        this.y = y;
     }
 
     @Override
@@ -37,14 +41,14 @@ public class Player extends GameObject {
             setSpeed(0);
         }
     }
-
+/*
     @Override
     public void draw(PGraphics pGraphics) {
         pGraphics.fill(kleur);
         pGraphics.rectMode(CENTER);
         pGraphics.rect(x, y, width, height);
     }
-
+*/
     @Override
     public void keyPressed(int keyCode, char key) {
         /*if (keyCode==32){
