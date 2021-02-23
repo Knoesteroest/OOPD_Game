@@ -1,16 +1,13 @@
-import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.objects.SpriteObject;
-import processing.core.PGraphics;
 import processing.data.IntList;
 import processing.core.PConstants;
 
-import java.lang.reflect.Array;
 
 public class Player extends SpriteObject {
 
-    int kleur = 0xFF0000FF;
-    IntList pressedKeys = new IntList();
+    private int kleur = 0xFF0000FF;
+    private IntList pressedKeys = new IntList();
 
     public Player(float x, float y) {
         super(new Sprite("sprites/dude.png"));
@@ -60,14 +57,12 @@ public class Player extends SpriteObject {
             case DOWN:
             case LEFT:
             case RIGHT:
-
                 pressedKeys.append(keyCode); //appendUnique bestaat niet?
         }
 
         /*
         {UP, DOWN, LEFT, RIGHT}
         {87, 83, 65, 68} WSAD
-
          */
     }
 
@@ -82,4 +77,7 @@ public class Player extends SpriteObject {
         }
     }
 
+    public void setKleur(int kleur) {
+        this.kleur = kleur;
+    }
 }

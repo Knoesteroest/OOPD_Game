@@ -1,4 +1,5 @@
 import nl.han.ica.oopg.collision.ICollidableWithGameObjects;
+import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.objects.GameObject;
 import processing.core.PGraphics;
 
@@ -6,19 +7,20 @@ import java.util.List;
 
 public class PowerUp extends GameObject implements ICollidableWithGameObjects {
     final int kleur = 0xFFFF1493;
+    public MazeDash world;
     //private MazeDash world;
 
-    public PowerUp(float x, float y, float width, float height) {
+    public PowerUp(float x, float y, float width, float height, MazeDash world) {
         super(x, y, width, height);
-        //this.world = world;
+        this.world = world;
     }
 
     @Override
     public void gameObjectCollisionOccurred(List<GameObject> list) {
         if(!list.isEmpty()){
             Player speler = (Player) list.get(0);
-            speler.kleur = 0xFFFFFF00;
-            MazeDash.game.deleteGameObject(this);
+            speler.setKleur(0xFFFFFF00);
+            world.deleteGameObject(this);
         }
     }
 

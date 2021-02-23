@@ -2,6 +2,7 @@ import java.awt.*;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
+
 public class Main extends JComponent {
 
     public static void main(String[] args) {

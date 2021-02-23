@@ -5,13 +5,12 @@ import nl.han.ica.oopg.view.View;
 //MazeDash titel voor het spel?
 public class MazeDash extends GameEngine{
 
-    static MazeDash game;
     public static void main(String[] args) {
-        game = new MazeDash();
+        MazeDash game = new MazeDash();
         game.runSketch();
     }
 
-    @Override
+    //@Override
     public void setupGame() {
         int schermBreedte = 900;
         int schermHoogte = 900;
@@ -22,11 +21,12 @@ public class MazeDash extends GameEngine{
 
         Player speler1 = new Player(450,450);
         addGameObject(speler1);
-        PowerUp koekje = new PowerUp(350,350,25,25);
+        PowerUp koekje = new PowerUp(350,350,25,25, this);
         addGameObject(koekje);
+
     }
 
-    @Override
+    //@Override
     public void update() {
 
     }
