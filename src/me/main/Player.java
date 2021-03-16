@@ -20,6 +20,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
     private boolean[] keyDown = new boolean[4];
 
     private int speed;
+    private int score;
     private float x,y;
 
     public Player(Game game,Handler handler){
@@ -32,6 +33,11 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
          keyDown[i] = false;
      }
      speed = 2;
+    }
+
+    public void addScore(int points){
+        score += points;
+        System.out.println("Score is nu: " + score);
     }
 
     @Override
