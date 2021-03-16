@@ -1,4 +1,4 @@
-package Enemy;
+package enemy;
 
 import me.main.Game;
 import nl.han.ica.oopg.collision.CollidedTile;
@@ -18,7 +18,7 @@ public class Zombie extends AnimatedSpriteObject implements ICollidableWithTiles
     private int direction;
     private float speed;
     public Zombie(Game game) {
-        super(new Sprite(Game.MEDIA_URL.concat("zombie.gif")),4);
+        super(new Sprite(Game.MEDIA_URL.concat("coin.gif")),4);
         this.game = game;
         setCurrentFrameIndex(1);
         speed = 1.25F;

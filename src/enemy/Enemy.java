@@ -1,4 +1,4 @@
-package Enemy;
+package enemy;
 
 import nl.han.ica.oopg.objects.GameObject;
 import processing.core.PGraphics;

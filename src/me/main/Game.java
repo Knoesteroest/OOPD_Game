@@ -1,14 +1,11 @@
 package me.main;
 
-import Enemy.Enemy;
-import Enemy.Zombie;
+import enemy.Zombie;
 import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.tile.TileMap;
 import nl.han.ica.oopg.tile.TileType;
 import nl.han.ica.oopg.view.View;
-import processing.core.PVector;
-import tiles.CoinTile;
 import tiles.WallTile;
 
 import java.awt.*;
@@ -16,7 +13,7 @@ import java.awt.*;
 public class Game extends GameEngine{
     private Player player;
     private ObjectSpawner objectSpawner;
-    private Zombie zombie;
+    //private Zombie zombie;
     public static final int WIDTH = 945, HEIGHT = WIDTH / 12 * 9;
     public static final float centerX = ((WIDTH /35) * 17), centerY = ((HEIGHT /35) *15);
     public static final String MEDIA_URL = "src/media/";
@@ -30,9 +27,9 @@ public class Game extends GameEngine{
     @Override
     public void setupGame() {
         player = new Player(this);
-        zombie = new Zombie(this);
+    //    zombie = new Zombie(this);
         addGameObject(player,centerX,centerY);
-        addGameObject(zombie,35, 635);
+    //    addGameObject(zombie,35, 635);
 
 //        setView(new View(WIDTH,HEIGHT));
 //        size(WIDTH,HEIGHT);
@@ -50,15 +47,14 @@ public class Game extends GameEngine{
         setView(new View(width,height));
         size(width,height);
     }
+
     public void initTileMap(){
 
         Sprite wallSprite = new Sprite(Game.MEDIA_URL.concat("wallTile.png"));
-        //Sprite coinSprite = new Sprite(Game.MEDIA_URL.concat("coin.gif"));
         TileType<WallTile> wallTileType = new TileType<>(WallTile.class, wallSprite);
-        //TileType<CoinTile> coinTileType = new TileType<>(CoinTile.class,coinSprite);
-        /*
-        Nummertjes die hij niet kent maakt de tilemap vanzelf EmptyTiles van.
-         */
+
+        //Nummertjes die hij niet kent maakt de tilemap vanzelf EmptyTiles van.
+
         TileType[] tileTypes = {wallTileType/*, coinTileType*/};
         int tileSize = 35;
         int tilesMap[][] = {
