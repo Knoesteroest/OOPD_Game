@@ -2,12 +2,10 @@ package me.main;
 
 import nl.han.ica.oopg.collision.CollidedTile;
 import nl.han.ica.oopg.collision.CollisionSide;
-import nl.han.ica.oopg.collision.ICollidableWithGameObjects;
 import nl.han.ica.oopg.collision.ICollidableWithTiles;
 import nl.han.ica.oopg.exceptions.TileNotFoundException;
 import nl.han.ica.oopg.objects.AnimatedSpriteObject;
 import nl.han.ica.oopg.objects.Sprite;
-import nl.han.ica.oopg.objects.SpriteObject;
 import processing.core.PVector;
 import tiles.CoinTile;
 import tiles.WallTile;
@@ -17,20 +15,24 @@ import java.util.List;
 public class Player extends AnimatedSpriteObject implements ICollidableWithTiles {
 
     private Game game;
+    private Handler handler;
+
     private boolean[] keyDown = new boolean[4];
+
     private int speed;
     private int score;
     private float x,y;
 
-    public Player(Game game){
+    public Player(Game game,Handler handler){
      super(new Sprite(Game.MEDIA_URL.concat("player_run.gif")),2);
      this.game = game;
+     this.handler = handler;
+
      setCurrentFrameIndex(1);
      for (int i =0; i< keyDown.length; i++) {
          keyDown[i] = false;
      }
      speed = 2;
-
     }
 
     public void addScore(int points){
