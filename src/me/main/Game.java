@@ -11,6 +11,7 @@ import tiles.WallTile;
 public class Game extends GameEngine{
     private Player player;
     public static final int WIDTH = 945, HEIGHT = WIDTH / 12 * 9;
+    public static final float centerX = ((WIDTH /35) * 17), centerY = ((HEIGHT /35) *15);
     public static final String MEDIA_URL = "src/media/";
     public static void main(String[] args) {
         Game game = new Game();
@@ -20,7 +21,7 @@ public class Game extends GameEngine{
     @Override
     public void setupGame() {
         player = new Player(this);
-        addGameObject(player,((WIDTH /35) * 17),((HEIGHT /35) *15));
+        addGameObject(player,centerX,centerY);
 
 //        setView(new View(WIDTH,HEIGHT));
 //        size(WIDTH,HEIGHT);
