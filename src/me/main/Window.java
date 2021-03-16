@@ -9,8 +9,7 @@ import nl.han.ica.oopg.view.View;
 import tiles.CoinTile;
 import tiles.WallTile;
 
-public class Window {
-
+public class Window extends Game{
 
 
 
