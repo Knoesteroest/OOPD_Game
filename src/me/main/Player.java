@@ -21,7 +21,6 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
     private int speed;
     private int score;
     private float x,y;
-    boolean doet = false;
 
     public Player(Game game){
      super(new Sprite(Game.MEDIA_URL.concat("player_run.gif")),2);
