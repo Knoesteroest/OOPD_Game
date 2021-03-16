@@ -1,7 +1,7 @@
 package me.main;
 
-import Enemy.Enemy;
-import Enemy.Zombie;
+import enemy.Enemy;
+import enemy.Zombie;
 import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
@@ -36,7 +36,7 @@ public class Game extends GameEngine{
 
         setView(new View(WIDTH,HEIGHT));
         size(WIDTH,HEIGHT);
-
+        setMap();
         objectSpawner = new ObjectSpawner(this, tileMap);
         objectSpawner.initCoins();
     }

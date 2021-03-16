@@ -1,4 +1,4 @@
-package Enemy;
+package enemy;
 
 import me.main.Game;
 import me.main.Handler;
