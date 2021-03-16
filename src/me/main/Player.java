@@ -20,7 +20,6 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
     private boolean[] keyDown = new boolean[4];
     private int speed;
     private float x,y;
-    boolean doet = false;
 
     public Player(Game game){
      super(new Sprite(Game.MEDIA_URL.concat("player_run.gif")),2);
