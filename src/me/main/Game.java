@@ -36,7 +36,8 @@ public class Game extends GameEngine{
 
         setView(new View(WIDTH,HEIGHT));
         size(WIDTH,HEIGHT);
-        setMap();
+
+        tileMap = new Maze();
         objectSpawner = new ObjectSpawner(this, tileMap);
         objectSpawner.initCoins();
     }
@@ -45,53 +46,32 @@ public class Game extends GameEngine{
     public void update() {
     }
 
-    public void setMap(){
-
-        Sprite wallSprite = new Sprite(Game.MEDIA_URL.concat("wallTile.png"));
-        TileType<WallTile> wallTileType = new TileType<>(WallTile.class, wallSprite);
-
-        //Nummertjes die hij niet kent maakt de tilemap vanzelf EmptyTiles van.
-
-        TileType[] tileTypes = {wallTileType/*, coinTileType*/};
-        int tileSize = 35;
-        int tilesMap[][] = {
-
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                {0,-1,-1,-1,-1,0,0,0,0,0,-1,0,-1,0,-1,-1,-1,-1,-1,0,-1,0,-1,-1,-1,0,0},
-                {0,-1,0,0,-1,-1,-1,-1,-1,0,-1,0,-1,-1,-1,0,-1,0,-1,-1,-1,0,1,0,-1,0,0},
-                {0,-1,1,-1,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,0,0,-1,-1,-1,0,-1,0,0},
-                {0,-1,0,-1,-1,-1,-1,0,-1,0,-1,-1,-1,0,-1,0,-1,-1,-1,0,0,-1,0,0,-1,0,0},
-                {0,-1,0,-1,0,0,0,0,-1,-1,-1,0,-1,0,0,0,-1,0,-1,0,-1,-1,-1,0,-1,-1,0},
-                {0,-1,-1,-1,0,0,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,0,0,-1,0},
-                {0,-1,0,-1,-1,-1,-1,0,0,0,-1,0,0,-1,0,0,-1,0,-1,0,-1,-1,-1,-1,0,-1,0},
-                {0,-1,0,0,0,0,-1,0,-1,-1,-1,0,-1,-1,-1,0,-1,0,-1,0,-1,0,-1,1,0,-1,0},
-                {0,-1,0,0,0,0,-1,-1,-1,0,-1,0,-1,-1,-1,0,-1,-1,-1,0,-1,0,0,-1,-1,-1,0},
-                {0,-1,-1,-1,-1,0,0,0,-1,-1,-1,0,0,0,0,0,0,0,-1,0,-1,-1,-1,0,0,-1,0},
-                {0,-1,0,0,-1,0,-1,-1,-1,0,-1,-1,0,-1,-1,0,-1,0,-1,-1,-1,0,-1,0,-1,-1,0},
-                {0,0,0,0,-1,-1,-1,0,-1,0,0,-1,0,0,-1,0,-1,-1,-1,0,-1,-1,-1,-1,-1,0,0},
-                {0,-1,-1,0,-1,0,-1,-1,-1,0,0,-1,-1,0,-1,0,0,-1,0,0,0,0,-1,0,-1,-1,0},
-                {0,-1,-1,-1,-1,0,-1,0,-1,0,0,0,-1,0,-1,-1,1,-1,-1,0,-1,0,-1,0,0,-1,0},
-                {0,-1,0,0,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,0,-1,0,-1,0,-1,-1,-1,-1,0,-1,0},
-                {0,-1,-1,-1,-1,0,-1,-1,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,0,-1,-1,-1,0},
-                {0,1,0,-1,0,0,-1,0,-1,-1,-1,0,-1,0,-1,-1,-1,-1,-1,0,-1,0,-1,-1,0,-1,0},
-                {0,-1,-1,-1,-1,-1,-1,0,-1,0,-1,0,-1,-1,-1,0,-1,0,-1,-1,-1,-1,-1,0,0,-1,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
-        };
-        tileMap = new TileMap(tileSize, tileTypes, tilesMap);
-    }
+    /*
+    Moved all the setmap() code to Maze.
+     */
 
     public void setView(int width, int height){
         setView(new View(width,height));
         size(width,height);
     }
 
-
+    /*
+    Maybe we should make a Util class?
+     */
     public static float clamp(float var, float min, float max){
         if (var >= max)
             return var = max;
         else if (var <= min)
             return var = min;
         else return var;
+    }
+
+    /*
+    Casts the Vector of all GameObjects into an ArrayList
+     */
+    public ArrayList<GameObject> getAllGameObjects(){
+        ArrayList<GameObject> allGameObjects = new ArrayList<>(getGameObjectItems());
+        return allGameObjects;
     }
 
     public void updateObjectList(GameObject object,float x, float y){

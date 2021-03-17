@@ -8,10 +8,9 @@ import nl.han.ica.oopg.tile.Tile;
 import nl.han.ica.oopg.tile.TileMap;
 import processing.core.PVector;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class ObjectSpawner implements IAlarmListener {
-    private TileMap map;
+    private Maze map;
     private Game game;
     private Alarm coinTimer;
     private final String coinTimerName = "coinTimer";
@@ -20,7 +19,7 @@ public class ObjectSpawner implements IAlarmListener {
 
     public ObjectSpawner(Game game, TileMap map){
         this.game = game;
-        this.map = map;
+        this.map = (Maze) map;
         restartCoinTimer();
     }
 
@@ -33,42 +32,7 @@ public class ObjectSpawner implements IAlarmListener {
         }
     }
 
-    /*
-    Gets a random tile that is empty and has no GameObjects on it.
-    Moet in de Maze class met andere Tile gerelateerde functies
-     */
-    public Tile getRandomEmptyTile(){
-        ArrayList<Tile> listOfEmptyTiles = new ArrayList<>();
-        int[][] tilesIndexes = map.getTileMap();
-        //First, cycle past all the tiles and make a list of empty tiles
-        for(int y = 0; y < tilesIndexes.length;y++){
-            for(int x = 0; x < tilesIndexes[y].length; x++){
-                Tile tile = map.getTileOnIndex(x,y);
-                if(tile instanceof EmptyTile){
-                    listOfEmptyTiles.add(tile);
-                }
-            }
-        }
-        //Now cycle past all GameObjects, check which Tile they're on and remove that one from our list
 
-        ArrayList<GameObject> allGameObjects = new ArrayList<>(game.getGameObjectItems());
-        for(GameObject object: allGameObjects){
-
-            Tile objectTile = map.getTileOnPosition((int) object.getX(), (int) object.getY());
-            //geen check nodig omdat remove() al optioneel is bij een ArrayList
-                listOfEmptyTiles.remove(objectTile);
-
-        }
-        int numberOfEmptyTiles = listOfEmptyTiles.size();
-        if (numberOfEmptyTiles <= 0){
-            System.out.println("Geen lege tiles om muntje op te spawnen.");
-            return null;
-        }
-        //Now pick a random Tile from the list
-        Random random = new Random();
-        int randomNumber = random.nextInt(listOfEmptyTiles.size());
-        return listOfEmptyTiles.get(randomNumber);
-    }
 
     //was used for testing
     //x and y are ints for the tilemap[][]
@@ -83,7 +47,7 @@ public class ObjectSpawner implements IAlarmListener {
     }
 
     public void addCoinOnRandomLocation(){
-        Tile tile = getRandomEmptyTile();
+        Tile tile = map.getRandomEmptyTileWithoutObjects(game.getAllGameObjects());
         if (tile != null){
             addCoin(tile);
         }
