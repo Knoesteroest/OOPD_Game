@@ -15,7 +15,6 @@ import java.util.List;
 public class Player extends AnimatedSpriteObject implements ICollidableWithTiles {
 
     private Game game;
-    private Handler handler;
 
     private boolean[] keyDown = new boolean[4];
 
@@ -23,10 +22,9 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
     private int score;
     private float x,y;
 
-    public Player(Game game,Handler handler){
+    public Player(Game game){
      super(new Sprite(Game.MEDIA_URL.concat("player_run.gif")),2);
      this.game = game;
-     this.handler = handler;
 
      setCurrentFrameIndex(1);
      for (int i =0; i< keyDown.length; i++) {

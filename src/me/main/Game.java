@@ -20,7 +20,6 @@ public class Game extends GameEngine{
     public static final int WIDTH = 945, HEIGHT = WIDTH / 12 * 9;
     public static final float centerX = ((WIDTH /35) * 17), centerY = ((HEIGHT /35) *15);
     public static final String MEDIA_URL = "src/media/";
-    private Handler handler;
 
     public static void main(String[] args) {
         Game game = new Game();
@@ -29,10 +28,9 @@ public class Game extends GameEngine{
 
     @Override
     public void setupGame() {
-       handler = new Handler();
 
-        handler.addObject(new Player(this,handler),centerX,centerY,this);
-        handler.addObject(new Zombie(this,handler),35,635,this);
+        addGameObject(new Player(this),centerX,centerY);
+        addGameObject(new Zombie(this),35,635);
 
         setView(new View(WIDTH,HEIGHT));
         size(WIDTH,HEIGHT);
