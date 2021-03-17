@@ -1,8 +1,6 @@
 package Enemy;
 
 import me.main.Game;
-import me.main.Handler;
-import me.main.ID;
 import me.main.Player;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
@@ -12,14 +10,13 @@ import nl.han.ica.oopg.objects.Sprite;
  */
 public class Zombie extends Enemy {
     private float speed;
-    private Handler handler;
-
+    private Game game;
     private float velX,velY,x,y;
 
-    public Zombie(Game game,Handler handler) {
-        super(new Sprite(Game.MEDIA_URL.concat("zombie.gif")), 4,handler,game);
-        this.handler = handler;
+    public Zombie(Game game) {
+        super(new Sprite(Game.MEDIA_URL.concat("zombie.gif")), 4,game);
         setCurrentFrameIndex(1);
+        this.game = game;
         this.speed = 0.85F;
     }
 
@@ -33,7 +30,8 @@ public class Zombie extends Enemy {
 
         setX(x);
         setY(y);
-        for (GameObject g: handler.objects){
+
+        for (GameObject g: game.getGameObjectItems()){
             if (g instanceof Player){
                 GameObject player = g;
 
