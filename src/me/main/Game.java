@@ -29,7 +29,6 @@ public class Game extends GameEngine{
     @Override
     public void setupGame() {
 
-        addGameObject(new Player(this),centerX,centerY);
         addGameObject(new Zombie(this),35,635);
 
         setView(new View(WIDTH,HEIGHT));
@@ -38,6 +37,8 @@ public class Game extends GameEngine{
         tileMap = new Maze();
         objectSpawner = new ObjectSpawner(this, tileMap);
         objectSpawner.initCoins();
+        objectSpawner.initPlayer();
+
     }
 
     @Override
