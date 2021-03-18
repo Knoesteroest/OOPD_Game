@@ -36,9 +36,8 @@ public class Game extends GameEngine{
 
         tileMap = new Maze();
         objectSpawner = new ObjectSpawner(this, tileMap);
-        objectSpawner.initCoins();
-        objectSpawner.initPlayer();
-
+        //spawns coins and the player
+        objectSpawner.spawnStartingObjects();
     }
 
     @Override

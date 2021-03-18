@@ -12,7 +12,7 @@ public class ObjectSpawner implements IAlarmListener {
     private Alarm coinTimer;
     private final String coinTimerName = "coinTimer";
     private final double coinSpawnInterval = 5;
-    private final int startingCoins = 10;
+    private final int startingCoins = 5;
 
     public ObjectSpawner(Game game, TileMap map){
         this.game = game;
@@ -20,7 +20,14 @@ public class ObjectSpawner implements IAlarmListener {
         restartCoinTimer();
     }
 
-    public void initPlayer(){
+    public void spawnStartingObjects() {
+        spawnPlayer();
+        spawnStartingCoins();
+    }
+    /*
+    Puts the player on the PlayerSpawnTile
+     */
+    public void spawnPlayer(){
         PVector playerSpawn = map.getPlayerSpawnLocation();
         game.addGameObject(new Player(game),playerSpawn.x,playerSpawn.y);
     }
@@ -28,7 +35,7 @@ public class ObjectSpawner implements IAlarmListener {
     /*
     Adds some coins to the map
     */
-    public void initCoins(){
+    public void spawnStartingCoins(){
         for(int i = 1; i <= startingCoins; i++) {
             addCoinOnRandomTile();
         }
@@ -64,4 +71,6 @@ public class ObjectSpawner implements IAlarmListener {
         coinTimer.addTarget(this);
         coinTimer.start();
     }
+
+
 }
