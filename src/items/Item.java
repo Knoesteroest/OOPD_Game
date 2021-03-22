@@ -9,10 +9,10 @@ import nl.han.ica.oopg.objects.SpriteObject;
 
 import java.util.List;
 
-public abstract class PickUp extends SpriteObject implements ICollidableWithGameObjects {
+public abstract class Item extends SpriteObject implements ICollidableWithGameObjects {
     private Game game;
 
-    public PickUp(Game game, Sprite sprite){
+    public Item(Game game, Sprite sprite){
         super(sprite);
         this.game=game;
     }

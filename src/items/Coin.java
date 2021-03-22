@@ -1,14 +1,11 @@
 package items;
 
-import items.PickUp;
 import me.main.Game;
 import me.main.Player;
 import nl.han.ica.oopg.objects.Sprite;
 import processing.core.PVector;
 
-import java.util.List;
-
-public class Coin extends PickUp {
+public class Coin extends Item {
     private final int value = 1;
 
     public Coin(Game game, PVector coordinates) {
