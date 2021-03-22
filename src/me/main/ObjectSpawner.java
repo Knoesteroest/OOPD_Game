@@ -1,6 +1,7 @@
 package me.main;
 
 import enemy.Zombie;
+import items.Coin;
 import nl.han.ica.oopg.alarm.Alarm;
 import nl.han.ica.oopg.alarm.IAlarmListener;
 import nl.han.ica.oopg.tile.Tile;
