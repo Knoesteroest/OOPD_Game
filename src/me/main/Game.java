@@ -1,18 +1,13 @@
 package me.main;
 
-import enemy.Enemy;
+
 import enemy.Zombie;
 import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
-import nl.han.ica.oopg.tile.TileMap;
-import nl.han.ica.oopg.tile.TileType;
 import nl.han.ica.oopg.view.View;
-import tiles.WallTile;
-
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class Game extends GameEngine{
     private ObjectSpawner objectSpawner;

@@ -20,6 +20,7 @@ public class Zombie extends Enemy {
         this.speed = 0.85F;
     }
 
+
     @Override
     public void update() {
         x = getX();

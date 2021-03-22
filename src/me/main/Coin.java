@@ -15,7 +15,6 @@ public class Coin extends SpriteObject implements ICollidableWithGameObjects {
     public Coin(Game game, PVector coordinates) {
         super(new Sprite(Game.MEDIA_URL.concat("coin.gif")));
         this.game = game;
-
         this.setX(coordinates.x);
         this.setY(coordinates.y);
     }
