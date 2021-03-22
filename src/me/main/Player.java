@@ -15,26 +15,31 @@ import java.util.List;
 public class Player extends AnimatedSpriteObject implements ICollidableWithTiles {
 
     private Game game;
+    private Difficulty difficulty;
 
     private boolean[] keyDown = new boolean[4];
 
     private int speed;
     private int score;
+    private int hitpoints;
     private float x,y;
 
-    public Player(Game game){
-     super(new Sprite(Game.MEDIA_URL.concat("player_run.gif")),2);
-     this.game = game;
-
-     setCurrentFrameIndex(1);
-     for (int i =0; i< keyDown.length; i++) {
-         keyDown[i] = false;
-     }
-     speed = 2;
-    }
+    public Player(Game game, Difficulty difficulty){
+        super(new Sprite(Game.MEDIA_URL.concat("player_run.gif")),2);
+        this.game = game;
+        this.difficulty = difficulty;
+        setCurrentFrameIndex(1);
+        for (int i =0; i< keyDown.length; i++) {
+            keyDown[i] = false;
+        }
+        speed = 2;
+        hitpoints = 100;
+        }
 
     public void addScore(int points){
+        int previousScore = score;
         score += points;
+        difficulty.scoreThresholdCrossed (score, previousScore);
         System.out.println("Score is nu: " + score);
     }
 

@@ -1,5 +1,6 @@
 package me.main;
 
+import enemy.Zombie;
 import nl.han.ica.oopg.alarm.Alarm;
 import nl.han.ica.oopg.alarm.IAlarmListener;
 import nl.han.ica.oopg.tile.Tile;
@@ -13,29 +14,48 @@ public class ObjectSpawner implements IAlarmListener {
     private final String coinTimerName = "coinTimer";
     private final double coinSpawnInterval = 5;
     private final int startingCoins = 5;
+    //private Difficulty difficulty;
 
     public ObjectSpawner(Game game, TileMap map){
         this.game = game;
         this.map = (Maze) map;
         restartCoinTimer();
     }
-
-    public void spawnStartingObjects() {
-        spawnPlayer();
+    /*
+    Needs the difficulty object to hand to the spawned Player object
+     */
+    public void spawnStartingObjects(Difficulty difficulty) {
+        spawnPlayer(difficulty);
         spawnStartingCoins();
+        spawnZombie();
     }
     /*
     Puts the player on the PlayerSpawnTile
      */
-    public void spawnPlayer(){
+    private void spawnPlayer(Difficulty difficulty){
         PVector playerSpawn = map.getPlayerSpawnLocation();
-        game.addGameObject(new Player(game),playerSpawn.x,playerSpawn.y);
+        game.addGameObject(new Player(game, difficulty), playerSpawn.x, playerSpawn.y);
     }
 
+    public void spawnEnemy(ObjectTypeId enemyType) {
+        if(enemyType == ObjectTypeId.Zombie){
+            spawnZombie();
+        } else if (enemyType == ObjectTypeId.Saw){
+            //spawnSaw();
+        }
+    }
+
+    public void spawnZombie(){
+        Tile tile = map.getRandomEmptyTileWithoutObjects(game.getAllGameObjects());
+        if (tile != null){
+            PVector coordinates = map.getTilePixelLocation(tile);
+            game.addGameObject(new Zombie(game, coordinates));
+        }
+    }
     /*
     Adds some coins to the map
     */
-    public void spawnStartingCoins(){
+    private void spawnStartingCoins(){
         for(int i = 1; i <= startingCoins; i++) {
             addCoinOnRandomTile();
         }
@@ -71,6 +91,5 @@ public class ObjectSpawner implements IAlarmListener {
         coinTimer.addTarget(this);
         coinTimer.start();
     }
-
 
 }

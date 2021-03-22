@@ -15,12 +15,11 @@ import java.util.List;
 /**
  * Class that contains all basic structure of the enemy
  */
-public class Enemy extends AnimatedSpriteObject implements ICollidableWithTiles {
-
+public abstract class Enemy extends AnimatedSpriteObject implements ICollidableWithTiles {
+    protected int damage;
     private Game game;
-    public Enemy(Sprite sprite, int totalFrames,Game game) {
+    public Enemy(Sprite sprite, int totalFrames, Game game) {
         super(sprite, totalFrames);
-
         this.game = game;
     }
 

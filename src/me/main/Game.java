@@ -16,6 +16,8 @@ public class Game extends GameEngine{
     public static final float centerX = ((WIDTH /35) * 17), centerY = ((HEIGHT /35) *15);
     public static final String MEDIA_URL = "src/media/";
 
+    private Difficulty difficulty;
+
     public static void main(String[] args) {
         Game game = new Game();
         game.runSketch();
@@ -24,15 +26,15 @@ public class Game extends GameEngine{
     @Override
     public void setupGame() {
 
-        addGameObject(new Zombie(this),35,635);
-
         setView(new View(WIDTH,HEIGHT));
         size(WIDTH,HEIGHT);
 
         tileMap = new Maze();
+
         objectSpawner = new ObjectSpawner(this, tileMap);
+        difficulty = new Difficulty(objectSpawner, StartingDifficulty.EASY.difficultyLevel);
         //spawns coins and the player
-        objectSpawner.spawnStartingObjects();
+        objectSpawner.spawnStartingObjects(difficulty);
     }
 
     @Override
@@ -63,11 +65,6 @@ public class Game extends GameEngine{
     Casts the Vector of all GameObjects into an ArrayList
      */
     public ArrayList<GameObject> getAllGameObjects(){
-        ArrayList<GameObject> allGameObjects = new ArrayList<>(getGameObjectItems());
-        return allGameObjects;
-    }
-
-    public void updateObjectList(GameObject object,float x, float y){
-        addGameObject(object,x,y);
+        return new ArrayList<>(getGameObjectItems());
     }
 }

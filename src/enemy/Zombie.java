@@ -4,6 +4,7 @@ import me.main.Game;
 import me.main.Player;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
+import processing.core.PVector;
 
 /**
  * Class for the zombie Enemy
@@ -13,11 +14,13 @@ public class Zombie extends Enemy {
     private Game game;
     private float velX,velY,x,y;
 
-    public Zombie(Game game) {
+    public Zombie(Game game, PVector coordinates) {
         super(new Sprite(Game.MEDIA_URL.concat("zombie.gif")), 4,game);
         setCurrentFrameIndex(1);
         this.game = game;
         this.speed = 0.85F;
+        this.setX(coordinates.x);
+        this.setY(coordinates.y);
     }
 
 

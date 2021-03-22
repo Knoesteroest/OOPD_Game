@@ -1,6 +1,6 @@
 package me.main;
 
-public enum ID {
+public enum ObjectTypeId {
     Player(),
     Zombie(),
     Saw(),
