@@ -10,17 +10,13 @@ import processing.core.PVector;
  * Class for the zombie Enemy
  */
 public class Zombie extends Enemy {
-    private float speed;
-    private Game game;
-    private float velX,velY,x,y;
+
+    private float velX,velY; //x,y and speed are already inherited
 
     public Zombie(Game game, PVector coordinates) {
-        super(new Sprite(Game.MEDIA_URL.concat("zombie.gif")), 4,game);
+        super(new Sprite(Game.MEDIA_URL.concat("zombie.gif")), 4, game, coordinates);
         setCurrentFrameIndex(1);
-        this.game = game;
-        this.speed = 0.85F;
-        this.setX(coordinates.x);
-        this.setY(coordinates.y);
+        this.setSpeed(0.85F);
     }
 
 

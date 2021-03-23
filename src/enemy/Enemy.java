@@ -1,6 +1,7 @@
 package enemy;
 
 import me.main.Game;
+import me.main.Maze;
 import nl.han.ica.oopg.collision.CollidedTile;
 import nl.han.ica.oopg.collision.CollisionSide;
 import nl.han.ica.oopg.collision.ICollidableWithTiles;
@@ -17,17 +18,19 @@ import java.util.List;
  */
 public abstract class Enemy extends AnimatedSpriteObject implements ICollidableWithTiles {
     protected int damage;
-    private Game game;
-    public Enemy(Sprite sprite, int totalFrames, Game game) {
+    protected Game game;
+    protected Maze map;
+    public Enemy(Sprite sprite, int totalFrames, Game game, PVector coordinates) {
         super(sprite, totalFrames);
         this.game = game;
+        this.map = (Maze) game.getTileMap();
+        this.setX(coordinates.x);
+        this.setY(coordinates.y);
     }
 
     @Override
     public void tileCollisionOccurred(List<CollidedTile> list) {
         PVector vector;
-
-
         for (CollidedTile ct : list) {
 //            if (ct.getTile() instanceof WallTile) {
 //                if (CollisionSide.TOP.equals(ct.getCollisionSide())) {

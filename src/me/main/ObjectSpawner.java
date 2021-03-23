@@ -1,5 +1,6 @@
 package me.main;
 
+import enemy.CircularSaw;
 import enemy.Zombie;
 import items.Coin;
 import items.SpeedBoost;
@@ -32,6 +33,7 @@ public class ObjectSpawner implements IAlarmListener {
         spawnZombie();
         game.addGameObject(new SpeedBoost(game), 35,635);//test Booster
         game.addGameObject(new SpeedBoost(game), 635,35);//test Booster
+        game.addGameObject(new CircularSaw(game, new PVector(385,280)));
     }
     /*
     Puts the player on the PlayerSpawnTile
