@@ -1,6 +1,7 @@
 package me.main;
 
 
+import enemy.Enemy;
 import enemy.Zombie;
 import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.objects.GameObject;
@@ -66,5 +67,26 @@ public class Game extends GameEngine{
      */
     public ArrayList<GameObject> getAllGameObjects(){
         return new ArrayList<>(getGameObjectItems());
+    }
+    /*
+    Moet misschien een variabele zijn, hoeft eigenlijk maar een keer gedaan te worden
+     */
+    public Player getPlayer(){
+        for (GameObject o: getAllGameObjects()){
+            if (o instanceof Player){
+                return (Player) o;
+            }
+        }
+        return null;
+    }
+
+    public  ArrayList<Enemy> getAllEnemies(){
+        ArrayList<Enemy> allEnemies = new ArrayList<>();
+        for (GameObject o: getAllGameObjects()){
+            if (o instanceof Enemy){
+                allEnemies.add((Enemy)o);
+            }
+        }
+        return allEnemies;
     }
 }

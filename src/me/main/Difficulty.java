@@ -13,7 +13,10 @@ public class Difficulty {
         this.difficultyLevel = difficultyLevel;
     }
 
-
+    /*
+    gets called when Player score increases
+    checks if the difficulty needs to go up
+     */
     public void scoreThresholdCrossed (int score, int previousScore){
         if (score / scoreDifficultyThreshhold > previousScore / scoreDifficultyThreshhold){
             difficultyLevel++;

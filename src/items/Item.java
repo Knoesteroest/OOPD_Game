@@ -10,7 +10,7 @@ import nl.han.ica.oopg.objects.SpriteObject;
 import java.util.List;
 
 public abstract class Item extends SpriteObject implements ICollidableWithGameObjects {
-    private Game game;
+    protected Game game;
 
     public Item(Game game, Sprite sprite){
         super(sprite);

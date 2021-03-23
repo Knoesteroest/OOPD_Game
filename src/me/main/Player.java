@@ -18,7 +18,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
     private Difficulty difficulty;
 
     private boolean[] keyDown = new boolean[4];
-
+    private final static int initialSpeed = 2;
     private int speed;
     private int score;
     private int hitpoints;
@@ -32,7 +32,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
         for (int i =0; i< keyDown.length; i++) {
             keyDown[i] = false;
         }
-        speed = 2;
+        speed = initialSpeed;
         hitpoints = 100;
         }
 
@@ -41,6 +41,14 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
         score += points;
         difficulty.scoreThresholdCrossed (score, previousScore);
         System.out.println("Score is nu: " + score);
+    }
+
+    public void setSpeed(int speed){
+        this.speed = speed;
+    }
+
+    public void resetSpeed(){
+        this.speed = initialSpeed;
     }
 
     @Override
@@ -88,23 +96,23 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
         switch (keyCode){
             case 87: // W
                 // setDirectionSpeed(0, speed);
-                setySpeed(-2);
+                setySpeed(-speed);
                 keyDown[0] = true;
                 break;
             case 65: // A
                 //setDirectionSpeed(270, speed);
                 setCurrentFrameIndex(0);
-                setxSpeed(-2);
+                setxSpeed(-speed);
                 keyDown[1] = true;
                 break;
             case 83: // S
                 //setDirectionSpeed(180, speed);
-                setySpeed(2);
+                setySpeed(speed);
                 keyDown[2] = true;
                 break;
             case 68: // D
                 //setDirectionSpeed(90, speed);
-                setxSpeed(2);
+                setxSpeed(speed);
                 keyDown[3] = true;
                 setCurrentFrameIndex(1);
                 break;

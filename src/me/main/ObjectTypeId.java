@@ -4,5 +4,8 @@ public enum ObjectTypeId {
     Player(),
     Zombie(),
     Saw(),
-    Coin()
+    Coin(),
+    Flash(),
+    Speed(),
+    DoubleScore()
 }
