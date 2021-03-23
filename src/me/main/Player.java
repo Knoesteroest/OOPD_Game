@@ -45,10 +45,11 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
 
     public void setSpeed(int speed){
         this.speed = speed;
+        System.out.println("Snelheid is nu: " + speed);
     }
 
     public void resetSpeed(){
-        this.speed = initialSpeed;
+        setSpeed(initialSpeed);
     }
 
     @Override

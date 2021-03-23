@@ -3,6 +3,7 @@ package me.main;
 
 import enemy.Enemy;
 import enemy.Zombie;
+import items.BoosterEffect;
 import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
@@ -12,10 +13,12 @@ import java.util.ArrayList;
 
 public class Game extends GameEngine{
     private ObjectSpawner objectSpawner;
+    private ArrayList<BoosterEffect> activeBoosterEffects;
 
     public static final int WIDTH = 945, HEIGHT = WIDTH / 12 * 9;
     public static final float centerX = ((WIDTH /35) * 17), centerY = ((HEIGHT /35) *15);
     public static final String MEDIA_URL = "src/media/";
+
 
     private Difficulty difficulty;
 
@@ -34,6 +37,7 @@ public class Game extends GameEngine{
 
         objectSpawner = new ObjectSpawner(this, tileMap);
         difficulty = new Difficulty(objectSpawner, StartingDifficulty.EASY.difficultyLevel);
+        activeBoosterEffects = new ArrayList<>();
         //spawns coins and the player
         objectSpawner.spawnStartingObjects(difficulty);
     }
@@ -68,8 +72,40 @@ public class Game extends GameEngine{
     public ArrayList<GameObject> getAllGameObjects(){
         return new ArrayList<>(getGameObjectItems());
     }
+
+//BoosterEffects code:
+
     /*
-    Moet misschien een variabele zijn, hoeft eigenlijk maar een keer gedaan te worden
+    adds booster effect to the list and starts the effect if there wasn't one in the list yet
+     */
+    public void addBoosterEffect(BoosterEffect boosterEffect){
+        if (!isBooster(boosterEffect.booster.typeId)) {
+            boosterEffect.booster.startEffect();
+        }
+        activeBoosterEffects.add(boosterEffect);
+    }
+
+    /*
+    checks if the booster type is already in the list
+     */
+    private boolean isBooster(ObjectTypeId typeId){
+        for(BoosterEffect effect: activeBoosterEffects){
+            if(effect.booster.typeId==typeId){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void removeBoosterEffect(BoosterEffect boosterEffect){
+        activeBoosterEffects.remove(boosterEffect);
+        if (!isBooster(boosterEffect.booster.typeId)){
+            boosterEffect.booster.endEffect();
+        }
+    }
+
+    /*
+    Could be a variable set once instead, low priority to-do
      */
     public Player getPlayer(){
         for (GameObject o: getAllGameObjects()){
@@ -80,6 +116,9 @@ public class Game extends GameEngine{
         return null;
     }
 
+    /*
+    Nodig voor de FlashBoost
+     */
     public  ArrayList<Enemy> getAllEnemies(){
         ArrayList<Enemy> allEnemies = new ArrayList<>();
         for (GameObject o: getAllGameObjects()){

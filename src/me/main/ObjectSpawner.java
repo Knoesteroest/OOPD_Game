@@ -2,6 +2,7 @@ package me.main;
 
 import enemy.Zombie;
 import items.Coin;
+import items.SpeedBoost;
 import nl.han.ica.oopg.alarm.Alarm;
 import nl.han.ica.oopg.alarm.IAlarmListener;
 import nl.han.ica.oopg.tile.Tile;
@@ -29,6 +30,8 @@ public class ObjectSpawner implements IAlarmListener {
         spawnPlayer(difficulty);
         spawnStartingCoins();
         spawnZombie();
+        game.addGameObject(new SpeedBoost(game), 35,635);//test Booster
+        game.addGameObject(new SpeedBoost(game), 635,35);//test Booster
     }
     /*
     Puts the player on the PlayerSpawnTile
@@ -62,12 +65,6 @@ public class ObjectSpawner implements IAlarmListener {
         }
     }
 
-    //was used for testing
-    //x and y are ints for the tilemap[][]
-    public void addCoin(int x, int y){
-        Tile tile = map.getTileOnIndex(x, y);
-        addCoin(tile);
-    }
 
     private void addCoin(Tile tile) {
         PVector coordinates = map.getTilePixelLocation(tile);
@@ -92,5 +89,4 @@ public class ObjectSpawner implements IAlarmListener {
         coinTimer.addTarget(this);
         coinTimer.start();
     }
-
 }
