@@ -1,14 +1,12 @@
 package enemy;
 
 import me.main.Game;
-import nl.han.ica.oopg.collision.CollidedTile;
 import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.tile.EmptyTile;
 import nl.han.ica.oopg.tile.Tile;
 import processing.core.PVector;
 import tiles.WallTile;
 
-import java.util.List;
 import static processing.core.PApplet.*;
 
 public class CircularSaw extends Enemy{
@@ -44,30 +42,32 @@ public class CircularSaw extends Enemy{
         }
         nextFrame();
     }
+
     public void test(){
         Tile testTile = map.getTileOnIndex(5,5);
-        Tile resultTile = getAdjacentRelative(testTile, 0, 0);
+        Tile resultTile = getAdjacentTile(testTile, 0, 0);
         PVector index = map.getTileIndex(resultTile);
-//        System.out.println("the tile in front of 5,5 going up is " + index.x +":"+ index.y);
-//
-//        resultTile = getAdjacentRelative(testTile, 0, -90);
-//        index = map.getTileIndex(resultTile);
-//        System.out.println("the tile in left of 5,5 going up is " + index.x +":"+ index.y);
+        System.out.println("the tile in front of 5,5 going up is " + index.x +":"+ index.y);
 
-        resultTile = getAdjacentRelative(testTile, 270, -90);
+        resultTile = getAdjacentTile(testTile, 0, -90);
+        index = map.getTileIndex(resultTile);
+        System.out.println("the tile in left of 5,5 going up is " + index.x +":"+ index.y);
+
+        resultTile = getAdjacentTile(testTile, 270, -90);
         index = map.getTileIndex(resultTile);
         System.out.println("the tile in left of 5,5 going left is " + index.x +":"+ index.y);
 
-//        resultTile = getAdjacentRelative(testTile, 180, -90);
-//        index = map.getTileIndex(resultTile);
-//        System.out.println("the tile in left of 5,5 going down is " + index.x +":"+ index.y);
+        resultTile = getAdjacentTile(testTile, 180, -90);
+        index = map.getTileIndex(resultTile);
+        System.out.println("the tile in left of 5,5 going down is " + index.x +":"+ index.y);
     }
+
     /*
     tile: the tile you're on
     heading: the direction you're going in
     side: the direction relative to your heading you want the tile from
      */
-    private Tile getAdjacentRelative(Tile tile, float heading, float side) {
+    private Tile getAdjacentTile(Tile tile, float heading, float side) {
         PVector index = map.getTileIndex(tile);
         index.x += sin(radians(heading + side));
 //        System.out.println(PApplet.sin(heading + side));
@@ -79,14 +79,14 @@ public class CircularSaw extends Enemy{
     }
 
     private Tile getFrontTile() {
-        Tile tile = getAdjacentRelative(getTile(), getDirection(), 0);
+        Tile tile = getAdjacentTile(getTile(), getDirection(), 0);
         PVector index = map.getTileIndex(getTile());
 //        System.out.println("frontTile: " + index.x +":"+ index.y);
         return tile;
     }
 
     private Tile getLeftTile() {
-        Tile tile = getAdjacentRelative(getTile(), getDirection(), -90);
+        Tile tile = getAdjacentTile(getTile(), getDirection(), -90);
         PVector index = map.getTileIndex(getTile());
 //        System.out.println("leftTile: " + index.x +":"+ index.y);
         return tile;

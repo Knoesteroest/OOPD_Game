@@ -170,7 +170,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
                     }
                 }
 
-            } else if(ct.getTile() instanceof CoinTile){
+            } /*else if(ct.getTile() instanceof CoinTile){
                     if (CollisionSide.LEFT.equals(ct.getCollisionSide())
                       ||CollisionSide.RIGHT.equals(ct.getCollisionSide())
                       ||CollisionSide.TOP.equals(ct.getCollisionSide())
@@ -182,7 +182,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
                             e.printStackTrace();
                         }
                     }
-                }
+                }*/
             }
         }
     }

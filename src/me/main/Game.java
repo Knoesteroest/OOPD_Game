@@ -4,6 +4,7 @@ package me.main;
 import enemy.Enemy;
 import enemy.Zombie;
 import items.BoosterEffect;
+import items.Coin;
 import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
@@ -105,7 +106,7 @@ public class Game extends GameEngine{
     }
 
     /*
-    Could be a variable set once instead, low priority to-do
+    Could be a variable set once instead, to-do...
      */
     public Player getPlayer(){
         for (GameObject o: getAllGameObjects()){
@@ -127,5 +128,15 @@ public class Game extends GameEngine{
             }
         }
         return allEnemies;
+    }
+
+    public int countCoins(){
+        int coinCount = 0;
+        for(GameObject o: getAllGameObjects()){
+            if (o instanceof Coin){
+                coinCount++;
+            }
+        }
+        return coinCount;
     }
 }

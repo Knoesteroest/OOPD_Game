@@ -17,6 +17,7 @@ public class ObjectSpawner implements IAlarmListener {
     private final String coinTimerName = "coinTimer";
     private final double coinSpawnInterval = 5;
     private final int startingCoins = 5;
+    private final int maxCoins = 10;
     //private Difficulty difficulty;
 
     public ObjectSpawner(Game game, TileMap map){
@@ -29,7 +30,7 @@ public class ObjectSpawner implements IAlarmListener {
      */
     public void spawnStartingObjects(Difficulty difficulty) {
         spawnPlayer(difficulty);
-        spawnStartingCoins();
+        spawnInitialCoins();
         spawnZombie();
         game.addGameObject(new SpeedBoost(game), 35,635);//test Booster
         game.addGameObject(new SpeedBoost(game), 635,35);//test Booster
@@ -61,12 +62,11 @@ public class ObjectSpawner implements IAlarmListener {
     /*
     Adds some coins to the map
     */
-    private void spawnStartingCoins(){
+    private void spawnInitialCoins(){
         for(int i = 1; i <= startingCoins; i++) {
             addCoinOnRandomTile();
         }
     }
-
 
     private void addCoin(Tile tile) {
         PVector coordinates = map.getTilePixelLocation(tile);
@@ -82,7 +82,9 @@ public class ObjectSpawner implements IAlarmListener {
 
     @Override
     public void triggerAlarm(String s) {
-        addCoinOnRandomTile();
+        if (game.countCoins() < maxCoins){
+            addCoinOnRandomTile();
+        }
         restartCoinTimer();
     }
 
