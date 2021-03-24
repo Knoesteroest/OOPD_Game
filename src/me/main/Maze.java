@@ -23,7 +23,7 @@ public class Maze extends TileMap {
     private final static TileType[] mazeTileTypes = {wallTileType, playerSpawnTileType};
     private final static int mazeTilesMap[][] = {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0,-1,-1, 0,-1, 0, 0, 0, 0, 0,-1, 0,-1, 0,-1,-1,-1,-1,-1, 0,-1, 0,-1,-1,-1, 0, 0},
+            {0,-1,-1,-1,-1, 0, 0, 0, 0, 0,-1, 0,-1, 0,-1,-1,-1,-1,-1, 0,-1, 0,-1,-1,-1, 0, 0},
             {0,-1, 0, 0,-1,-1,-1,-1,-1, 0,-1, 0,-1,-1,-1, 0,-1, 0,-1,-1,-1, 0, 0, 0,-1, 0, 0},
             {0,-1, 0,-1,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0, 0, 0,-1,-1,-1, 0,-1, 0, 0},
             {0,-1, 0,-1,-1,-1,-1, 0,-1, 0,-1,-1,-1, 0,-1, 0,-1,-1,-1, 0, 0,-1, 0, 0,-1, 0, 0},
@@ -39,11 +39,11 @@ public class Maze extends TileMap {
             {0,-1,-1,-1,-1, 0,-1, 0,-1, 0, 0, 0,-1, 0,-1,-1, 0,-1,-1, 0,-1, 0,-1, 0, 0,-1, 0},
             {0,-1, 0, 0,-1,-1,-1, 0,-1,-1,-1,-1,-1,-1,-1, 0,-1, 0,-1, 0,-1,-1,-1,-1, 0,-1, 0},
             {0,-1,-1,-1,-1, 0,-1,-1,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0, 0,-1,-1,-1, 0},
-            {0, 0, 0,-1, 0, 0,-1, 0,-1,-1,-1, 0,-1, 0,-1,-1,-1,-1,-1, 0,-1, 0,-1,-1, 0,-1, 0},
-            {0,-1,-1,-1,-1,-1,-1, 0,-1, 0,-1, 0,-1,-1,-1, 0,-1, 0,-1,-1,-1,-1,-1, 0, 0,-1, 0},
+            {0, 0, 0,-1, 0, 0,-1, 0,-1, 0,-1, 0,-1, 0,-1,-1,-1,-1,-1, 0,-1, 0,-1,-1, 0,-1, 0},
+            {0,-1,-1,-1,-1,-1,-1, 0,-1,-1,-1, 0,-1,-1,-1, 0,-1, 0,-1,-1,-1,-1,-1, 0, 0,-1, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     };
-    private Tile playerSpawn;
+    private PlayerSpawnTile playerSpawn;
     /*
     I made all these static so I can throw them to the TileMap constructor.
     Not sure if this is the best way.
@@ -56,14 +56,14 @@ public class Maze extends TileMap {
     /*
     There can be only one playerSpawn, if there's more on the tileMap, it picks the first one.
      */
-    private Tile findPlayerSpawn() {
-        int[][] tilesIndexes = getTileMap();
+    private PlayerSpawnTile findPlayerSpawn() {
+        int[][] tileIndexes = getTileMap();
         //First, cycle past all the tiles by index with a double for-loop
-        for(int y = 0; y < tilesIndexes.length;y++){
-            for(int x = 0; x < tilesIndexes[y].length; x++){
+        for(int y = 0; y < tileIndexes.length;y++){
+            for(int x = 0; x < tileIndexes[y].length; x++){
                 Tile tile = getTileOnIndex(x,y);
                 if(tile instanceof PlayerSpawnTile){
-                    return tile;
+                    return (PlayerSpawnTile) tile;
                 }
             }
         }
@@ -74,6 +74,7 @@ public class Maze extends TileMap {
     public PVector getPlayerSpawnLocation(){
         return getTilePixelLocation(playerSpawn);
     }
+    public PlayerSpawnTile getPlayerSpawnTile() {return playerSpawn;}
 
     /*
     Gets a list of all empty tiles
@@ -118,5 +119,11 @@ public class Maze extends TileMap {
         Random random = new Random();
         int randomNumber = random.nextInt(listOfEmptyTiles.size());
         return listOfEmptyTiles.get(randomNumber);
+    }
+
+    public void closeSpawn(){
+        PVector coordinates = getTileIndex(playerSpawn);
+        setTile((int)coordinates.x, (int) coordinates.y, 0);
+        playerSpawn = null;
     }
 }

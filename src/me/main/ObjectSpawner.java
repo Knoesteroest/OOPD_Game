@@ -9,6 +9,7 @@ import nl.han.ica.oopg.alarm.IAlarmListener;
 import nl.han.ica.oopg.tile.Tile;
 import nl.han.ica.oopg.tile.TileMap;
 import processing.core.PVector;
+import tiles.PlayerSpawnTile;
 
 public class ObjectSpawner implements IAlarmListener {
     private Maze map;
@@ -32,16 +33,22 @@ public class ObjectSpawner implements IAlarmListener {
         spawnPlayer(difficulty);
         spawnInitialCoins();
         spawnZombie();
-        game.addGameObject(new SpeedBoost(game), 35,635);//test Booster
-        game.addGameObject(new SpeedBoost(game), 635,35);//test Booster
-        game.addGameObject(new CircularSaw(game, new PVector(385,280)));
+        spawnTestObjects();
+    }
+
+    public void spawnTestObjects() {
+        game.addGameObject(new Zombie(game, new PVector(500,280)));
+        game.addGameObject(new SpeedBoost(game), 35,635);
+        game.addGameObject(new SpeedBoost(game), 635,35);
+        game.addGameObject(new CircularSaw(game, new PVector(390,280)));
     }
     /*
     Puts the player on the PlayerSpawnTile
      */
     private void spawnPlayer(Difficulty difficulty){
         PVector playerSpawn = map.getPlayerSpawnLocation();
-        game.addGameObject(new Player(game, difficulty), playerSpawn.x, playerSpawn.y);
+        PlayerSpawnTile playerSpawnTile = map.getPlayerSpawnTile();
+        game.addGameObject(new Player(game, difficulty, playerSpawnTile), playerSpawn.x, playerSpawn.y);
     }
 
     public void spawnEnemy(ObjectTypeId enemyType) {

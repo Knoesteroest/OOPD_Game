@@ -7,7 +7,7 @@ import nl.han.ica.oopg.exceptions.TileNotFoundException;
 import nl.han.ica.oopg.objects.AnimatedSpriteObject;
 import nl.han.ica.oopg.objects.Sprite;
 import processing.core.PVector;
-import tiles.CoinTile;
+import tiles.PlayerSpawnTile;
 import tiles.WallTile;
 
 import java.util.List;
@@ -15,6 +15,7 @@ import java.util.List;
 public class Player extends AnimatedSpriteObject implements ICollidableWithTiles {
 
     private Game game;
+    private Maze map;
     private Difficulty difficulty;
 
     private boolean[] keyDown = new boolean[4];
@@ -22,11 +23,13 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
     private int speed;
     private int score;
     private int hitpoints;
-    private float x,y;
 
-    public Player(Game game, Difficulty difficulty){
+    private PlayerSpawnTile spawn;
+    private boolean inSpawn;
+    public Player(Game game, Difficulty difficulty, PlayerSpawnTile spawn){
         super(new Sprite(Game.MEDIA_URL.concat("player_run.gif")),2);
         this.game = game;
+        this.map = (Maze) game.getTileMap();
         this.difficulty = difficulty;
         setCurrentFrameIndex(1);
         for (int i =0; i< keyDown.length; i++) {
@@ -34,6 +37,8 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
         }
         speed = initialSpeed;
         hitpoints = 100;
+        this.spawn = spawn;
+        inSpawn = true;
         }
 
     public void addScore(int points){
@@ -55,35 +60,16 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
     @Override
     public void update() {
 
-//        if (getX() <= 0) {
-//            setxSpeed(0);
-//            setX(0);
-//        }
-//        if (getY() <= 0) {
-//            setySpeed(0);
-//            setY(0);
-//        }
-//        if (getX() >= game.width - 15) {
-//            setxSpeed(0);
-//            setX(game.width - 15);
-//        }
-//        if (getY() >= game.height - 15) {
-//            setySpeed(0);
-//            setY(game.height - 15);
-//        }
-
-
-
         x = getX();
         y = getY();
 
         x += getxSpeed();
         y += getySpeed();
 
-//        x = game.clamp((int) x, 0, Game.WIDTH);
-//        y = game.clamp((int) y, 0, Game.HEIGHT);
-
-        //collision();
+        if(spawn != null && !inSpawn){
+            map.closeSpawn();
+            spawn = null;
+        }
     }
 
     @Override
@@ -134,7 +120,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
     @Override
     public void tileCollisionOccurred(List<CollidedTile> collidedTiles) {
         PVector vector;
-
+        inSpawn = false;
         for (CollidedTile ct : collidedTiles) {
             if (ct.getTile() instanceof WallTile) {
                 if (CollisionSide.TOP.equals(ct.getCollisionSide())) {
@@ -169,20 +155,9 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
                         e.printStackTrace();
                     }
                 }
-
-            } /*else if(ct.getTile() instanceof CoinTile){
-                    if (CollisionSide.LEFT.equals(ct.getCollisionSide())
-                      ||CollisionSide.RIGHT.equals(ct.getCollisionSide())
-                      ||CollisionSide.TOP.equals(ct.getCollisionSide())
-                      ||CollisionSide.BOTTOM.equals(ct.getCollisionSide())) {
-                        try {
-                            vector = game.getTileMap().getTilePixelLocation(ct.getTile());
-                            game.getTileMap().setTile((int) vector.x / 35, (int) vector.y / 35, -1);
-                        } catch (TileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }*/
+            } else if (spawn != null && ct.getTile() == spawn){
+                inSpawn = true;
             }
         }
     }
+}

@@ -22,3 +22,5 @@ FAILURE: java.lang.NullPointerException
 FAILURE: java.lang.NullPointerException
 [2021-04-11 04:04:29.271] 
 FAILURE: java.lang.NullPointerException
+[2021-56-24 11:56:17.352] 
+FAILURE: java.lang.IllegalArgumentException: Width (0) and height (0) cannot be <= 0

@@ -8,7 +8,9 @@ import nl.han.ica.oopg.collision.ICollidableWithTiles;
 import nl.han.ica.oopg.exceptions.TileNotFoundException;
 import nl.han.ica.oopg.objects.AnimatedSpriteObject;
 import nl.han.ica.oopg.objects.Sprite;
+import nl.han.ica.oopg.tile.Tile;
 import processing.core.PVector;
+import tiles.PlayerSpawnTile;
 import tiles.WallTile;
 
 import java.util.List;
@@ -66,7 +68,8 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
 //                    }
 //                }
 //            }
-            if (ct.getTile() instanceof WallTile) {
+            Tile tile = ct.getTile();
+            if (tile instanceof WallTile || tile instanceof PlayerSpawnTile) {
                 if (CollisionSide.TOP.equals(ct.getCollisionSide())) {
                     try {
                         vector = game.getTileMap().getTilePixelLocation(ct.getTile());
@@ -100,7 +103,7 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
                     }
                 }
             }
-            }
+        }
     }
 
     @Override
