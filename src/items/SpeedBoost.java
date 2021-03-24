@@ -5,12 +5,13 @@ import me.main.ObjectTypeId;
 import nl.han.ica.oopg.objects.Sprite;
 
 public class SpeedBoost extends Booster{
-    private final int boostedSpeed = 4;
-    private final static int effectDuration = 5;
+
     private final static Sprite boltSprite = new Sprite(Game.MEDIA_URL.concat("lightningBolt.png"));
+    private final int boostedSpeed = 4;
+    private final static int initEffectDuration = 5;
 
     public SpeedBoost(Game game) {
-        super(game, boltSprite, effectDuration, ObjectTypeId.Speed);
+        super(game, boltSprite, initEffectDuration, ObjectTypeId.Speed);
     }
 
     @Override

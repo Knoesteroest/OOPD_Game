@@ -22,12 +22,10 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     protected int damage;
     protected Game game;
     protected Maze map;
-    public Enemy(Sprite sprite, int totalFrames, Game game, PVector coordinates) {
+    public Enemy(Sprite sprite, int totalFrames, Game game) {
         super(sprite, totalFrames);
         this.game = game;
         this.map = (Maze) game.getTileMap();
-        this.setX(coordinates.x);
-        this.setY(coordinates.y);
     }
 
     @Override

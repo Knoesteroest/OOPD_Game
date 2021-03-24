@@ -13,8 +13,8 @@ public class Zombie extends Enemy {
 
     private float velX,velY; //x,y and speed are already inherited
 
-    public Zombie(Game game, PVector coordinates) {
-        super(new Sprite(Game.MEDIA_URL.concat("zombie.gif")), 4, game, coordinates);
+    public Zombie(Game game) {
+        super(new Sprite(Game.MEDIA_URL.concat("zombie.gif")), 4, game);
         setCurrentFrameIndex(1);
         this.setSpeed(0.85F);
     }

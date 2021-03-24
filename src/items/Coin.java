@@ -8,10 +8,9 @@ import processing.core.PVector;
 public class Coin extends Item {
     private final int value = 1;
 
-    public Coin(Game game, PVector coordinates) {
+    public Coin(Game game) {
         super(game, new Sprite(Game.MEDIA_URL.concat("coin.gif")));
-        this.setX(coordinates.x);
-        this.setY(coordinates.y);
+
     }
 
     public void pickUp(Player player){

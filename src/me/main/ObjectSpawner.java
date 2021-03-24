@@ -6,6 +6,7 @@ import items.Coin;
 import items.SpeedBoost;
 import nl.han.ica.oopg.alarm.Alarm;
 import nl.han.ica.oopg.alarm.IAlarmListener;
+import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.tile.Tile;
 import nl.han.ica.oopg.tile.TileMap;
 import processing.core.PVector;
@@ -37,10 +38,15 @@ public class ObjectSpawner implements IAlarmListener {
     }
 
     public void spawnTestObjects() {
-        game.addGameObject(new Zombie(game, new PVector(500,280)));
+        spawnObject(new Zombie(game), map.getTileOnIndex(8,2)); //new spawn method by index
         game.addGameObject(new SpeedBoost(game), 35,635);
         game.addGameObject(new SpeedBoost(game), 635,35);
-        game.addGameObject(new CircularSaw(game, new PVector(390,280)));
+        game.addGameObject(new CircularSaw(game), 390,280);
+    }
+
+    public void spawnObject(GameObject object, Tile tile){
+        PVector coordinates = map.getTilePixelLocation(tile);
+        game.addGameObject(object, coordinates.x, coordinates.y);
     }
     /*
     Puts the player on the PlayerSpawnTile
@@ -48,7 +54,7 @@ public class ObjectSpawner implements IAlarmListener {
     private void spawnPlayer(Difficulty difficulty){
         PVector playerSpawn = map.getPlayerSpawnLocation();
         PlayerSpawnTile playerSpawnTile = map.getPlayerSpawnTile();
-        game.addGameObject(new Player(game, difficulty, playerSpawnTile), playerSpawn.x, playerSpawn.y);
+        spawnObject(new Player(game, difficulty, playerSpawnTile), playerSpawnTile);
     }
 
     public void spawnEnemy(ObjectTypeId enemyType) {
@@ -62,8 +68,7 @@ public class ObjectSpawner implements IAlarmListener {
     public void spawnZombie(){
         Tile tile = map.getRandomEmptyTileWithoutObjects(game.getAllGameObjects());
         if (tile != null){
-            PVector coordinates = map.getTilePixelLocation(tile);
-            game.addGameObject(new Zombie(game, coordinates));
+            spawnObject(new Zombie(game), tile);
         }
     }
     /*
@@ -76,8 +81,7 @@ public class ObjectSpawner implements IAlarmListener {
     }
 
     private void addCoin(Tile tile) {
-        PVector coordinates = map.getTilePixelLocation(tile);
-        game.addGameObject(new Coin(game, coordinates));
+        spawnObject(new Coin(game),tile);
     }
 
     private void addCoinOnRandomTile(){

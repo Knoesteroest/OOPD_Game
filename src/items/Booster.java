@@ -14,16 +14,18 @@ public abstract class Booster extends Item{
      */
     public Booster(Game game, Sprite sprite, int effectDuration, ObjectTypeId typeId) {
         super(game, sprite);
-        this.effectDuration=effectDuration;
+        this.effectDuration = effectDuration;
         this.typeId=typeId;
     }
 
+/*
+    add effect to boostereffect list
+    don't start effect here because it might already be in effect.
+    Item class removes this from the game after this runs
+*/
     @Override
     public void pickUp(Player player){
         game.addBoosterEffect(new BoosterEffect(this));
-        //add effect to boostereffect list
-        //don't start effect here because it might already be in effect.
-        //Item class removes this from the game after this runs
     }
 
     public int getEffectDuration(){
