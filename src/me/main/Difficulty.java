@@ -20,20 +20,21 @@ public class Difficulty {
     public void scoreThresholdCrossed (int score, int previousScore){
         if (score / scoreDifficultyThreshhold > previousScore / scoreDifficultyThreshhold){
             difficultyLevel++;
-            addEnemyOnDifficultyIncrease();
+            addEnemy();
             System.out.println("Difficulty is now " + difficultyLevel);
         }
     }
 
     /*
     gets called when the score crosses a multiple of 10
-    spawns a saw at levels 3 and 5
+    spawns a saw at levels 3 and 5 at tile 1 or 2
+    (The first saw spawned at level 1)
      */
-    private void addEnemyOnDifficultyIncrease() {
+    private void addEnemy() {
         if (difficultyLevel % 2 == 1 && difficultyLevel < 6) {
-            objectSpawner.spawnEnemy(ObjectTypeId.Saw);
+            objectSpawner.spawnSaw(difficultyLevel == 3 ? 1 : 2);
         } else{
-            objectSpawner.spawnEnemy(ObjectTypeId.Zombie);
+            objectSpawner.spawnZombie();
         }
     }
 }

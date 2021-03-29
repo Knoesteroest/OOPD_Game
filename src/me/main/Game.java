@@ -46,10 +46,6 @@ public class Game extends GameEngine{
     public void update() {
     }
 
-    /*
-    Moved all the setmap() code to Maze.
-     */
-
     public void setView(int width, int height){
         setView(new View(width,height));
         size(width,height);

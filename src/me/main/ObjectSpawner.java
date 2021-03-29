@@ -35,6 +35,7 @@ public class ObjectSpawner implements IAlarmListener {
         spawnPlayer(difficulty);
         spawnInitialCoins();
         spawnZombie();
+        spawnSaw(0);
         spawnTestObjects();
     }
 
@@ -44,7 +45,7 @@ public class ObjectSpawner implements IAlarmListener {
         spawnObject(new SpeedBoost(game), map.getTileOnIndex(17,4));
         spawnObject(new FlashBomb(game), map.getTileOnIndex(1,1));
         spawnObject(new FlashBomb(game), map.getTileOnIndex(25,18));
-        game.addGameObject(new CircularSaw(game), 390,280);
+
     }
 
     public void spawnObject(GameObject object, Tile tile){
@@ -59,12 +60,9 @@ public class ObjectSpawner implements IAlarmListener {
         spawnObject(new Player(game, difficulty, playerSpawnTile), playerSpawnTile);
     }
 
-    public void spawnEnemy(ObjectTypeId enemyType) {
-        if(enemyType == ObjectTypeId.Zombie){
-            spawnZombie();
-        } else if (enemyType == ObjectTypeId.Saw){
-            //spawnSaw();
-        }
+    public void spawnSaw(int spawnTilenr){
+        Tile tile = map.getSawSpawnTiles().get(spawnTilenr);
+        spawnObject(new CircularSaw(game), tile);
     }
 
     public void spawnZombie(){
