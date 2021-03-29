@@ -5,13 +5,13 @@ import nl.han.ica.oopg.alarm.IAlarmListener;
 
 public class BoosterEffect implements IAlarmListener {
     public Booster booster;
-    private Alarm alarm;
+    private Alarm effectTimer;
 
     public BoosterEffect(Booster booster){
         this.booster = booster;
-        alarm = new Alarm("boosterEffectTimer", booster.getEffectDuration());
-        alarm.addTarget(this);
-        alarm.start();
+        effectTimer = new Alarm("boosterEffectTimer", booster.getEffectDuration());
+        effectTimer.addTarget(this);
+        effectTimer.start();
     }
 
     @Override

@@ -6,7 +6,6 @@ import me.main.Player;
 import nl.han.ica.oopg.objects.Sprite;
 
 public abstract class Booster extends Item{
-    
     private int effectDuration;
     public ObjectTypeId typeId;//to-do, make this private
     /*

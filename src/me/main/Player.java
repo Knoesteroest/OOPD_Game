@@ -1,10 +1,14 @@
 package me.main;
 
+import enemy.Enemy;
+import items.Item;
 import nl.han.ica.oopg.collision.CollidedTile;
 import nl.han.ica.oopg.collision.CollisionSide;
+import nl.han.ica.oopg.collision.ICollidableWithGameObjects;
 import nl.han.ica.oopg.collision.ICollidableWithTiles;
 import nl.han.ica.oopg.exceptions.TileNotFoundException;
 import nl.han.ica.oopg.objects.AnimatedSpriteObject;
+import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 import processing.core.PVector;
 import tiles.PlayerSpawnTile;
@@ -12,7 +16,7 @@ import tiles.WallTile;
 
 import java.util.List;
 
-public class Player extends AnimatedSpriteObject implements ICollidableWithTiles {
+public class Player extends AnimatedSpriteObject implements ICollidableWithTiles, ICollidableWithGameObjects {
 
     private Game game;
     private Maze map;
@@ -22,6 +26,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
     private final static int initialSpeed = 2;
     private int speed;
     private int score;
+    private final static int initialHitpoints = 400;
     private int hitpoints;
 
     private PlayerSpawnTile spawn;
@@ -36,7 +41,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
             keyDown[i] = false;
         }
         speed = initialSpeed;
-        hitpoints = 100;
+        hitpoints = initialHitpoints;
         this.spawn = spawn;
         inSpawn = true;
         }
@@ -65,7 +70,10 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
 
         x += getxSpeed();
         y += getySpeed();
-
+/*
+trick to compensate for the lack of a hasLeftTile function
+check every collission  to see if the Player has left the spawn tile
+ */
         if(spawn != null && !inSpawn){
             map.closeSpawn();
             spawn = null;
@@ -142,7 +150,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
                 if (CollisionSide.RIGHT.equals(ct.getCollisionSide())) {
                     try {
                         vector = game.getTileMap().getTilePixelLocation(ct.getTile());
-                        setX(vector.x + getWidth()+6);
+                        setX(vector.x + getWidth() + 6);
                     } catch (TileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -150,7 +158,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
                 if (CollisionSide.BOTTOM.equals(ct.getCollisionSide())) {
                     try {
                         vector = game.getTileMap().getTilePixelLocation(ct.getTile());
-                        setY((vector.y + getWidth())+6);
+                        setY((vector.y + getWidth()) + 6);
                     } catch (TileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -159,5 +167,22 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
                 inSpawn = true;
             }
         }
+    }
+
+    @Override
+    public void gameObjectCollisionOccurred(List<GameObject> list) {
+        for(GameObject collidedObject: list){
+            if(collidedObject instanceof Item){
+                ((Item) collidedObject).touchPlayer(this);
+            }
+            if(collidedObject instanceof Enemy){
+                takeDamage(((Enemy)collidedObject).getDamage());
+            }
+        }
+    }
+
+    private void takeDamage(int damage){
+        hitpoints -= damage;
+        //System.out.println(hitpoints);
     }
 }

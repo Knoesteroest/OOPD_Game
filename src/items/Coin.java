@@ -10,7 +10,6 @@ public class Coin extends Item {
 
     public Coin(Game game) {
         super(game, new Sprite(Game.MEDIA_URL.concat("coin.gif")));
-
     }
 
     public void pickUp(Player player){
@@ -21,6 +20,4 @@ public class Coin extends Item {
     public void update() {
 
     }
-
-
 }

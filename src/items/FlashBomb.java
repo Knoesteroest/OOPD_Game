@@ -28,7 +28,7 @@ public class FlashBomb extends Booster{
         allEnemies.forEach(enemy -> setSpeed(1));
     }
 
-    //mandatory by OOPG for some reason
+    //mandated by OOPG for some reason
     @Override
     public void update() {}
 }

@@ -20,7 +20,6 @@ public class Game extends GameEngine{
     public static final float centerX = ((WIDTH /35) * 17), centerY = ((HEIGHT /35) *15);
     public static final String MEDIA_URL = "src/media/";
 
-
     private Difficulty difficulty;
 
     public static void main(String[] args) {
@@ -37,7 +36,7 @@ public class Game extends GameEngine{
         tileMap = new Maze();
 
         objectSpawner = new ObjectSpawner(this, tileMap);
-        difficulty = new Difficulty(objectSpawner, StartingDifficulty.EASY.difficultyLevel);
+        difficulty = new Difficulty(objectSpawner, StartingDifficulty.EASY.getDifficultyLevel());
         activeBoosterEffects = new ArrayList<>();
         //spawns coins and the player
         objectSpawner.spawnStartingObjects(difficulty);

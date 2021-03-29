@@ -9,7 +9,7 @@ import nl.han.ica.oopg.objects.SpriteObject;
 
 import java.util.List;
 
-public abstract class Item extends SpriteObject implements ICollidableWithGameObjects {
+public abstract class Item extends SpriteObject /*implements ICollidableWithGameObjects*/ {
     protected Game game;
 
     public Item(Game game, Sprite sprite){
@@ -21,18 +21,9 @@ public abstract class Item extends SpriteObject implements ICollidableWithGameOb
         this object is destroyed after
      */
     public abstract void pickUp(Player player);
-
-    private void removeThis(){
+    public void touchPlayer(Player player){
+        pickUp(player);
         game.deleteGameObject(this);
     }
 
-    @Override
-    public void gameObjectCollisionOccurred(List<GameObject> list) {
-        for(GameObject collidedObject: list ){
-            if(collidedObject instanceof Player){
-                pickUp((Player) collidedObject);
-                removeThis();
-            }
-        }
-    }
 }

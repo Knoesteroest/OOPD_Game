@@ -11,9 +11,10 @@ import static processing.core.PApplet.*;
 
 public class CircularSaw extends Enemy{
     private final static Sprite sprite = new Sprite(Game.MEDIA_URL.concat("sawAnim.png"));
+    private final static int sawDamage = 3;
 
     public CircularSaw(Game game) {
-        super(sprite, 3, game);
+        super(sprite, 3, game, sawDamage);
         setCurrentFrameIndex(0);
         this.setSpeed(1);
         setDirection(0);

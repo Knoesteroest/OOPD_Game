@@ -12,9 +12,10 @@ import processing.core.PVector;
 public class Zombie extends Enemy {
 
     private float velX,velY; //x,y and speed are already inherited
+    private static int zombieDamage = 2;
 
     public Zombie(Game game) {
-        super(new Sprite(Game.MEDIA_URL.concat("zombie.gif")), 4, game);
+        super(new Sprite(Game.MEDIA_URL.concat("zombie.gif")), 4, game, zombieDamage);
         setCurrentFrameIndex(1);
         this.setSpeed(0.85F);
     }
