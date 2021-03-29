@@ -23,31 +23,28 @@ public class Maze extends TileMap {
     private final static TileType[] mazeTileTypes = {wallTileType, playerSpawnTileType};
     private final static int mazeTilesMap[][] = {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0,-1,-1,-1,-1, 0, 0, 0, 0, 0,-1, 0,-1, 0,-1,-1,-1,-1,-1, 0,-1, 0,-1,-1,-1, 0, 0},
-            {0,-1, 0, 0,-1,-1,-1,-1,-1, 0,-1, 0,-1,-1,-1, 0,-1, 0,-1,-1,-1, 0, 0, 0,-1, 0, 0},
+            {0,-1,-1,-1,-1, 0, 0, 0, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0,-1,-1,-1,-1,-1, 0, 0},
+            {0,-1, 0, 0,-1, 0,-1,-1,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0,-1,-1,-1, 0, 0, 0,-1, 0, 0},
             {0,-1, 0,-1,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0, 0, 0,-1,-1,-1, 0,-1, 0, 0},
-            {0,-1, 0,-1,-1,-1,-1, 0,-1, 0,-1,-1,-1, 0,-1, 0,-1,-1,-1, 0, 0,-1, 0, 0,-1, 0, 0},
+            {0,-1, 0,-1,-1,-1,-1, 0,-1, 0,-1,-1,-1, 0,-1,-1,-1,-1,-1, 0, 0, 0,-1, 0,-1, 0, 0},
             {0,-1, 0,-1, 0, 0, 0, 0,-1,-1,-1, 0, 0, 0, 0, 0,-1, 0,-1, 0,-1,-1,-1, 0,-1,-1, 0},
             {0,-1,-1,-1, 0, 0,-1,-1,-1, 0,-1,-1,-1, 0,-1,-1,-1, 0,-1,-1,-1, 0,-1, 0, 0,-1, 0},
-            {0,-1, 0,-1,-1,-1,-1, 0, 0, 0, 0,-1,-1,-1,-1,-1,-1, 0,-1, 0,-1,-1,-1,-1, 0,-1, 0},
-            {0,-1, 0, 0, 0, 0,-1, 0,-1,-1,-1,-1, 0, 1, 0,-1, 0, 0,-1, 0,-1, 0,-1, 0, 0,-1, 0},
-            {0,-1, 0, 0, 0, 0,-1,-1,-1, 0, 0,-1, 0, 0, 0,-1,-1,-1,-1, 0,-1, 0, 0,-1,-1,-1, 0},
-            {0,-1,-1,-1,-1, 0, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1, 0,-1,-1,-1, 0, 0,-1, 0},
-            {0,-1, 0, 0,-1, 0,-1,-1,-1, 0,-1,-1, 0,-1,-1, 0,-1, 0,-1,-1,-1, 0,-1, 0,-1,-1, 0},
-            {0, 0, 0, 0,-1,-1,-1, 0,-1, 0, 0,-1, 0, 0,-1, 0,-1,-1,-1, 0,-1,-1,-1,-1,-1, 0, 0},
-            {0,-1,-1, 0,-1, 0,-1,-1,-1, 0, 0,-1,-1, 0,-1, 0, 0,-1, 0, 0, 0, 0,-1, 0,-1,-1, 0},
-            {0,-1,-1,-1,-1, 0,-1, 0,-1, 0, 0, 0,-1, 0,-1,-1, 0,-1,-1, 0,-1, 0,-1, 0, 0,-1, 0},
-            {0,-1, 0, 0,-1,-1,-1, 0,-1,-1,-1,-1,-1,-1,-1, 0,-1, 0,-1, 0,-1,-1,-1,-1, 0,-1, 0},
-            {0,-1,-1,-1,-1, 0,-1,-1,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0, 0,-1,-1,-1, 0},
-            {0, 0, 0,-1, 0, 0,-1, 0,-1, 0,-1, 0,-1, 0,-1,-1,-1,-1,-1, 0,-1, 0,-1,-1, 0,-1, 0},
-            {0,-1,-1,-1,-1,-1,-1, 0,-1,-1,-1, 0,-1,-1,-1, 0,-1, 0,-1,-1,-1,-1,-1, 0, 0,-1, 0},
+            {0,-1, 0,-1,-1,-1,-1, 0, 0, 0, 0,-1,-1,-1,-1,-1,-1, 0,-1, 0,-1, 0,-1,-1,-1,-1, 0},
+            {0,-1, 0, 0, 0, 0,-1, 0,-1,-1,-1,-1, 0, 1, 0,-1, 0, 0,-1, 0,-1, 0, 0, 0, 0, 2, 0},
+            {0,-1, 0, 0, 0, 0,-1,-1,-1, 0, 0,-1, 0, 0, 0,-1,-1,-1,-1, 0,-1, 0,-1,-1,-1,-1, 0},
+            {0,-1,-1,-1,-1, 0, 0, 0, 2,-1,-1,-1,-1,-1,-1,-1,-1, 0,-1, 0,-1,-1,-1, 0, 0,-1, 0},
+            {0,-1, 0, 0,-1, 0,-1,-1,-1, 0,-1,-1, 0, 0,-1, 0, 0, 0,-1,-1,-1, 0,-1, 0,-1,-1, 0},
+            {0, 0, 0, 0,-1,-1,-1, 0,-1, 0, 0,-1,-1, 0,-1, 0,-1,-1,-1, 0,-1,-1,-1,-1,-1, 0, 0},
+            {0,-1,-1, 0,-1, 0,-1,-1,-1,-1,-1, 0,-1, 0,-1, 0,-1, 0, 0, 0, 0, 0,-1, 0,-1,-1, 0},
+            {0,-1,-1,-1,-1, 0,-1, 0, 0, 0,-1, 0,-1, 0,-1,-1,-1, 0,-1,-1,-1, 0,-1, 0, 0,-1, 0},
+            {0,-1, 0, 0,-1,-1,-1, 0,-1, 0,-1,-1,-1,-1,-1, 0,-1, 0,-1, 0,-1,-1,-1,-1, 0,-1, 0},
+            {0,-1,-1,-1,-1, 0,-1,-1,-1, 0,-1, 0, 0, 0, 0, 0, 2, 0,-1, 0,-1, 0, 0,-1,-1,-1, 0},
+            {0,-1, 0, 0, 0, 0,-1, 0,-1, 0,-1, 0,-1,-1,-1, 0,-1, 0,-1, 0,-1, 0,-1,-1, 0,-1, 0},
+            {0,-1,-1,-1,-1,-1,-1, 0,-1,-1,-1,-1,-1, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     };
     private PlayerSpawnTile playerSpawn;
-    /*
-    I made all these static so I can throw them to the TileMap constructor.
-    Not sure if this is the best way.
-     */
+
     public Maze () {
         super(mazeTileSize, mazeTileTypes, mazeTilesMap);
         playerSpawn = findPlayerSpawn();
@@ -78,8 +75,6 @@ public class Maze extends TileMap {
 
     /*
     Gets a list of all empty tiles
-    Should we run this only once?
-    Can more EmptyTiles appear?
      */
     public ArrayList<Tile> getEmptyTiles(){
         ArrayList<Tile> listOfEmptyTiles = new ArrayList<>();
@@ -100,9 +95,10 @@ public class Maze extends TileMap {
     Gets a random tile that is empty and has no GameObjects on it.
     Can still spawn coins under the player's feet for some reason.
      */
-    public Tile getRandomEmptyTileWithoutObjects(ArrayList<GameObject> allGameObjects){
-        ArrayList<Tile>  listOfEmptyTiles = getEmptyTiles();
-        //Now cycle past all GameObjects, check which Tile they're on and remove that one from our list
+
+    public Tile getSuitableSpawnTile(ArrayList<GameObject> allGameObjects){
+        ArrayList<Tile> listOfEmptyTiles = getEmptyTiles();
+        //Cycle past all GameObjects, check which Tile they're on and remove that one from our list
 
         for(GameObject object: allGameObjects){
             Tile objectTile = getTileOnPosition((int) object.getX(), (int) object.getY());
@@ -112,7 +108,7 @@ public class Maze extends TileMap {
 
         int numberOfEmptyTiles = listOfEmptyTiles.size();
         if (numberOfEmptyTiles <= 0){
-            System.out.println("Geen lege tiles om muntje op te spawnen. Maze.getRandomEmptyTileWithoutObjects()");
+            System.out.println("Geen lege tiles om muntje op te spawnen. Maze.getSuitableSpawnTile()");
             return null;
         }
         //Now pick a random Tile from the list

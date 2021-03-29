@@ -66,7 +66,7 @@ public class ObjectSpawner implements IAlarmListener {
     }
 
     public void spawnZombie(){
-        Tile tile = map.getRandomEmptyTileWithoutObjects(game.getAllGameObjects());
+        Tile tile = map.getSuitableSpawnTile(game.getAllGameObjects());
         if (tile != null){
             spawnObject(new Zombie(game), tile);
         }
@@ -85,7 +85,7 @@ public class ObjectSpawner implements IAlarmListener {
     }
 
     private void addCoinOnRandomTile(){
-        Tile tile = map.getRandomEmptyTileWithoutObjects(game.getAllGameObjects());
+        Tile tile = map.getSuitableSpawnTile(game.getAllGameObjects());
         if (tile != null){
             addCoin(tile);
         }
