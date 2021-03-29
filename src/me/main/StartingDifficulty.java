@@ -12,8 +12,6 @@ public enum StartingDifficulty {
         return difficultyLevel;
     }
 
-
-
     StartingDifficulty(int difficultyLevel) {
 
         this.difficultyLevel = difficultyLevel;

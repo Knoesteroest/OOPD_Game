@@ -6,12 +6,12 @@ import me.main.Player;
 import nl.han.ica.oopg.objects.Sprite;
 
 public abstract class Booster extends Item{
-    private int effectDuration;
+    private double effectDuration;
     public ObjectTypeId typeId;//to-do, make this private
     /*
     added effectDuration to the constructor to force children to set it
      */
-    public Booster(Game game, Sprite sprite, int effectDuration, ObjectTypeId typeId) {
+    public Booster(Game game, Sprite sprite, double effectDuration, ObjectTypeId typeId) {
         super(game, sprite);
         this.effectDuration = effectDuration;
         this.typeId=typeId;
@@ -27,7 +27,7 @@ public abstract class Booster extends Item{
         game.addBoosterEffect(new BoosterEffect(this));
     }
 
-    public int getEffectDuration(){
+    public double getEffectDuration(){
         return effectDuration;
     }
     public abstract void startEffect();

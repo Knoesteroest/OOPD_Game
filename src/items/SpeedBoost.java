@@ -8,7 +8,7 @@ public class SpeedBoost extends Booster{
 
     private final static Sprite boltSprite = new Sprite(Game.MEDIA_URL.concat("lightningBolt.png"));
     private final int boostedSpeed = 4;
-    private final static int initEffectDuration = 5;
+    private final static double initEffectDuration = 5;
 
     public SpeedBoost(Game game) {
         super(game, boltSprite, initEffectDuration, ObjectTypeId.Speed);

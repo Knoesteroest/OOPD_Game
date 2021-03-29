@@ -12,14 +12,13 @@ import static processing.core.PApplet.*;
 public class CircularSaw extends Enemy{
     private final static Sprite sprite = new Sprite(Game.MEDIA_URL.concat("sawAnim.png"));
     private final static int sawDamage = 3;
+    private final static float initialSpeed = 1.0f;
 
     public CircularSaw(Game game) {
         super(sprite, 3, game, sawDamage);
         setCurrentFrameIndex(0);
-        this.setSpeed(1);
+        this.setSpeed(initialSpeed);
         setDirection(0);
-//        test();
-//        System.exit(5);
     }
 
     public void turnLeft(){
@@ -34,7 +33,7 @@ public class CircularSaw extends Enemy{
     @Override
     public void update() {
         if (isMiddleOfTile()){
-//            System.out.println("middle");
+//            System.out.println("In the middle");
             if (getLeftTile() instanceof EmptyTile) {
                 turnLeft();
             } else if (getFrontTile() instanceof WallTile) {
@@ -42,6 +41,7 @@ public class CircularSaw extends Enemy{
             }
         }
         nextFrame();
+        System.out.println(getSpeed());
     }
 
     public void test(){
@@ -71,11 +71,7 @@ public class CircularSaw extends Enemy{
     private Tile getAdjacentTile(Tile tile, float heading, float side) {
         PVector index = map.getTileIndex(tile);
         index.x += sin(radians(heading + side));
-//        System.out.println(PApplet.sin(heading + side));
-//        System.out.println(PApplet.sin(180));
-//        System.out.println(index.x);
         index.y -= cos(radians(heading + side));
-//        System.out.println(index.y);
         return map.getTileOnIndex((int)index.x, (int) index.y);
     }
 

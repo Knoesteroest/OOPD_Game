@@ -3,6 +3,7 @@ package me.main;
 import enemy.CircularSaw;
 import enemy.Zombie;
 import items.Coin;
+import items.FlashBomb;
 import items.SpeedBoost;
 import nl.han.ica.oopg.alarm.Alarm;
 import nl.han.ica.oopg.alarm.IAlarmListener;
@@ -39,8 +40,10 @@ public class ObjectSpawner implements IAlarmListener {
 
     public void spawnTestObjects() {
         spawnObject(new Zombie(game), map.getTileOnIndex(8,2)); //new spawn method by index
-        game.addGameObject(new SpeedBoost(game), 35,635);
-        game.addGameObject(new SpeedBoost(game), 635,35);
+        spawnObject(new SpeedBoost(game), map.getTileOnIndex(11,18));
+        spawnObject(new SpeedBoost(game), map.getTileOnIndex(17,4));
+        spawnObject(new FlashBomb(game), map.getTileOnIndex(1,1));
+        spawnObject(new FlashBomb(game), map.getTileOnIndex(25,18));
         game.addGameObject(new CircularSaw(game), 390,280);
     }
 
@@ -52,7 +55,6 @@ public class ObjectSpawner implements IAlarmListener {
     Puts the player on the PlayerSpawnTile
      */
     private void spawnPlayer(Difficulty difficulty){
-        PVector playerSpawn = map.getPlayerSpawnLocation();
         PlayerSpawnTile playerSpawnTile = map.getPlayerSpawnTile();
         spawnObject(new Player(game, difficulty, playerSpawnTile), playerSpawnTile);
     }
@@ -76,25 +78,22 @@ public class ObjectSpawner implements IAlarmListener {
     */
     private void spawnInitialCoins(){
         for(int i = 1; i <= startingCoins; i++) {
-            addCoinOnRandomTile();
+            addCoin();
         }
     }
 
-    private void addCoin(Tile tile) {
-        spawnObject(new Coin(game),tile);
-    }
-
-    private void addCoinOnRandomTile(){
+    /* spawns a coin on a random tile*/
+    private void addCoin(){
         Tile tile = map.getSuitableSpawnTile(game.getAllGameObjects());
         if (tile != null){
-            addCoin(tile);
+            spawnObject(new Coin(game), tile);
         }
     }
 
     @Override
     public void triggerAlarm(String s) {
         if (game.countCoins() < maxCoins){
-            addCoinOnRandomTile();
+            addCoin();
         }
         restartCoinTimer();
     }
