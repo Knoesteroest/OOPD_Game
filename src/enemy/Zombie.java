@@ -11,7 +11,7 @@ import nl.han.ica.oopg.objects.Sprite;
  */
 public class Zombie extends Enemy {
 
-    private float velX,velY; //x,y and speed are already inherited
+    private float velX,velY; //x,y and speed are already inherited from GameObject
     private static int zombieDamage = 2;
 
     public Zombie(Game game) {
@@ -19,7 +19,6 @@ public class Zombie extends Enemy {
         setCurrentFrameIndex(1);
         this.setSpeed(0.85F);
     }
-
 
     @Override
     public void update() {

@@ -22,31 +22,36 @@ public class CircularSaw extends Enemy{
 
     public CircularSaw(Game game) {
         super(sprite, 3, game, sawDamage);
+//        setHeight(30);
+//        setWidth(30);
         setCurrentFrameIndex(0);
         this.setSpeed(initialSpeed);
         setDirection(0);
+//        testTrigonometry();
     }
 
     public void turnLeft(){
         setDirection((getDirection() - 90) % 360);
-        //System.out.println("Turning left.");
+//        System.out.println("Turning left.");
     }
     public void turnRight(){
         setDirection((getDirection() + 90) % 360);
-        //System.out.println("Turning right.");
+//        System.out.println("Turning right.");
     }
 
     /**
-     * This is run every frame.
-     * It checks if the saw is in the middle of the tile,
-     * turns left if there is an empty space there,
+     * This runs every frame.
+     * It checks if the saw is in the middle of the tile then,
+     * turns left if there is an empty space there, if not,
      * turns right if there is a wall ahead.
+     * (If it then bumps into a wall again, collission should keep it in the middle of the tile
+     * and run this again next frame).
      * It also switches the frame of the rotate animation of the saw.
      */
     @Override
     public void update() {
         if (isMiddleOfTile()){
-//            System.out.println("In the middle");
+//            System.out.println("Saw is on tile: " + (int) map.getTileIndex( getTile()).x +":"+ (int) map.getTileIndex(getTile()).y);
             if (getLeftTile() instanceof EmptyTile) {
                 turnLeft();
             } else if (getFrontTile() instanceof WallTile) {
@@ -57,22 +62,22 @@ public class CircularSaw extends Enemy{
     }
 
     public void testTrigonometry(){
-        Tile testTile = map.getTileOnIndex(5,5);
-        Tile resultTile = getAdjacentTile(testTile, 0, 0);
+        Tile testTile = map.getTileOnIndex((int)5.0,(int)5.0);
+        Tile resultTile = getAdjacentTile(testTile, 180, 0);
         PVector index = map.getTileIndex(resultTile);
-        System.out.println("the tile in front of 5,5 going up is " + index.x +":"+ index.y);
+        System.out.println("the tile in front of 5,5 going down is " + index.x +":"+ index.y);
 
         resultTile = getAdjacentTile(testTile, 0, -90);
         index = map.getTileIndex(resultTile);
-        System.out.println("the tile in left of 5,5 going up is " + index.x +":"+ index.y);
+        System.out.println("the tile  left of 5,5 going up is " + index.x +":"+ index.y);
 
         resultTile = getAdjacentTile(testTile, 270, -90);
         index = map.getTileIndex(resultTile);
-        System.out.println("the tile in left of 5,5 going left is " + index.x +":"+ index.y);
+        System.out.println("the tile  left of 5,5 going left is " + index.x +":"+ index.y);
 
         resultTile = getAdjacentTile(testTile, 180, -90);
         index = map.getTileIndex(resultTile);
-        System.out.println("the tile in left of 5,5 going down is " + index.x +":"+ index.y);
+        System.out.println("the tile  left of 5,5 going down is " + index.x +":"+ index.y);
     }
 
     /**
@@ -86,20 +91,16 @@ public class CircularSaw extends Enemy{
         PVector index = map.getTileIndex(tile);
         index.x += sin(radians(heading + side));
         index.y -= cos(radians(heading + side));
-        return map.getTileOnIndex((int)index.x, (int) index.y);
+        return map.getTileOnIndex(round(index.x), round(index.y));
     }
 
     private Tile getFrontTile() {
         Tile tile = getAdjacentTile(getTile(), getDirection(), 0);
-        PVector index = map.getTileIndex(getTile());
-//        System.out.println("frontTile: " + index.x +":"+ index.y);
         return tile;
     }
 
     private Tile getLeftTile() {
         Tile tile = getAdjacentTile(getTile(), getDirection(), -90);
-        PVector index = map.getTileIndex(getTile());
-//        System.out.println("leftTile: " + index.x +":"+ index.y);
         return tile;
     }
     /**
@@ -107,12 +108,12 @@ public class CircularSaw extends Enemy{
      */
     private Tile getTile(){
         Tile tile = map.getTileOnPosition((int) getCenterX(), (int) getCenterY());
-//        System.out.println("ourTile: " + map.getTileIndex(tile).x +":"+ map.getTileIndex(tile).y);
         return tile;
     }
 
     private boolean isMiddleOfTile(){
         PVector tileCoordinates = map.getTilePixelLocation(getTile());
-        return (PVector.dist(new PVector(getX(), getY()), tileCoordinates) < 0.5); //Is 0.5 close enough?
+        float distance = PVector.dist(new PVector(getX(), getY()), tileCoordinates);
+        return (distance < 1.0); //Is 1.0 close enough?
     }
 }

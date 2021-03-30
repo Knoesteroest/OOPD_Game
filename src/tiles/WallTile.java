@@ -11,6 +11,5 @@ import nl.han.ica.oopg.tile.Tile;
 public class WallTile extends Tile {
     public WallTile(Sprite sprite) {
         super(sprite);
-
     }
 }

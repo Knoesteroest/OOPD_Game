@@ -23,6 +23,7 @@ import processing.core.PVector;
 import tiles.PlayerSpawnTile;
 import tiles.WallTile;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Player extends AnimatedSpriteObject implements ICollidableWithTiles, ICollidableWithGameObjects {
@@ -40,21 +41,31 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
 
     private PlayerSpawnTile spawn;
     private boolean inSpawn;
+
+    /**
+     * Creator for a Player object.
+     * @param game The central Game object.
+     * @param difficulty The difficulty object used to increase difficulty
+     * @param spawn The PlayerSpawnTile, this is not used for the location of the created
+     *              Player object, only to check if the player has left the spawn.
+     */
     public Player(Game game, Difficulty difficulty, PlayerSpawnTile spawn){
         super(new Sprite(Game.MEDIA_URL.concat("player_run.gif")),2);
         this.game = game;
         this.map = (Maze) game.getTileMap();
         this.difficulty = difficulty;
         setCurrentFrameIndex(1);
-        for (int i =0; i< keyDown.length; i++) {
-            keyDown[i] = false;
-        }
+        Arrays.fill(keyDown,false);
         speed = initialSpeed;
         hitpoints = initialHitpoints;
         this.spawn = spawn;
         inSpawn = true;
         }
 
+    /**
+     * Adds points to the player score total, then checks if that
+     * @param points The number of points to add.
+     */
     public void addScore(int points){
         int previousScore = score;
         score += points;
@@ -64,13 +75,17 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
 
     public void setSpeed(int speed){
         this.speed = speed;
-        System.out.println("Snelheid is nu: " + speed);
+//        System.out.println("Snelheid is nu: " + speed);
     }
 
     public void resetSpeed(){
         setSpeed(initialSpeed);
     }
 
+    /**
+     * Moves the player and checks if he has left the spawn.
+     * If the player left his spawn the spawntile is closed by Maze.
+     */
     @Override
     public void update() {
 
@@ -79,10 +94,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
 
         x += getxSpeed();
         y += getySpeed();
-/*
-trick to compensate for the lack of a hasLeftTile function
-check every collission  to see if the Player has left the spawn tile
- */
+
         if(spawn != null && !inSpawn){
             map.closeSpawn();
             spawn = null;

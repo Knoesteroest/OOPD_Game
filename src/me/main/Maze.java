@@ -48,17 +48,17 @@ public class Maze extends TileMap {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0,-1,-1,-1,-1, 0, 0, 0, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0,-1,-1,-1,-1,-1, 0, 0},
             {0,-1, 0, 0,-1, 0,-1,-1,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0,-1,-1,-1, 0, 0, 0,-1, 0, 0},
-            {0,-1, 0,-1,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0, 0, 0,-1,-1,-1, 0,-1, 0, 0},
+            {0,-1, 0, 0,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0, 0, 0,-1,-1,-1, 0,-1, 0, 0},
             {0,-1, 0,-1,-1,-1,-1, 0,-1, 0,-1,-1,-1, 0,-1,-1,-1,-1,-1, 0, 0, 0,-1, 0,-1, 0, 0},
             {0,-1, 0,-1, 0, 0, 0, 0,-1,-1,-1, 0, 0, 0, 0, 0,-1, 0,-1, 0,-1,-1,-1, 0,-1,-1, 0},
-            {0,-1,-1,-1, 0, 0,-1,-1,-1, 0,-1,-1,-1, 0,-1,-1,-1, 0,-1,-1,-1, 0,-1, 0, 0,-1, 0},
-            {0,-1, 0,-1,-1,-1,-1, 0, 0, 0, 0,-1,-1,-1,-1,-1,-1, 0,-1, 0,-1, 0,-1,-1,-1,-1, 0},
-            {0,-1, 0, 0, 0, 0,-1, 0,-1,-1,-1,-1, 0, 1, 0,-1, 0, 0,-1, 0,-1, 0, 0, 0, 0, 2, 0},
+            {0,-1, 0,-1, 0, 0,-1,-1,-1, 0,-1,-1, 0, 0, 0,-1,-1, 0,-1,-1,-1, 0,-1, 0, 0,-1, 0},
+            {0,-1, 0,-1,-1,-1,-1, 0, 0, 0, 0,-1,-1,-1,-1,-1, 0, 0,-1, 0,-1, 0,-1,-1,-1,-1, 0},
+            {0,-1,-1,-1, 0, 0,-1, 0,-1,-1,-1,-1, 0, 1, 0,-1, 0, 0,-1, 0,-1, 0, 0, 0, 0, 2, 0},
             {0,-1, 0, 0, 0, 0,-1,-1,-1, 0, 0,-1, 0, 0, 0,-1,-1,-1,-1, 0,-1, 0,-1,-1,-1,-1, 0},
             {0,-1,-1,-1,-1, 0, 0, 0, 2,-1,-1,-1,-1,-1,-1,-1,-1, 0,-1, 0,-1,-1,-1, 0, 0,-1, 0},
             {0,-1, 0, 0,-1, 0,-1,-1,-1, 0,-1,-1, 0, 0,-1, 0, 0, 0,-1,-1,-1, 0,-1, 0,-1,-1, 0},
             {0, 0, 0, 0,-1,-1,-1, 0,-1, 0, 0,-1,-1, 0,-1, 0,-1,-1,-1, 0,-1,-1,-1,-1,-1, 0, 0},
-            {0,-1,-1, 0,-1, 0,-1,-1,-1,-1,-1, 0,-1, 0,-1, 0,-1, 0, 0, 0, 0, 0,-1, 0,-1,-1, 0},
+            {0, 0,-1, 0,-1, 0,-1,-1,-1,-1,-1, 0,-1, 0,-1, 0,-1, 0, 0, 0, 0, 0,-1, 0,-1,-1, 0},
             {0,-1,-1,-1,-1, 0,-1, 0, 0, 0,-1, 0,-1, 0,-1,-1,-1, 0,-1,-1,-1, 0,-1, 0, 0,-1, 0},
             {0,-1, 0, 0,-1,-1,-1, 0,-1, 0,-1,-1,-1,-1,-1, 0,-1, 0,-1, 0,-1,-1,-1,-1, 0,-1, 0},
             {0,-1,-1,-1,-1, 0,-1,-1,-1, 0,-1, 0, 0, 0, 0, 0, 2, 0,-1, 0,-1, 0, 0,-1,-1,-1, 0},
@@ -96,8 +96,9 @@ public class Maze extends TileMap {
         }
     }
 
-    /*
-    There can be only one playerSpawn, if there's more on the tileMap, it picks the first one.
+    /**
+    *Finds the player spawn tile in the tileMap array and returns it
+     *There can be only one playerSpawn, if there's more on the tileMap, it picks the first one.
      */
     private PlayerSpawnTile findPlayerSpawn() {
         int[][] tileIndexes = getTileMap();
@@ -138,9 +139,11 @@ public class Maze extends TileMap {
     }
 
     /**
-    Gets a random tile that is empty and has no GameObjects on it.
-    @bug Can still spawn coins under the player's feet for some reason.
+    *Gets a random tile that is empty and has no GameObjects on it.
+     * Used for spawning different objects.
+     *@param allGameObjects A list of all game objects that disqualify a tile.
      */
+    //TODO bug: This can still spawn coins under the player's feet.
     public Tile getSuitableSpawnTile(ArrayList<GameObject> allGameObjects){
         ArrayList<Tile> listOfEmptyTiles = getEmptyTiles();
         //Cycle past all GameObjects, check which Tile they're on and remove that one from our list
@@ -162,6 +165,10 @@ public class Maze extends TileMap {
         return listOfEmptyTiles.get(randomNumber);
     }
 
+    /**
+     * Replaces the PlayerSpawn tile with a Wall tile.
+     * Used to close the player spawn after the player leaves.
+     */
     public void closeSpawn(){
         PVector coordinates = getTileIndex(playerSpawn);
         setTile((int) coordinates.x, (int) coordinates.y, 0);

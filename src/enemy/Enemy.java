@@ -110,6 +110,9 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
         }
     }
 
+    /**
+     Mandated by GameEngine, but not used.
+     */
     @Override
     public void update() {
     }

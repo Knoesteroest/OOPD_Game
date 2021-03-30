@@ -20,16 +20,22 @@ public class Game extends GameEngine{
     private ArrayList<BoosterEffect> activeBoosterEffects;
 
     public static final int WIDTH = 945, HEIGHT = WIDTH / 12 * 9;
-    public static final float centerX = ((WIDTH /35) * 17), centerY = ((HEIGHT /35) *15);
+    //public static final float centerX = ((WIDTH /35) * 17), centerY = ((HEIGHT /35) *15);
     public static final String MEDIA_URL = "src/media/";
 
     private Difficulty difficulty;
+    private Player player;
 
     public static void main(String[] args) {
         Game game = new Game();
         game.runSketch();
     }
 
+    /**
+     * Creates instances of the central objects that run the game:
+     * Maze, ObjectSpawner, Difficulty
+     * Also finds and references the player object
+     */
     @Override
     public void setupGame() {
 
@@ -43,11 +49,14 @@ public class Game extends GameEngine{
         activeBoosterEffects = new ArrayList<>();
         //spawns starting coins and the player
         objectSpawner.spawnStartingObjects(difficulty);
+        player = findPlayer();
     }
 
+    /**
+    Mandated by GameEngine, but not used.
+     */
     @Override
-    public void update() {
-    }
+    public void update() {}
 
     public void setView(int width, int height){
         setView(new View(width,height));
@@ -76,51 +85,66 @@ public class Game extends GameEngine{
 
 //BoosterEffects code:
 
-    /*
-    adds booster effect to the list and starts the effect if there wasn't one in the list yet
+    /**
+    Adds a booster effect to the list of active booster effectsand starts the effect if
+     there wasn't one of that type in the list yet
+     @param boosterEffect The effect object to add to the list.
      */
     public void addBoosterEffect(BoosterEffect boosterEffect){
-        if (!isBooster(boosterEffect.booster.typeId)) {
+        if (!isBooster(boosterEffect.booster.getTypeId())) {
             boosterEffect.booster.startEffect();
         }
         activeBoosterEffects.add(boosterEffect);
     }
 
-    /*
-    checks if the booster type is already in the list
+    /**
+     *Checks if the booster type is already in the list of active booster effects.
+     *@return true if the booster is already in effect, false if not
      */
     private boolean isBooster(ObjectTypeId typeId){
         for(BoosterEffect effect: activeBoosterEffects){
-            if(effect.booster.typeId==typeId){
+            if(effect.booster.getTypeId().equals(typeId)){
                 return true;
             }
         }
         return false;
     }
 
+    /**
+     * Removes a boostereffect from the list of active booster effects,
+     * then, if that was the last of that booster's type in the list, ends the effect.
+     * @param boosterEffect The boosterEffect to remove.
+     */
     public void removeBoosterEffect(BoosterEffect boosterEffect){
         activeBoosterEffects.remove(boosterEffect);
-        if (!isBooster(boosterEffect.booster.typeId)){
+        if (!isBooster(boosterEffect.booster.getTypeId())){
             boosterEffect.booster.endEffect();
         }
     }
 
-    /*
-    Could be a variable set once instead, to-do...
+    /**
+     * Finds the player object from the list of all game objects.
+     * Used once to set the player variable.
+     * @return The player object.
      */
-    public Player getPlayer(){
+    public Player findPlayer(){
         for (GameObject o: getAllGameObjects()){
             if (o instanceof Player){
                 return (Player) o;
             }
         }
+        System.out.println("Fout: Player object niet gevonden. Game.findPlayer()");
         return null;
     }
 
-    /*
-    Nodig voor de FlashBoost
+    public Player getPlayer(){return player;};
+
+    /**
+     * Filters through the list of all game objects to find the enemies.
+     * Used to slow all enemies in the FlashBomb class
+     * @return An arraylist of all the enemies in the game.
      */
-    public  ArrayList<Enemy> getAllEnemies(){
+    public ArrayList<Enemy> getAllEnemies(){
         ArrayList<Enemy> allEnemies = new ArrayList<>();
         for (GameObject o: getAllGameObjects()){
             if (o instanceof Enemy){
@@ -130,6 +154,10 @@ public class Game extends GameEngine{
         return allEnemies;
     }
 
+    /**
+     * Counts the number of coins in the list of game objects.
+     * @return The number of coins in the game.
+     */
     public int countCoins(){
         int coinCount = 0;
         for(GameObject o: getAllGameObjects()){
