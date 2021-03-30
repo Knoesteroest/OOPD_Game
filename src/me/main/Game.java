@@ -63,17 +63,6 @@ public class Game extends GameEngine{
         size(width,height);
     }
 
-    /*
-    Maybe we should make a Util class?
-     */
-    public static float clamp(float var, float min, float max){
-        if (var >= max)
-            return var = max;
-        else if (var <= min)
-            return var = min;
-        else return var;
-    }
-
     /**
     Casts the Vector of all GameObjects into an ArrayList
      Needed because Vector does not play nice with Alarm.

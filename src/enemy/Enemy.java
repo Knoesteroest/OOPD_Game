@@ -38,46 +38,12 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     public void tileCollisionOccurred(List<CollidedTile> list) {
         PVector vector;
         for (CollidedTile ct : list) {
-//            if (ct.getTile() instanceof WallTile) {
-//                if (CollisionSide.TOP.equals(ct.getCollisionSide())) {
-//                    try {
-//                        vector = game.getTileMap().getTilePixelLocation(ct.getTile());
-//                        setY(game.clamp(vector.y - getHeight() +10, 0, Game.HEIGHT));
-//                    } catch (TileNotFoundException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                if (CollisionSide.RIGHT.equals(ct.getCollisionSide())) {
-//                    try {
-//                        vector = game.getTileMap().getTilePixelLocation(ct.getTile());
-//                        setX(game.clamp(vector.x + getWidth(), 0, Game.HEIGHT));
-//                    } catch (TileNotFoundException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                if (CollisionSide.LEFT.equals(ct.getCollisionSide())) {
-//                    try {
-//                        vector = game.getTileMap().getTilePixelLocation(ct.getTile());
-//                        setX(game.clamp(vector.x - getWidth(), 0, Game.HEIGHT));
-//                    } catch (TileNotFoundException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                if (CollisionSide.BOTTOM.equals(ct.getCollisionSide())) {
-//                    try {
-//                        vector = game.getTileMap().getTilePixelLocation(ct.getTile());
-//                        setX(game.clamp(vector.y - getHeight() + 10, 0, Game.HEIGHT));
-//                    } catch (TileNotFoundException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
             Tile tile = ct.getTile();
             if (tile instanceof WallTile || tile instanceof PlayerSpawnTile) {
                 if (CollisionSide.TOP.equals(ct.getCollisionSide())) {
                     try {
                         vector = game.getTileMap().getTilePixelLocation(ct.getTile());
-                        setY(game.clamp(vector.y - getHeight(), 0, Game.HEIGHT));
+                        setY(vector.y - getHeight());
                     } catch (TileNotFoundException e) {
                         e.printStackTrace();
                     }

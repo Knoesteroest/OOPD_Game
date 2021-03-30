@@ -17,19 +17,20 @@ public class Zombie extends Enemy {
     public Zombie(Game game) {
         super(new Sprite(Game.MEDIA_URL.concat("zombie.gif")), 4, game, zombieDamage);
         setCurrentFrameIndex(1);
-        this.setSpeed(0.85F);
+        //his.setSpeed(0.85F);
     }
 
+    private int test = 1;
     @Override
     public void update() {
-        x = getX();
-        x += velX;
-
-        y = getY();
-        y += velY;
-
-        setX(x);
-        setY(y);
+//        x = getX();
+//        //x += velX;
+//
+//        y = getY();
+//        //y += velY;
+//
+//        setX(x);
+//        setY(y);
 
         for (GameObject g: game.getGameObjectItems()){
             if (g instanceof Player){
@@ -41,6 +42,31 @@ public class Zombie extends Enemy {
 
                 velX =  ((-1/distance) * diffX );
                 velY =  ((-1/distance) * diffY );
+                if(test ==1){
+                    System.out.println("DIFFERENCE X: " + diffX);
+                    System.out.println("DIFFERENCE Y : " +diffY);
+                    test =0;
+                }
+        /**
+         * check if X or Y position is closer to player.
+         * if X / Y pos != collision with wall
+         * set direction to W,A,S,D on closes param
+         * sets looking direction to W,A,S,D
+         * moves zombie closer to player.
+         *
+         * OPTION 2
+         * GET PLAYER X AND Y
+         * GET ZOMBIE X AND Y
+         * FIRST SETS X SAME AS PLAYER, THEN SETS Y == PLAYER Y;
+         * ||
+         * PLAYER.X - ZOMBIE.X les than PLAYER.Y - ZOMBIE.Y
+         * ACT ON WHAT VALUE IS LOWEST.
+         */
+
+
+
+
+
             }
         }
     }

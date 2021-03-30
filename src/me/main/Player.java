@@ -33,7 +33,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
     private Difficulty difficulty;
 
     private boolean[] keyDown = new boolean[4];
-    private final static int initialSpeed = 2;
+    private final static int initialSpeed = 1;
     private int speed;
     private int score;
     private final static int initialHitpoints = 400;
@@ -155,7 +155,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
                 if (CollisionSide.TOP.equals(ct.getCollisionSide())) {
                     try {
                         vector = game.getTileMap().getTilePixelLocation(ct.getTile());
-                        setY(game.clamp(vector.y - getHeight(),0,Game.HEIGHT));
+                        setY(vector.y - getHeight());
                     } catch (TileNotFoundException e) {
                         e.printStackTrace();
                     }
