@@ -16,7 +16,8 @@ import tiles.WallTile;
 import java.util.List;
 
 /**
- * Class that contains all basic structure of the enemy
+ * Class that contains all basic structure of the two enemies: CircularSaw and Zombie
+ * Makes sure sub-classes set damage and stay out of the walls
  */
 public abstract class Enemy extends AnimatedSpriteObject implements ICollidableWithTiles {
     protected int damage;

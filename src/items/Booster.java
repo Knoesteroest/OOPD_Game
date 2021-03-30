@@ -1,5 +1,13 @@
 package items;
 
+/**
+ * This is the super-class of all boosters. When a booster is picked up by the player it is passed
+ * to a BoosterEffect and then removed from game. This does not destroy the Booster object,
+ * because the BoosterEffect still has a reference. The BoosterEffect is then added to the list
+ * kept by Game.
+ * The methods startEffect() and endEffect() are called from Game.
+ */
+
 import me.main.Game;
 import me.main.ObjectTypeId;
 import me.main.Player;
@@ -18,8 +26,7 @@ public abstract class Booster extends Item{
     }
 
 /*
-    add effect to boostereffect list
-    don't start effect here because it might already be in effect.
+    This adds an effect to boostereffect list
     Item class removes this from the game after this runs
 */
     @Override

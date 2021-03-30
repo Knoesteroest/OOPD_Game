@@ -1,5 +1,14 @@
 package me.main;
 
+/**
+ * This is the class for the player. It keeps track of held keys and moves the player.
+ * It is collidible with tiles to stop it from entering walls.
+ * It is the only object that handles object collission, which it uses to pick up
+ * boosters and get damaged by enemies.
+ * It keeps track of player hitpoints and score.
+ * It is created at game start by ObjectSpawner
+ */
+
 import enemy.Enemy;
 import items.Item;
 import nl.han.ica.oopg.collision.CollidedTile;
@@ -183,6 +192,6 @@ check every collission  to see if the Player has left the spawn tile
 
     private void takeDamage(int damage){
         hitpoints -= damage;
-        //System.out.println(hitpoints);
+        System.out.println("HP:"+hitpoints);
     }
 }

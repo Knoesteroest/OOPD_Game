@@ -1,13 +1,16 @@
 package me.main;
 
+/**
+ * Central class and program entry point
+ * Creates instances of Maze, Difficulty and ObjectSpawner to pass to other objects
+ * Also handles a list of BoosterEffects
+ */
 
 import enemy.Enemy;
-import enemy.Zombie;
 import items.BoosterEffect;
 import items.Coin;
 import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.objects.GameObject;
-import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.view.View;
 import java.util.ArrayList;
 
@@ -38,7 +41,7 @@ public class Game extends GameEngine{
         objectSpawner = new ObjectSpawner(this, tileMap);
         difficulty = new Difficulty(objectSpawner, StartingDifficulty.EASY.getDifficultyLevel());
         activeBoosterEffects = new ArrayList<>();
-        //spawns coins and the player
+        //spawns starting coins and the player
         objectSpawner.spawnStartingObjects(difficulty);
     }
 
@@ -62,8 +65,10 @@ public class Game extends GameEngine{
         else return var;
     }
 
-    /*
+    /**
     Casts the Vector of all GameObjects into an ArrayList
+     Needed because Vector does not play nice with Alarm.
+     * @return an arraylist of all GameObject in the game
      */
     public ArrayList<GameObject> getAllGameObjects(){
         return new ArrayList<>(getGameObjectItems());

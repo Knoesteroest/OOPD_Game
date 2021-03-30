@@ -1,4 +1,7 @@
 package items;
+/**
+ * This booster increases the player's speed to 4 for 5 seconds, then resets it.
+ */
 
 import me.main.Game;
 import me.main.ObjectTypeId;

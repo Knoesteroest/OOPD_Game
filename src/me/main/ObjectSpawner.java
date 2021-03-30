@@ -1,5 +1,12 @@
 package me.main;
 
+/**
+ * This class creates all game objects and spawns them in the map.
+ * It is called at game start to spawn the initial objects and by
+ * Difficulty when new enemies get added when difficulty increases.
+ * It runs a timer to spawn more Coin objects at regular intervals.
+ */
+
 import enemy.CircularSaw;
 import enemy.Zombie;
 import items.Coin;
@@ -45,7 +52,8 @@ public class ObjectSpawner implements IAlarmListener {
         spawnObject(new SpeedBoost(game), map.getTileOnIndex(17,4));
         spawnObject(new FlashBomb(game), map.getTileOnIndex(1,1));
         spawnObject(new FlashBomb(game), map.getTileOnIndex(25,18));
-
+        spawnSaw(1);
+        spawnSaw(2);
     }
 
     public void spawnObject(GameObject object, Tile tile){

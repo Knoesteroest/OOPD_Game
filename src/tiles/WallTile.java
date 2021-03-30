@@ -1,10 +1,12 @@
 package tiles;
 
-import me.main.Game;
+/**
+ * This is the wall tile that is impenetrable to players and enemies.
+ * They are represented by 0's in the tile array in Maze.
+ */
+
 import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.tile.Tile;
-import nl.han.ica.oopg.tile.TileMap;
-import nl.han.ica.oopg.tile.TileType;
 
 public class WallTile extends Tile {
     public WallTile(Sprite sprite) {

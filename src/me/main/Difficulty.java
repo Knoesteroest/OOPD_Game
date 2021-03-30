@@ -1,5 +1,11 @@
 package me.main;
 
+/**
+ * This class keeps tracks of difficulty by spawning new enemies as the player's score increases
+ * past the threshhold. Player calls this when the score increases and this calls ObjectSpawner
+ * to spawn the new enemies.
+ */
+
 public class Difficulty {
 
     private int difficultyLevel;

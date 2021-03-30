@@ -1,5 +1,15 @@
 package me.main;
 
+/**
+ * This is our TileMap; It generates our only level and gives map-related information
+ * to other objects.
+ *
+ * Created in Game and passed to all objects that need it.
+ *
+ * @author Pieter Oosterbroek & Martijn Engels
+ *
+ */
+
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.tile.EmptyTile;
@@ -13,9 +23,13 @@ import tiles.SawSpawnTile;
 import tiles.WallTile;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class Maze extends TileMap {
+    /**
+     * The size of our tiles in pexels
+     */
     private final static int mazeTileSize = 35;
     private final static Sprite wallSprite = new Sprite(Game.MEDIA_URL.concat("wallTile.png"));
     private final static TileType<WallTile> wallTileType = new TileType<>(WallTile.class, wallSprite);
@@ -23,6 +37,13 @@ public class Maze extends TileMap {
     private final static TileType<PlayerSpawnTile> playerSpawnTileType = new TileType<>(PlayerSpawnTile.class, emptySprite);
     private final static TileType<SawSpawnTile> sawSpawnTileType = new TileType<>(SawSpawnTile.class, emptySprite);
     private final static TileType[] mazeTileTypes = {wallTileType, playerSpawnTileType, sawSpawnTileType};
+    /**
+     * The array that is used to generate our level.
+     * -1 is a path
+     * 0 is a wall
+     * 1 is the player spawn
+     * 2 is a saw spawn
+     */
     private final static int mazeTilesMap[][] = {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0,-1,-1,-1,-1, 0, 0, 0, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0,-1,-1,-1,-1,-1, 0, 0},
@@ -70,6 +91,7 @@ public class Maze extends TileMap {
             System.out.println("Kan geen SawSpawnTiles vinden. Maze.findSawSpawns()");
             return null;
         } else{
+            Collections.reverse(sawSpawnList); //reversed because I like the right-most spawn better
             return sawSpawnList;
         }
     }
@@ -97,8 +119,8 @@ public class Maze extends TileMap {
         return sawSpawnTiles;
     }
 
-    /*
-    Gets a list of all empty tiles
+    /**
+    Gets a list of all empty tiles on the tileMap
      */
     public ArrayList<Tile> getEmptyTiles(){
         ArrayList<Tile> listOfEmptyTiles = new ArrayList<>();
@@ -115,11 +137,10 @@ public class Maze extends TileMap {
         return listOfEmptyTiles;
     }
 
-    /*
+    /**
     Gets a random tile that is empty and has no GameObjects on it.
-    Can still spawn coins under the player's feet for some reason.
+    @bug Can still spawn coins under the player's feet for some reason.
      */
-
     public Tile getSuitableSpawnTile(ArrayList<GameObject> allGameObjects){
         ArrayList<Tile> listOfEmptyTiles = getEmptyTiles();
         //Cycle past all GameObjects, check which Tile they're on and remove that one from our list
@@ -135,7 +156,7 @@ public class Maze extends TileMap {
             System.out.println("Geen lege tiles om voorwerp op te spawnen. Maze.getSuitableSpawnTile()");
             return null;
         }
-        //Now pick a random Tile from the list
+        //Pick a random Tile from the list
         Random random = new Random();
         int randomNumber = random.nextInt(listOfEmptyTiles.size());
         return listOfEmptyTiles.get(randomNumber);

@@ -1,9 +1,13 @@
 package items;
 
+/**
+ * This booster slows all enemies to .5 speed for 5 seconds.
+ * It gets a list of all enemies from Game.
+ */
+
 import enemy.Enemy;
 import me.main.Game;
 import me.main.ObjectTypeId;
-import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 
 import java.util.ArrayList;
@@ -14,7 +18,7 @@ public class FlashBomb extends Booster{
     private final static double initEffectDuration = 5;
 
     public FlashBomb(Game game) {
-        super(game, flashSprite, initEffectDuration, ObjectTypeId.Speed);
+        super(game, flashSprite, initEffectDuration, ObjectTypeId.Flash);
     }
 
     @Override

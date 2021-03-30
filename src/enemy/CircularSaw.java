@@ -1,5 +1,11 @@
 package enemy;
 
+/**
+ * A circular saw is an enemy that always turns left.
+ * Whenever it is in the middle of the tile, it checks adjacent tiles to see if it should turn.
+ * Object collission is handled in the Player object.
+ */
+
 import me.main.Game;
 import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.tile.EmptyTile;
@@ -23,13 +29,20 @@ public class CircularSaw extends Enemy{
 
     public void turnLeft(){
         setDirection((getDirection() - 90) % 360);
-//        System.out.println("Turning left.");
+        //System.out.println("Turning left.");
     }
     public void turnRight(){
         setDirection((getDirection() + 90) % 360);
-//        System.out.println("Turning right.");
+        //System.out.println("Turning right.");
     }
 
+    /**
+     * This is run every frame.
+     * It checks if the saw is in the middle of the tile,
+     * turns left if there is an empty space there,
+     * turns right if there is a wall ahead.
+     * It also switches the frame of the rotate animation of the saw.
+     */
     @Override
     public void update() {
         if (isMiddleOfTile()){
@@ -41,10 +54,9 @@ public class CircularSaw extends Enemy{
             }
         }
         nextFrame();
-        System.out.println(getSpeed());
     }
 
-    public void test(){
+    public void testTrigonometry(){
         Tile testTile = map.getTileOnIndex(5,5);
         Tile resultTile = getAdjacentTile(testTile, 0, 0);
         PVector index = map.getTileIndex(resultTile);
@@ -63,10 +75,12 @@ public class CircularSaw extends Enemy{
         System.out.println("the tile in left of 5,5 going down is " + index.x +":"+ index.y);
     }
 
-    /*
-    tile: the tile you're on
-    heading: the direction you're going in
-    side: the direction relative to your heading you want the tile from
+    /**
+     * This gets a tile adjacent to the given tile, to a specified side, relative to our movement direction.
+     * @param tile The tile this saw is on.
+     * @param heading The direction (in degrees) the saw is moving in.
+     * @param side The direction (in degrees) of the tile to return, relative to your heading. (-90 for left, 90 for right)
+     * @return The adjacent tile specified.
      */
     private Tile getAdjacentTile(Tile tile, float heading, float side) {
         PVector index = map.getTileIndex(tile);
@@ -88,8 +102,8 @@ public class CircularSaw extends Enemy{
 //        System.out.println("leftTile: " + index.x +":"+ index.y);
         return tile;
     }
-    /*
-    get the tile this is on
+    /**
+    Gets the tile this saw is on.
      */
     private Tile getTile(){
         Tile tile = map.getTileOnPosition((int) getCenterX(), (int) getCenterY());
@@ -99,6 +113,6 @@ public class CircularSaw extends Enemy{
 
     private boolean isMiddleOfTile(){
         PVector tileCoordinates = map.getTilePixelLocation(getTile());
-        return (PVector.dist(new PVector(getX(), getY()), tileCoordinates) < 1.0); //close enough?
+        return (PVector.dist(new PVector(getX(), getY()), tileCoordinates) < 0.5); //Is 0.5 close enough?
     }
 }

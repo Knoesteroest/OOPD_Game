@@ -4,10 +4,10 @@ import me.main.Game;
 import me.main.Player;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
-import processing.core.PVector;
 
 /**
- * Class for the zombie Enemy
+ * Class for the zombie
+ * This enemy tries to follow the player and cannot go through walls.
  */
 public class Zombie extends Enemy {
 
@@ -36,14 +36,13 @@ public class Zombie extends Enemy {
             if (g instanceof Player){
                 GameObject player = g;
 
-        float diffX = x - player.getX();
-        float diffY = y - player.getY() - ((player.getHeight() /2) - (player.getHeight() /4));
-        float distance = (float)Math.sqrt((x-player.getX())*(x - player.getX()) + (y - player.getY())*(y - player.getY()));
+                float diffX = x - player.getX();
+                float diffY = y - player.getY() - ((player.getHeight() / 2) - (player.getHeight() / 4));
+                float distance = (float) Math.sqrt((x-player.getX())*(x - player.getX()) + (y - player.getY()) * (y - player.getY()));
 
-        velX =  ((-1/distance) * diffX );
-        velY =  ((-1/distance) * diffY );
+                velX =  ((-1/distance) * diffX );
+                velY =  ((-1/distance) * diffY );
             }
         }
-
     }
 }
