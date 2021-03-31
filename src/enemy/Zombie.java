@@ -1,9 +1,13 @@
 package enemy;
 
 import me.main.Game;
-import me.main.Player;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
+import nl.han.ica.oopg.tile.Tile;
+import tiles.PlayerSpawnTile;
+import tiles.WallTile;
+
+import java.util.ArrayList;
 
 /**
  * Class for the zombie
@@ -11,71 +15,92 @@ import nl.han.ica.oopg.objects.Sprite;
  */
 public class Zombie extends Enemy {
 
-    private float velX,velY; //x,y and speed are already inherited from GameObject
     private static int zombieDamage = 2;
+    private static float initialSpeed = 0.85f;
 
     public Zombie(Game game) {
-        super(new Sprite(Game.MEDIA_URL.concat("zombie.gif")), 4, game, zombieDamage);
+        super(new Sprite(Game.MEDIA_URL.concat("zombie.gif")), 4, game, zombieDamage, initialSpeed);
         setCurrentFrameIndex(1);
-        //this.setSpeed(0.85F);
+        setDirection(180);
     }
 
-    private int test = 1;
     @Override
-    public void update() {
-//        x = getX();
-//        y = getY();
+    protected void choosePath() {
+        GameObject player = game.getPlayer();
 
-//        x += getxSpeed();
-//        y += getySpeed();
-//        setX(x);
-//        setY(y);
+        float diffX = this.getCenterX() - player.getCenterX();
+        float diffY = this.getCenterY() - player.getCenterY();
 
-        for (GameObject g: game.getGameObjectItems()){
-            if (g instanceof Player){
-                GameObject player = g;
+        ArrayList<Integer> directionPreferences = getDirectionPreferences(diffX, diffY);
 
-                float diffX = this.getCenterX() - player.getCenterX();
-                float diffY = this.getCenterY() - player.getCenterY() /*- ((player.getHeight() / 2) - (player.getHeight() / 4))*/;
-                float distance = (float) Math.sqrt((this.getCenterX()-player.getCenterX())*(this.getCenterX() - player.getCenterX()) + (this.getCenterY() - player.getCenterY()) * (this.getCenterY() - player.getCenterY()));
-
-                // set speed x/y with speed
-                // code hieronder bugt de zombie als distance <35 is
-                // add dat afstand in NofTegels komt. /35
-                velX =((float) ((-1/distance) * Math.floor(diffX)));
-//                if (diffY > 0) diffY += 8;
-//                else diffY -= 16;
-                velY =((float) ((-1/distance) * Math.floor(diffY)));
-                diffX /= 35;
-                diffY /= 35;
-
-                if(test ==1){
-                    System.out.println("DIFFERENCE X: " + Math.floor(diffX));
-
-                    System.out.println("DIFFERENCE Y : " + Math.floor(diffY));
-                    test =0;
-                }
-        /**
-         * check if X or Y position is closer to player.
-         * if X / Y pos != collision with wall
-         * set direction to W,A,S,D on closes param
-         * sets looking direction to W,A,S,D
-         * moves zombie closer to player.
-         *
-         * OPTION 2
-         * GET PLAYER X AND Y
-         * GET ZOMBIE X AND Y
-         * FIRST SETS X SAME AS PLAYER, THEN SETS Y == PLAYER Y;
-         * ||
-         * PLAYER.X - ZOMBIE.X les than PLAYER.Y - ZOMBIE.Y
-         * ACT ON WHAT VALUE IS LOWEST.
-         */
-
-
-
-
-
+        for (int direction: directionPreferences) {
+            if (isDirectionPassable(direction)) {
+                setDirection(direction);
+                move(); //Super raar dat dit hiermee werkt. De GameEngine zou dit moeten doen.
+                break;
             }
         }
+    }
+
+    /**
+     * This sorts the 4 orthogonal directions to move in by
+     * the shortest route to the player.
+     * @param diffX Distance between the player and the zombie over the x axis
+     * @param diffY Distance between the player and the zombie over the y axis
+     * @return An ArrayList of 4 integers
+     */
+    private ArrayList<Integer> getDirectionPreferences(float diffX, float diffY){
+        ArrayList<Integer> directionPreferences = new ArrayList<>();
+        int direction1;
+        int direction2;
+        if(Math.abs(diffX) > Math.abs(diffY)){ // If horizontal distance larger than vertical
+            direction1 = pickHorizontal(diffX);// then pick the horizontal direction towards player first
+            direction2 = pickVertical(diffY);
+        }else{
+            direction1 = pickVertical(diffY); //else pick vertical first
+            direction2 = pickHorizontal(diffX);
+        }
+        directionPreferences.add(direction1);
+        directionPreferences.add(direction2);
+        directionPreferences.add(pickReversedDirection(direction2)); //if the zombie has to move in another direction do it by the less favoured axis
+        directionPreferences.add(pickReversedDirection(direction1));
+        return directionPreferences;
+    }
+
+    /**
+     * Tests if the zombie can move in the specified direction by checking if the tile is clear
+     * and if it collided with a tile in the direction last frame.
+     * @param direction Direction in degrees
+     * @return true if we can move in the direction, false if not
+     */
+    private boolean isDirectionPassable(int direction){
+        //System.out.println(lastCollidedSide + " isDirectionPassable()");
+        Tile zombieTile = getTile();
+        Tile otherTile = getAdjacentTile(zombieTile, direction,0);
+        if (otherTile instanceof WallTile || otherTile instanceof PlayerSpawnTile){
+            //System.out.println("Detected wall ahead.");
+            return false;
+        }
+        return true;
+    }
+
+    private int pickHorizontal(float diffX){
+        if(diffX > 0) {
+            return 270;
+        }else{
+            return 90;
+        }
+    }
+
+    private int pickVertical(float diffY){
+        if(diffY > 0) {
+            return 0;
+        }else{
+            return 180;
+        }
+    }
+
+    private int pickReversedDirection(int dir){
+        return (dir + 180) % 360;
     }
 }

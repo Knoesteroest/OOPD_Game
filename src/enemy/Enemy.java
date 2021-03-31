@@ -15,6 +15,9 @@ import tiles.WallTile;
 
 import java.util.List;
 
+import static processing.core.PApplet.*;
+import static processing.core.PApplet.round;
+
 /**
  * Class that contains all basic structure of the two enemies: CircularSaw and Zombie
  * Makes sure sub-classes set damage and stay out of the walls
@@ -23,11 +26,17 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     protected int damage;
     protected Game game;
     protected Maze map;
-    public Enemy(Sprite sprite, int totalFrames, Game game, int damage) {
+    protected float initialSpeed;
+    public Enemy(Sprite sprite, int totalFrames, Game game, int damage, float initialSpeed) {
         super(sprite, totalFrames);
         this.game = game;
         this.map = (Maze) game.getTileMap();
         this.damage = damage;
+        setSpeed(initialSpeed);
+    }
+
+    public void resetSpeed(){
+        setSpeed(initialSpeed);
     }
 
     public int getDamage() {
@@ -37,18 +46,20 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     @Override
     public void tileCollisionOccurred(List<CollidedTile> list) {
         PVector tileCoordinates;
+
         for (CollidedTile collidedTile : list) {
             Tile tile = collidedTile.getTile();
             if (tile instanceof WallTile || tile instanceof PlayerSpawnTile) {
-                if (CollisionSide.TOP.equals(collidedTile.getCollisionSide())) {
+                CollisionSide collisionSide = collidedTile.getCollisionSide();
+                if (CollisionSide.TOP.equals(collisionSide)) {
                     try {
                         tileCoordinates = game.getTileMap().getTilePixelLocation(collidedTile.getTile());
-                        setY(game.clamp(tileCoordinates.y - getHeight(), 0, Game.HEIGHT));
+                        setY(tileCoordinates.y - getHeight());
                     } catch (TileNotFoundException e) {
                         e.printStackTrace();
                     }
                 }
-                if (CollisionSide.LEFT.equals(collidedTile.getCollisionSide())) {
+                if (CollisionSide.LEFT.equals(collisionSide)) {
                     try {
                         tileCoordinates = game.getTileMap().getTilePixelLocation(collidedTile.getTile());
                         setX(tileCoordinates.x - getWidth());
@@ -56,7 +67,7 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
                         e.printStackTrace();
                     }
                 }
-                if (CollisionSide.RIGHT.equals(collidedTile.getCollisionSide())) {
+                if (CollisionSide.RIGHT.equals(collisionSide)) {
                     try {
                         tileCoordinates = game.getTileMap().getTilePixelLocation(collidedTile.getTile());
                         setX(tileCoordinates.x + getWidth() + 6);
@@ -64,7 +75,7 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
                         e.printStackTrace();
                     }
                 }
-                if (CollisionSide.BOTTOM.equals(collidedTile.getCollisionSide())) {
+                if (CollisionSide.BOTTOM.equals(collisionSide)) {
                     try {
                         tileCoordinates = game.getTileMap().getTilePixelLocation(collidedTile.getTile());
                         setY((tileCoordinates.y + getWidth()) + 6);
@@ -76,10 +87,57 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
         }
     }
 
-    /**
-     Mandated by GameEngine, but not used.
+    /*
+     Checks if the enemy is in the middle of the tile and if so, activates pathfinding.
      */
     @Override
     public void update() {
+        if (isMiddleOfTile()){
+            choosePath();
+        }
+    }
+
+    protected abstract void choosePath();
+    /**
+     Gets the tile this enemy is on.
+     */
+    protected Tile getTile(){
+        Tile tile = map.getTileOnPosition((int) getCenterX(), (int) getCenterY());
+        return tile;
+    }
+
+    protected Tile getFrontTile() {
+        Tile tile = getAdjacentTile(getTile(), getDirection(), 0);
+        return tile;
+    }
+    /**
+     * This gets a tile adjacent to the given tile, to a specified side, relative to our movement direction.
+     * @param tile The tile this saw is on.
+     * @param heading The direction (in degrees) the saw is moving in.
+     * @param side The direction (in degrees) of the tile to return, relative to your heading. (-90 for left, 90 for right)
+     * @return The adjacent tile specified.
+     */
+    protected Tile getAdjacentTile(Tile tile, float heading, float side) {
+        PVector index = map.getTileIndex(tile);
+        index.x += sin(radians(heading + side));
+        index.y -= cos(radians(heading + side));
+        return map.getTileOnIndex(round(index.x), round(index.y));
+    }
+    /**
+    Checks if this enemy is in the middle of the tile, ready to make decisions about its path
+     */
+    protected boolean isMiddleOfTile(){
+
+        PVector tileCoordinates = map.getTilePixelLocation(getTile());
+        tileCoordinates.x += map.getTileSize() / 2.0f;
+        tileCoordinates.y += map.getTileSize() / 2.0f;
+        float distance = PVector.dist(new PVector(getCenterX(), getCenterY()), tileCoordinates);
+        if (distance < getSpeed()){
+            setX(tileCoordinates.x - getWidth() / 2.0f);
+            setY(tileCoordinates.y - getHeight() / 2.0f);
+            return true;
+        }else {
+            return false;
+        }
     }
 }

@@ -44,7 +44,6 @@ public class ObjectSpawner implements IAlarmListener {
         spawnInitialCoins();
         spawnInitialBoosters();
         spawnSaw(0);
-        spawnZombie();
         //spawnTestObjects();
     }
 
@@ -58,8 +57,13 @@ public class ObjectSpawner implements IAlarmListener {
     }
 
     public void spawnTestObjects() {
-        spawnSaw(1);
-        spawnSaw(2);
+        spawnZombie();
+        spawnZombie();
+        spawnZombie();
+        spawnZombie();
+        spawnZombie();
+        spawnZombie();
+
     }
 
     /**
@@ -78,7 +82,13 @@ public class ObjectSpawner implements IAlarmListener {
      */
     public void spawnObject(GameObject object, Tile tile){
         PVector coordinates = map.getTilePixelLocation(tile);
+        coordinates.x += map.getTileSize() / 2;
+        coordinates.y += map.getTileSize() / 2;
+
         game.addGameObject(object, coordinates.x, coordinates.y);
+        object.setX(coordinates.x - object.getWidth() / 2);
+        object.setY(coordinates.y - object.getHeight() / 2);
+
     }
     /**
     Spawns the player on the PlayerSpawnTile

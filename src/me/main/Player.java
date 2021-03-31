@@ -56,10 +56,10 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
         this.difficulty = difficulty;
         setCurrentFrameIndex(1);
         Arrays.fill(keyDown,false);
-        speed = (int) initialSpeed;
-        hitpoints = initialHitpoints;
+        this.speed = initialSpeed;
+        this.hitpoints = initialHitpoints;
         this.spawn = spawn;
-        inSpawn = true;
+        this.inSpawn = true;
         }
 
     /**
