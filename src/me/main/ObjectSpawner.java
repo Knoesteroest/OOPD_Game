@@ -44,6 +44,7 @@ public class ObjectSpawner implements IAlarmListener {
         spawnInitialCoins();
         spawnInitialBoosters();
         spawnSaw(0);
+        spawnZombie();
         //spawnTestObjects();
     }
 

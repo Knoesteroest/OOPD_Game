@@ -36,7 +36,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
     private final static int initialSpeed = 2;
     private int speed;
     private int score;
-    private final static int initialHitpoints = 400;
+    private final static int initialHitpoints = 200;
     private int hitpoints;
 
     private PlayerSpawnTile spawn;
@@ -56,7 +56,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
         this.difficulty = difficulty;
         setCurrentFrameIndex(1);
         Arrays.fill(keyDown,false);
-        speed = initialSpeed;
+        speed = (int) initialSpeed;
         hitpoints = initialHitpoints;
         this.spawn = spawn;
         inSpawn = true;
@@ -88,13 +88,6 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
      */
     @Override
     public void update() {
-
-//        x = getX();
-//        y = getY();
-//
-//        x += getxSpeed();
-//        y += getySpeed();
-
         if(spawn != null && !inSpawn){
             map.closeSpawn();
             spawn = null;
@@ -155,7 +148,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
                 if (CollisionSide.TOP.equals(ct.getCollisionSide())) {
                     try {
                         vector = game.getTileMap().getTilePixelLocation(ct.getTile());
-                        setY(game.clamp(vector.y - getHeight(),0,Game.HEIGHT));
+                        setY(vector.y - getHeight());
                     } catch (TileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -203,7 +196,15 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
     }
 
     private void takeDamage(int damage){
-        hitpoints -= damage;
-        System.out.println("HP:"+hitpoints);
+        if (hitpoints > 0){
+            hitpoints -= damage;
+            //TODO HUD hier op aansluiten
+            System.out.println("HP:"+hitpoints);
+        } else{
+            //TODO ENDSCREEN MET SCORE
+        }
+
+
+
     }
 }
