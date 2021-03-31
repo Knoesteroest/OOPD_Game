@@ -33,7 +33,7 @@ public class FlashBomb extends Booster{
     public void endEffect() {
         ArrayList<Enemy> allEnemies = game.getAllEnemies();
         for (Enemy enemy: allEnemies){
-            enemy.setSpeed(1.0f);
+            enemy.resetSpeed();
         }
     }
 
