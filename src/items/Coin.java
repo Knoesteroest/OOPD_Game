@@ -19,8 +19,7 @@ public class Coin extends Item {
         player.addScore(value);
     }
 
+    //mandated by OOPG
     @Override
-    public void update() {
-
-    }
+    public void update() {}
 }

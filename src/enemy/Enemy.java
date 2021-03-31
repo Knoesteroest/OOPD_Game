@@ -36,72 +36,38 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
 
     @Override
     public void tileCollisionOccurred(List<CollidedTile> list) {
-        PVector vector;
-        for (CollidedTile ct : list) {
-//            if (ct.getTile() instanceof WallTile) {
-//                if (CollisionSide.TOP.equals(ct.getCollisionSide())) {
-//                    try {
-//                        vector = game.getTileMap().getTilePixelLocation(ct.getTile());
-//                        setY(game.clamp(vector.y - getHeight() +10, 0, Game.HEIGHT));
-//                    } catch (TileNotFoundException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                if (CollisionSide.RIGHT.equals(ct.getCollisionSide())) {
-//                    try {
-//                        vector = game.getTileMap().getTilePixelLocation(ct.getTile());
-//                        setX(game.clamp(vector.x + getWidth(), 0, Game.HEIGHT));
-//                    } catch (TileNotFoundException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                if (CollisionSide.LEFT.equals(ct.getCollisionSide())) {
-//                    try {
-//                        vector = game.getTileMap().getTilePixelLocation(ct.getTile());
-//                        setX(game.clamp(vector.x - getWidth(), 0, Game.HEIGHT));
-//                    } catch (TileNotFoundException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                if (CollisionSide.BOTTOM.equals(ct.getCollisionSide())) {
-//                    try {
-//                        vector = game.getTileMap().getTilePixelLocation(ct.getTile());
-//                        setX(game.clamp(vector.y - getHeight() + 10, 0, Game.HEIGHT));
-//                    } catch (TileNotFoundException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-            Tile tile = ct.getTile();
+        PVector tileCoordinates;
+        for (CollidedTile collidedTile : list) {
+            Tile tile = collidedTile.getTile();
             if (tile instanceof WallTile || tile instanceof PlayerSpawnTile) {
-                if (CollisionSide.TOP.equals(ct.getCollisionSide())) {
+                if (CollisionSide.TOP.equals(collidedTile.getCollisionSide())) {
                     try {
-                        vector = game.getTileMap().getTilePixelLocation(ct.getTile());
-                        setY(game.clamp(vector.y - getHeight(), 0, Game.HEIGHT));
+                        tileCoordinates = game.getTileMap().getTilePixelLocation(collidedTile.getTile());
+                        setY(game.clamp(tileCoordinates.y - getHeight(), 0, Game.HEIGHT));
                     } catch (TileNotFoundException e) {
                         e.printStackTrace();
                     }
                 }
-                if (CollisionSide.LEFT.equals(ct.getCollisionSide())) {
+                if (CollisionSide.LEFT.equals(collidedTile.getCollisionSide())) {
                     try {
-                        vector = game.getTileMap().getTilePixelLocation(ct.getTile());
-                        setX(vector.x - getWidth());
+                        tileCoordinates = game.getTileMap().getTilePixelLocation(collidedTile.getTile());
+                        setX(tileCoordinates.x - getWidth());
                     } catch (TileNotFoundException e) {
                         e.printStackTrace();
                     }
                 }
-                if (CollisionSide.RIGHT.equals(ct.getCollisionSide())) {
+                if (CollisionSide.RIGHT.equals(collidedTile.getCollisionSide())) {
                     try {
-                        vector = game.getTileMap().getTilePixelLocation(ct.getTile());
-                        setX(vector.x + getWidth() + 6);
+                        tileCoordinates = game.getTileMap().getTilePixelLocation(collidedTile.getTile());
+                        setX(tileCoordinates.x + getWidth() + 6);
                     } catch (TileNotFoundException e) {
                         e.printStackTrace();
                     }
                 }
-                if (CollisionSide.BOTTOM.equals(ct.getCollisionSide())) {
+                if (CollisionSide.BOTTOM.equals(collidedTile.getCollisionSide())) {
                     try {
-                        vector = game.getTileMap().getTilePixelLocation(ct.getTile());
-                        setY((vector.y + getWidth()) + 6);
+                        tileCoordinates = game.getTileMap().getTilePixelLocation(collidedTile.getTile());
+                        setY((tileCoordinates.y + getWidth()) + 6);
                     } catch (TileNotFoundException e) {
                         e.printStackTrace();
                     }

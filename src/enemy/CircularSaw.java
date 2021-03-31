@@ -22,8 +22,6 @@ public class CircularSaw extends Enemy{
 
     public CircularSaw(Game game) {
         super(sprite, 3, game, sawDamage);
-//        setHeight(30);
-//        setWidth(30);
         setCurrentFrameIndex(0);
         this.setSpeed(initialSpeed);
         setDirection(0);

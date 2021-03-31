@@ -89,11 +89,11 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
     @Override
     public void update() {
 
-        x = getX();
-        y = getY();
-
-        x += getxSpeed();
-        y += getySpeed();
+//        x = getX();
+//        y = getY();
+//
+//        x += getxSpeed();
+//        y += getySpeed();
 
         if(spawn != null && !inSpawn){
             map.closeSpawn();
