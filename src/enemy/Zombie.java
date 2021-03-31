@@ -12,10 +12,10 @@ import nl.han.ica.oopg.objects.Sprite;
 public class Zombie extends Enemy {
 
     private float velX,velY; //x,y and speed are already inherited from GameObject
-    private static int zombieDamage = 2;
+    private static float zombieDamage = 0.5f;
 
     public Zombie(Game game) {
-        super(new Sprite(Game.MEDIA_URL.concat("zombie.gif")), 4, game, zombieDamage);
+        super(new Sprite(Game.MEDIA_URL.concat("zombie.gif")), 4, game, (int)zombieDamage);
         setCurrentFrameIndex(1);
         //this.setSpeed(0.85F);
     }

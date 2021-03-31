@@ -9,6 +9,8 @@ package me.main;
  * It is created at game start by ObjectSpawner
  */
 
+import HUD.HealthBar;
+import HUD.scoreBoard;
 import enemy.Enemy;
 import items.Item;
 import nl.han.ica.oopg.collision.CollidedTile;
@@ -19,6 +21,7 @@ import nl.han.ica.oopg.exceptions.TileNotFoundException;
 import nl.han.ica.oopg.objects.AnimatedSpriteObject;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
+import processing.core.PGraphics;
 import processing.core.PVector;
 import tiles.PlayerSpawnTile;
 import tiles.WallTile;
@@ -32,53 +35,55 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
     private Maze map;
     private Difficulty difficulty;
 
+    private PGraphics g = new PGraphics();
+    private HealthBar HB = new HealthBar();
+    private scoreBoard score = new scoreBoard();
+
     private boolean[] keyDown = new boolean[4];
     private final static int initialSpeed = 2;
     private int speed;
-    private int score;
-    private final static int initialHitpoints = 200;
-    private int hitpoints;
 
     private PlayerSpawnTile spawn;
     private boolean inSpawn;
 
     /**
      * Creator for a Player object.
-     * @param game The central Game object.
+     *
+     * @param game       The central Game object.
      * @param difficulty The difficulty object used to increase difficulty
-     * @param spawn The PlayerSpawnTile, this is not used for the location of the created
-     *              Player object, only to check if the player has left the spawn.
+     * @param spawn      The PlayerSpawnTile, this is not used for the location of the created
+     *                   Player object, only to check if the player has left the spawn.
      */
-    public Player(Game game, Difficulty difficulty, PlayerSpawnTile spawn){
-        super(new Sprite(Game.MEDIA_URL.concat("player_run.gif")),2);
+    public Player(Game game, Difficulty difficulty, PlayerSpawnTile spawn) {
+        super(new Sprite(Game.MEDIA_URL.concat("player_run.gif")), 2);
         this.game = game;
         this.map = (Maze) game.getTileMap();
         this.difficulty = difficulty;
         setCurrentFrameIndex(1);
-        Arrays.fill(keyDown,false);
+        Arrays.fill(keyDown, false);
         speed = initialSpeed;
-        hitpoints = initialHitpoints;
         this.spawn = spawn;
         inSpawn = true;
-        }
+    }
 
     /**
      * Adds points to the player score total, then checks if that
+     *
      * @param points The number of points to add.
      */
-    public void addScore(int points){
-        int previousScore = score;
-        score += points;
-        difficulty.scoreThresholdCrossed (score, previousScore);
-        System.out.println("Score is nu: " + score);
+    public void addScore(int points) {
+        int previousScore = score.getScore();
+        score.setScore(points);
+        difficulty.scoreThresholdCrossed(score.getScore(), previousScore);
+        score.draw(g);
     }
 
-    public void setSpeed(int speed){
+    public void setSpeed(int speed) {
         this.speed = speed;
 //        System.out.println("Snelheid is nu: " + speed);
     }
 
-    public void resetSpeed(){
+    public void resetSpeed() {
         setSpeed(initialSpeed);
     }
 
@@ -88,21 +93,21 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
      */
     @Override
     public void update() {
-        if(spawn != null && !inSpawn){
+        if (spawn != null && !inSpawn) {
             map.closeSpawn();
             spawn = null;
         }
     }
 
     @Override
-    public void keyPressed(int keyCode, char key){
+    public void keyPressed(int keyCode, char key) {
         /**
          * W : 87
          * A : 65
          * S : 83
          * D : 68
          */
-        switch (keyCode){
+        switch (keyCode) {
             case 87: // W
                 // setDirectionSpeed(0, speed);
                 setySpeed(-speed);
@@ -129,7 +134,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
     }
 
     @Override
-    public void keyReleased(int keyCode, char key){
+    public void keyReleased(int keyCode, char key) {
         if (keyCode == 87) keyDown[0] = false;
         if (keyCode == 65) keyDown[1] = false;
         if (keyCode == 83) keyDown[2] = false;
@@ -177,7 +182,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
                         e.printStackTrace();
                     }
                 }
-            } else if (spawn != null && ct.getTile() == spawn){
+            } else if (spawn != null && ct.getTile() == spawn) {
                 inSpawn = true;
             }
         }
@@ -185,26 +190,18 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
 
     @Override
     public void gameObjectCollisionOccurred(List<GameObject> list) {
-        for(GameObject collidedObject: list){
-            if(collidedObject instanceof Item){
+        for (GameObject collidedObject : list) {
+            if (collidedObject instanceof Item) {
                 ((Item) collidedObject).touchPlayer(this);
             }
-            if(collidedObject instanceof Enemy){
-                takeDamage(((Enemy)collidedObject).getDamage());
+            if (collidedObject instanceof Enemy) {
+                takeDamage(((Enemy) collidedObject).getDamage());
             }
         }
     }
 
-    private void takeDamage(int damage){
-        if (hitpoints > 0){
-            hitpoints -= damage;
-            //TODO HUD hier op aansluiten
-            System.out.println("HP:"+hitpoints);
-        } else{
-            //TODO ENDSCREEN MET SCORE
-        }
-
-
-
+    private void takeDamage(float damage) {
+        HealthBar.setHEALTH(damage);
+        HB.draw(g);
     }
 }

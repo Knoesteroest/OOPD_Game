@@ -20,17 +20,17 @@ import java.util.List;
  * Makes sure sub-classes set damage and stay out of the walls
  */
 public abstract class Enemy extends AnimatedSpriteObject implements ICollidableWithTiles {
-    protected int damage;
+    protected float damage;
     protected Game game;
     protected Maze map;
-    public Enemy(Sprite sprite, int totalFrames, Game game, int damage) {
+    public Enemy(Sprite sprite, int totalFrames, Game game, float damage) {
         super(sprite, totalFrames);
         this.game = game;
         this.map = (Maze) game.getTileMap();
         this.damage = damage;
     }
 
-    public int getDamage() {
+    public float getDamage() {
         return damage;
     }
 
@@ -43,7 +43,7 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
                 if (CollisionSide.TOP.equals(collidedTile.getCollisionSide())) {
                     try {
                         tileCoordinates = game.getTileMap().getTilePixelLocation(collidedTile.getTile());
-                        setY(game.clamp(tileCoordinates.y - getHeight(), 0, Game.HEIGHT));
+                        setY(tileCoordinates.y - getHeight());
                     } catch (TileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -81,5 +81,6 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
      */
     @Override
     public void update() {
+
     }
 }
