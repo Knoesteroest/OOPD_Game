@@ -10,7 +10,7 @@ import nl.han.ica.oopg.objects.Sprite;
 public class SpeedBoost extends Booster{
 
     private final static Sprite boltSprite = new Sprite(Game.MEDIA_URL.concat("lightningBolt.png"));
-    private final int boostedSpeed = 2;
+    private final int boostedSpeed = 3;
     private final static double initEffectDuration = 5;
 
     public SpeedBoost(Game game) {

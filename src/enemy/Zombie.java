@@ -17,18 +17,17 @@ public class Zombie extends Enemy {
     public Zombie(Game game) {
         super(new Sprite(Game.MEDIA_URL.concat("zombie.gif")), 4, game, zombieDamage);
         setCurrentFrameIndex(1);
-        //his.setSpeed(0.85F);
+        //this.setSpeed(0.85F);
     }
 
     private int test = 1;
     @Override
     public void update() {
 //        x = getX();
-//        //x += velX;
-//
 //        y = getY();
-//        //y += velY;
-//
+
+//        x += getxSpeed();
+//        y += getySpeed();
 //        setX(x);
 //        setY(y);
 
@@ -36,15 +35,24 @@ public class Zombie extends Enemy {
             if (g instanceof Player){
                 GameObject player = g;
 
-                float diffX = x - player.getX();
-                float diffY = y - player.getY() - ((player.getHeight() / 2) - (player.getHeight() / 4));
-                float distance = (float) Math.sqrt((x-player.getX())*(x - player.getX()) + (y - player.getY()) * (y - player.getY()));
+                float diffX = this.getCenterX() - player.getCenterX();
+                float diffY = this.getCenterY() - player.getCenterY() /*- ((player.getHeight() / 2) - (player.getHeight() / 4))*/;
+                float distance = (float) Math.sqrt((this.getCenterX()-player.getCenterX())*(this.getCenterX() - player.getCenterX()) + (this.getCenterY() - player.getCenterY()) * (this.getCenterY() - player.getCenterY()));
 
-                velX =  ((-1/distance) * diffX );
-                velY =  ((-1/distance) * diffY );
+                // set speed x/y with speed
+                // code hieronder bugt de zombie als distance <35 is
+                // add dat afstand in NofTegels komt. /35
+                velX =((float) ((-1/distance) * Math.floor(diffX)));
+//                if (diffY > 0) diffY += 8;
+//                else diffY -= 16;
+                velY =((float) ((-1/distance) * Math.floor(diffY)));
+                diffX /= 35;
+                diffY /= 35;
+
                 if(test ==1){
-                    System.out.println("DIFFERENCE X: " + diffX);
-                    System.out.println("DIFFERENCE Y : " +diffY);
+                    System.out.println("DIFFERENCE X: " + Math.floor(diffX));
+
+                    System.out.println("DIFFERENCE Y : " + Math.floor(diffY));
                     test =0;
                 }
         /**
