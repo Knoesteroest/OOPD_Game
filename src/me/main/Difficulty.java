@@ -9,7 +9,7 @@ package me.main;
 public class Difficulty {
 
     private int difficultyLevel;
-    private final int scoreDifficultyThreshhold = 2; //10
+    private final int scoreDifficultyThreshhold = 5;
     private ObjectSpawner objectSpawner;
 
     public Difficulty(ObjectSpawner objectSpawner, int difficultyLevel)
