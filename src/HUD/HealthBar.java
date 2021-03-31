@@ -1,7 +1,10 @@
 package HUD;
 
+import me.main.Game;
 import nl.han.ica.oopg.objects.GameObject;
 import processing.core.PGraphics;
+
+import java.awt.*;
 
 public class HealthBar extends GameObject {
     public static float HEALTH = 100;
@@ -14,10 +17,6 @@ public class HealthBar extends GameObject {
         greenValue = clamp(greenValue, 0, 255);
 
         greenValue = HEALTH * 2;
-        if (HEALTH == 0) {
-            //TODO END SCREEN
-            System.exit(1);
-        }
     }
 
     @Override
@@ -27,7 +26,7 @@ public class HealthBar extends GameObject {
         g.fill(WHITE_CEMENT);
         g.rect(10, 7, 201, 20);
         g.fill(75, (int) greenValue, 0);
-        g.rect(10, 7, ((int) HEALTH *2), 20);
+        g.rect(10, 7, ((int) HEALTH * 2), 20);
         g.dispose();
     }
 
@@ -43,6 +42,10 @@ public class HealthBar extends GameObject {
     }
 
     public static void setHEALTH(float damage) {
-        HEALTH = clamp(HEALTH-= damage, 0, 100);
+        HEALTH = clamp(HEALTH -= damage, 0, 100);
+    }
+
+    public static float getHEALTH() {
+        return HEALTH;
     }
 }

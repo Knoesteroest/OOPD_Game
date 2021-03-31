@@ -12,17 +12,13 @@ import items.BoosterEffect;
 import items.Coin;
 import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.objects.GameObject;
-import nl.han.ica.oopg.objects.TextObject;
 import nl.han.ica.oopg.view.View;
-import processing.core.PGraphics;
 
 import java.util.ArrayList;
-
 
 public class Game extends GameEngine {
     private ObjectSpawner objectSpawner;
     private ArrayList<BoosterEffect> activeBoosterEffects;
-    private TextObject dashBoardText;
 
     public static final int WIDTH = 945, HEIGHT = WIDTH / 12 * 9;
     public static final String MEDIA_URL = "src/media/";
@@ -43,14 +39,13 @@ public class Game extends GameEngine {
      */
     @Override
     public void setupGame() {
-
-        hud = new HUD(WIDTH, HEIGHT);
+        hud = new HUD(WIDTH, HEIGHT,this);
         addDashboard(hud);
 
         setView(WIDTH, HEIGHT);
 
         tileMap = new Maze();
-        objectSpawner = new ObjectSpawner(this, tileMap);
+        objectSpawner = new ObjectSpawner(this, tileMap,hud);
         difficulty = new Difficulty(objectSpawner, StartingDifficulty.EASY.getDifficultyLevel());
         activeBoosterEffects = new ArrayList<>();
 

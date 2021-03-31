@@ -15,8 +15,8 @@ import java.util.ArrayList;
  */
 public class Zombie extends Enemy {
 
-    private static int zombieDamage = 2;
-    private static float initialSpeed = 0.85f;
+    private final static float zombieDamage = 0.5f;
+    private final static float initialSpeed = 0.85f;
 
     public Zombie(Game game) {
         super(new Sprite(Game.MEDIA_URL.concat("zombie.gif")), 4, game, zombieDamage, initialSpeed);

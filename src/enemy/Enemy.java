@@ -23,23 +23,26 @@ import static processing.core.PApplet.round;
  * Makes sure sub-classes set damage and stay out of the walls
  */
 public abstract class Enemy extends AnimatedSpriteObject implements ICollidableWithTiles {
-    protected int damage;
+    protected float damage;
     protected Game game;
     protected Maze map;
     protected float initialSpeed;
-    public Enemy(Sprite sprite, int totalFrames, Game game, int damage, float initialSpeed) {
+    public Enemy(Sprite sprite, int totalFrames, Game game, float damage, float initialSpeed) {
         super(sprite, totalFrames);
         this.game = game;
         this.map = (Maze) game.getTileMap();
         this.damage = damage;
         setSpeed(initialSpeed);
+        this.initialSpeed = initialSpeed;
     }
 
     public void resetSpeed(){
         setSpeed(initialSpeed);
+        System.out.println(initialSpeed);
+        System.out.println("SPEED RESET");
     }
 
-    public int getDamage() {
+    public float getDamage() {
         return damage;
     }
 

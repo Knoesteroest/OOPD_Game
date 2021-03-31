@@ -9,6 +9,7 @@ package me.main;
  * It is created at game start by ObjectSpawner
  */
 
+import HUD.HUD;
 import HUD.HealthBar;
 import HUD.scoreBoard;
 import enemy.Enemy;
@@ -21,6 +22,7 @@ import nl.han.ica.oopg.exceptions.TileNotFoundException;
 import nl.han.ica.oopg.objects.AnimatedSpriteObject;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
+import nl.han.ica.oopg.objects.TextObject;
 import processing.core.PGraphics;
 import processing.core.PVector;
 import tiles.PlayerSpawnTile;
@@ -37,7 +39,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
 
     private PGraphics g = new PGraphics();
     private HealthBar HB = new HealthBar();
-    private scoreBoard score = new scoreBoard();
+    private HUD hud;
 
     private boolean[] keyDown = new boolean[4];
     private final static int initialSpeed = 2;
@@ -54,7 +56,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
      * @param spawn      The PlayerSpawnTile, this is not used for the location of the created
      *                   Player object, only to check if the player has left the spawn.
      */
-    public Player(Game game, Difficulty difficulty, PlayerSpawnTile spawn) {
+    public Player(Game game, Difficulty difficulty, PlayerSpawnTile spawn,HUD hud) {
         super(new Sprite(Game.MEDIA_URL.concat("player_run.gif")), 2);
         this.game = game;
         this.map = (Maze) game.getTileMap();
@@ -64,6 +66,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
         speed = initialSpeed;
         this.spawn = spawn;
         inSpawn = true;
+        this.hud = hud;
     }
 
     /**
@@ -72,10 +75,9 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
      * @param points The number of points to add.
      */
     public void addScore(int points) {
-        int previousScore = score.getScore();
-        score.setScore(points);
-        difficulty.scoreThresholdCrossed(score.getScore(), previousScore);
-        score.draw(g);
+        int previousScore = hud.getScore();
+        hud.setScore(points);
+        difficulty.scoreThresholdCrossed(hud.getScore(), previousScore);
     }
 
     public void setSpeed(int speed) {

@@ -6,11 +6,6 @@ package me.main;
  * the list of active booster effects in Game.
  */
 public enum ObjectTypeId {
-    Player(),
-    Zombie(),
-    Saw(),
-    Coin(),
     Flash(),
-    Speed(),
-    DoubleScore()
+    Speed()
 }

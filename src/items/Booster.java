@@ -15,7 +15,7 @@ import nl.han.ica.oopg.objects.Sprite;
 
 public abstract class Booster extends Item{
     private double effectDuration;
-    private ObjectTypeId typeId;//todo, make this private
+    private ObjectTypeId typeId;
     /*
     added effectDuration to the constructor to force children to set it
      */

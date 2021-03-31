@@ -7,6 +7,7 @@ package me.main;
  * It runs a timer to spawn more Coin objects at regular intervals.
  */
 
+import HUD.HUD;
 import enemy.CircularSaw;
 import enemy.Zombie;
 import items.Coin;
@@ -28,11 +29,13 @@ public class ObjectSpawner implements IAlarmListener {
     private final double coinSpawnInterval = 5;
     private final int startingCoins = 5;
     private final int maxCoins = 10;
+    private HUD hud;
 
-    public ObjectSpawner(Game game, TileMap map){
+    public ObjectSpawner(Game game, TileMap map,HUD hud){
         this.game = game;
         this.map = (Maze) map;
         restartCoinTimer();
+        this.hud = hud;
     }
     /**
      * Spawns the objects that need to exist at the start of the game:
@@ -44,26 +47,20 @@ public class ObjectSpawner implements IAlarmListener {
         spawnInitialCoins();
         spawnInitialBoosters();
         spawnSaw(0);
-        //spawnTestObjects();
+        spawnTestObjects();
     }
 
     public void spawnInitialBoosters(){
-        spawnObject(new SpeedBoost(game));
-        spawnObject(new SpeedBoost(game));
-        spawnObject(new SpeedBoost(game));
-        spawnObject(new FlashBomb(game));
-        spawnObject(new FlashBomb(game));
-        spawnObject(new FlashBomb(game));
+        spawnObject(new SpeedBoost(game, hud));
+        spawnObject(new SpeedBoost(game, hud));
+        spawnObject(new SpeedBoost(game, hud));
+        spawnObject(new FlashBomb(game,hud));
+        spawnObject(new FlashBomb(game,hud));
+        spawnObject(new FlashBomb(game,hud));
     }
 
     public void spawnTestObjects() {
-        spawnZombie();
-        spawnZombie();
-        spawnZombie();
-        spawnZombie();
-        spawnZombie();
-        spawnZombie();
-
+    // place here test objects
     }
 
     /**
@@ -95,7 +92,7 @@ public class ObjectSpawner implements IAlarmListener {
      */
     private void spawnPlayer(Difficulty difficulty){
         PlayerSpawnTile playerSpawnTile = map.getPlayerSpawnTile();
-        spawnObject(new Player(game, difficulty, playerSpawnTile), playerSpawnTile);
+        spawnObject(new Player(game, difficulty, playerSpawnTile,hud), playerSpawnTile);
     }
 
     public void spawnSaw(int spawnTilenr){
