@@ -1,17 +1,21 @@
 package HUD;
 
-import me.main.Game;
 import nl.han.ica.oopg.objects.GameObject;
 import processing.core.PGraphics;
 
-import java.awt.*;
-
+/**
+ *  Class for the players Health.
+ *  the healthbar is shown in the Heads Up Display.
+ */
 public class HealthBar extends GameObject {
     public static float HEALTH = 100;
     private float greenValue = 255;
     private final int WHITE_CEMENT = 200;
     private final int BLACK = 44;
 
+    /**
+     * Updates color of the healthbar based on the players health.
+     */
     @Override
     public void update() {
         greenValue = clamp(greenValue, 0, 255);
@@ -19,6 +23,10 @@ public class HealthBar extends GameObject {
         greenValue = HEALTH * 2;
     }
 
+    /**
+     * draws the healthbar
+     * @param g PGraphics object used to draw on dashboard
+     */
     @Override
     public void draw(PGraphics g) {
         //Black border of healthbar
@@ -33,7 +41,13 @@ public class HealthBar extends GameObject {
         g.dispose();
     }
 
-
+    /**
+     * keeps value within the boundaries
+     * @param var incomming value that needs to be checked
+     * @param min minimal value of boundary
+     * @param max maximum value of boundary
+     * @return returns var within boundraries
+     */
     public static float clamp(float var, float min, float max) {
         if (var >= max) {
             return var = max;
@@ -44,10 +58,18 @@ public class HealthBar extends GameObject {
         }
     }
 
+    /**
+     * changes the amount of health the player has.
+     * @param damage the amount gets subtracted from the players's health.
+     */
     public static void setHEALTH(float damage) {
         HEALTH = clamp(HEALTH -= damage, 0, 100);
     }
 
+    /**
+     * Gets amount of Health the player has
+     * @return Health of player
+     */
     public static float getHEALTH() {
         return HEALTH;
     }

@@ -1,14 +1,5 @@
 package me.main;
 
-/**
- * This is our TileMap; It generates our only level and gives map-related information
- * to other objects.
- * <p>
- * Created in Game and passed to all objects that need it.
- *
- * @author Pieter Oosterbroek & Martijn Engel
- */
-
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.tile.EmptyTile;
@@ -24,7 +15,11 @@ import tiles.WallTile;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-
+/**
+ * This is our TileMap; It generates our only level and gives map-related information
+ * to other objects.
+ * Created in Game and passed to all objects that need it.
+ */
 public class Maze extends TileMap {
     /**
      * The size of our tiles in pixels
@@ -71,12 +66,19 @@ public class Maze extends TileMap {
     private PlayerSpawnTile playerSpawn;
     private ArrayList<SawSpawnTile> sawSpawnTiles;
 
+    /**
+     * Sets the map's structure.
+     */
     public Maze() {
         super(mazeTileSize, mazeTileTypes, mazeTilesMap);
         playerSpawn = findPlayerSpawn();
         sawSpawnTiles = findSawSpawns();
     }
 
+    /**
+     * Gets the position of where a CircularSaw enemy can spawn on the map
+     * @return Tile of CircularSaw's spawn
+     */
     private ArrayList<SawSpawnTile> findSawSpawns() {
         ArrayList<SawSpawnTile> sawSpawnList = new ArrayList<>();
         int[][] tileIndexes = getTileMap();

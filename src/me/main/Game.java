@@ -28,6 +28,10 @@ public class Game extends GameEngine {
     private Player player;
     private HUD hud;
 
+    /**
+     * the start of the program.
+     * @param args default string array that is given to any main method
+     */
     public static void main(String[] args) {
         Game game = new Game();
         game.runSketch();
@@ -65,6 +69,11 @@ public class Game extends GameEngine {
     @Override
     public void update() {}
 
+    /**
+     * Sets the size of the programs window
+     * @param width Total width of the window
+     * @param height Total Height og the window
+     */
     public void setWindowView(int width, int height) {
         setView(new View(width, height));
         size(width, height);
@@ -139,6 +148,10 @@ public class Game extends GameEngine {
         return null;
     }
 
+    /**
+     * Gets player object
+     * @return player object
+     */
     public Player getPlayer() {
         return player;
     }

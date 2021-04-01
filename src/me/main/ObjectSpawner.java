@@ -1,11 +1,5 @@
 package me.main;
 
-/**
- * This class creates all game objects and spawns them in the map.
- * It is called at game start to spawn the initial objects and by
- * Difficulty when new enemies get added when difficulty increases.
- * It runs a timer to spawn more Coin objects at regular intervals.
- */
 
 import HUD.HUD;
 import enemy.CircularSaw;
@@ -21,6 +15,12 @@ import nl.han.ica.oopg.tile.TileMap;
 import processing.core.PVector;
 import tiles.PlayerSpawnTile;
 
+/**
+ * This class creates all game objects and spawns them in the map.
+ * It is called at game start to spawn the initial objects and by
+ * Difficulty when new enemies get added when difficulty increases.
+ * It runs a timer to spawn more Coin objects at regular intervals.
+ */
 public class ObjectSpawner implements IAlarmListener {
 
     private Maze map;
@@ -33,7 +33,12 @@ public class ObjectSpawner implements IAlarmListener {
     private final int startingCoins = 5;
     private final int maxCoins = 10;
 
-
+    /**
+     * Creates a new spawner object.
+     * @param game The main program
+     * @param map the Tilemap that has been initialized
+     * @param hud the dashboard
+     */
     public ObjectSpawner(Game game, TileMap map, HUD hud) {
         this.game = game;
         this.map = (Maze) map;
@@ -53,6 +58,9 @@ public class ObjectSpawner implements IAlarmListener {
         spawnSaw(0);
     }
 
+    /**
+     * Creates the booster objects to spawn in the map
+     */
     public void spawnInitialBoosters() {
         spawnObject(new SpeedBoost(game, hud));
         spawnObject(new SpeedBoost(game, hud));
@@ -62,6 +70,10 @@ public class ObjectSpawner implements IAlarmListener {
         spawnObject(new FlashBomb(game, hud));
     }
 
+    /**
+     * function to call when you want editional objects on the playingfield.
+     * You need to add the objects in the body, by default empty
+     */
     public void spawnTestObjects() {
         // place objects to test here
     }
@@ -100,11 +112,19 @@ public class ObjectSpawner implements IAlarmListener {
         spawnObject(new Player(game, difficulty, playerSpawnTile, hud), playerSpawnTile);
     }
 
+    /**
+     * Spawn the CircularSaw on the playingfield
+     *
+     * @param spawnTilenr the assigned place for the CircularSaw to spawn.
+     */
     public void spawnSaw(int spawnTilenr) {
         Tile tile = map.getSawSpawnTiles().get(spawnTilenr);
         spawnObject(new CircularSaw(game), tile);
     }
 
+    /**
+     * Spawns the Zomnie on the playingfield.
+     */
     public void spawnZombie() {
         Tile tile = map.getSuitableSpawnTile(game.getAllGameObjects());
         if (tile != null) {
@@ -145,6 +165,9 @@ public class ObjectSpawner implements IAlarmListener {
         restartCoinTimer();
     }
 
+    /**
+     * Sets spawning time of the coin back to 10 seconds
+     */
     private void restartCoinTimer() {
         coinTimer = new Alarm(coinTimerName, coinSpawnInterval);
         coinTimer.addTarget(this);

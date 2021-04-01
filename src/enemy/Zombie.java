@@ -18,12 +18,18 @@ public class Zombie extends Enemy {
     private final static float zombieDamage = 0.5f;
     private final static float initialSpeed = 0.85f;
 
+    /**
+     * Makes the Zombie Sets an image,speed, beginning frame, and starting direction.
+     * @param game the central class
+     */
     public Zombie(Game game) {
         super(new Sprite(Game.MEDIA_URL.concat("zombie.gif")), 4, game, zombieDamage, initialSpeed);
         setCurrentFrameIndex(1);
         setDirection(180);
     }
-
+    /**
+     *  Sets the zombie's next step based on the player's position.
+     */
     @Override
     protected void choosePath() {
         GameObject player = game.getPlayer();
@@ -51,19 +57,19 @@ public class Zombie extends Enemy {
      */
     private ArrayList<Integer> getDirectionPreferences(float diffX, float diffY){
         ArrayList<Integer> directionPreferences = new ArrayList<>();
-        int direction1;
-        int direction2;
+        int zombieFacingX;
+        int zombieFacingY;
         if(Math.abs(diffX) > Math.abs(diffY)){ // If horizontal distance larger than vertical
-            direction1 = pickHorizontal(diffX);// then pick the horizontal direction towards player first
-            direction2 = pickVertical(diffY);
+            zombieFacingX = setHorizontal(diffX);// then pick the horizontal direction towards player first
+            zombieFacingY = setVertical(diffY);
         }else{
-            direction1 = pickVertical(diffY); //else pick vertical first
-            direction2 = pickHorizontal(diffX);
+            zombieFacingX = setVertical(diffY); //else pick vertical first
+            zombieFacingY = setHorizontal(diffX);
         }
-        directionPreferences.add(direction1);
-        directionPreferences.add(direction2);
-        directionPreferences.add(pickReversedDirection(direction2)); //if the zombie has to move in another direction do it by the less favoured axis
-        directionPreferences.add(pickReversedDirection(direction1));
+        directionPreferences.add(zombieFacingX);
+        directionPreferences.add(zombieFacingY);
+        directionPreferences.add(setReversedDirection(zombieFacingY)); //if the zombie has to move in another direction do it by the less favoured axis
+        directionPreferences.add(setReversedDirection(zombieFacingX));
         return directionPreferences;
     }
 
@@ -82,15 +88,24 @@ public class Zombie extends Enemy {
         return true;
     }
 
-    private int pickHorizontal(float diffX){
+    /**
+     * Sets image direction based on movement
+     * @param diffX the difference between the zombie and player over the x axis
+     * @return whether the zombie is moving left or right
+     */
+    private int setHorizontal(float diffX){
         if(diffX > 0) {
             return 270;
         }else{
             return 90;
         }
     }
-
-    private int pickVertical(float diffY){
+    /**
+     * Sets image direction based on movement
+     * @param diffY the difference between the zombie and player over the y axis
+     * @return whether the zombie is moving up or down
+     */
+    private int setVertical(float diffY){
         if(diffY > 0) {
             return 0;
         }else{
@@ -98,7 +113,12 @@ public class Zombie extends Enemy {
         }
     }
 
-    private int pickReversedDirection(int dir){
-        return (dir + 180) % 360;
+    /**
+     * Sets zombies direction to opposite side.
+     * @param direction current direction the zombie is moving
+     * @return opposite side of the zombies direction
+     */
+    private int setReversedDirection(int direction){
+        return (direction + 180) % 360;
     }
 }

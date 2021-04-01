@@ -38,14 +38,25 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
         setSpeed(initialSpeed);
     }
 
+    /**
+     * Sets enemy's speed back to initialSpeed
+     */
     public void resetSpeed() {
         setSpeed(initialSpeed);
     }
 
+    /**
+     * Gets amount of damage that the enemy can give
+     * @return amount of damage
+     */
     public float getDamage() {
         return damage;
     }
 
+    /**
+     * Sets enemy movement based on the collision
+     * @param list list of tiles that the enemy collided with
+     */
     @Override
     public void tileCollisionOccurred(List<CollidedTile> list) {
         PVector tileCoordinates;
@@ -92,8 +103,8 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
         }
     }
 
-    /*
-     Checks if the enemy is in the middle of the tile and if so, activates pathfinding.
+    /**
+     * Checks if the enemy is in the middle of the tile and if so, activates pathfinding.
      */
     @Override
     public void update() {
@@ -102,16 +113,26 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
         }
     }
 
+    /**
+     * Abstract class to be used in the zombie and CircalSaw Classes
+     */
     protected abstract void choosePath();
 
     /**
      * Gets the tile this enemy is on.
+     *
+     * @return the tile the enemy is on.
      */
     protected Tile getTile() {
         Tile tile = map.getTileOnPosition((int) getCenterX(), (int) getCenterY());
         return tile;
     }
 
+    /**
+     * Gets the direction the enemy is facing
+     *
+     * @return the tile the enemy is on.
+     */
     protected Tile getFrontTile() {
         Tile tile = getAdjacentTile(getTile(), getDirection(), 0);
         return tile;
@@ -150,7 +171,9 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
         }
     }
 
-    // TEST COMMENT
+    /**
+     * Test for getAdjacentTile function
+     */
     public void testGETAdjacontTile() {
         Tile testTile = map.getTileOnIndex((int) 5.0, (int) 5.0);
         Tile resultTile = getAdjacentTile(testTile, 180, 0);

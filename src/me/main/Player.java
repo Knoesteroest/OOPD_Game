@@ -1,13 +1,5 @@
 package me.main;
 
-/**
- * This is the class for the player. It keeps track of held keys and moves the player.
- * It is collidible with tiles to stop it from entering walls.
- * It is the only object that handles object collission, which it uses to pick up
- * boosters and get damaged by enemies.
- * It keeps track of player hitpoints and score.
- * It is created at game start by ObjectSpawner
- */
 
 import HUD.HUD;
 import HUD.HealthBar;
@@ -29,6 +21,14 @@ import tiles.WallTile;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * This is the class for the player. It keeps track of held keys and moves the player.
+ * It is collidible with tiles to stop it from entering walls.
+ * It is the only object that handles object collission, which it uses to pick up
+ * boosters and get damaged by enemies.
+ * It keeps track of player hitpoints and score.
+ * It is created at game start by ObjectSpawner
+ */
 public class Player extends AnimatedSpriteObject implements ICollidableWithTiles, ICollidableWithGameObjects {
 
     private Game game;
@@ -101,6 +101,11 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
         }
     }
 
+    /**
+     * When the user presses a key that corresponds with any of the movement keys the player will move that direction
+     * @param keyCode integer of the key number
+     * @param key param isn't used.
+     */
     @Override
     public void keyPressed(int keyCode, char key) {
 
@@ -127,6 +132,11 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
         }
     }
 
+    /**
+     * When the user releases a key that corresponds with any of the movement keys and the opposite key isn't pressed the movement gets reset
+     * @param keyCode integer of the key number
+     * @param key param isn't used.
+     */
     @Override
     public void keyReleased(int keyCode, char key) {
         if (keyCode == KEY_UP) keyDown[0] = false;
@@ -138,6 +148,10 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
         if (!keyDown[1] && !keyDown[3]) setxSpeed(0);
     }
 
+    /**
+     * When the player collides with a wall object it stops the player from moving
+     * @param collidedTiles list of tiles that the player collides with
+     */
     @Override
     public void tileCollisionOccurred(List<CollidedTile> collidedTiles) {
         PVector vector;
@@ -181,7 +195,9 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
             }
         }
     }
-
+    /**
+     * Sets action based on the what game object the player collided with
+     */
     @Override
     public void gameObjectCollisionOccurred(List<GameObject> list) {
         for (GameObject collidedObject : list) {
@@ -194,6 +210,10 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
         }
     }
 
+    /**
+     * Sets Healthbar of player.
+     * @param damage the amount of point the that health of the player needs to be lowered
+     */
     private void takeDamage(float damage) {
         HealthBar.setHEALTH(damage);
     }

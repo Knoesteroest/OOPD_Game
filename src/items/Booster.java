@@ -16,8 +16,12 @@ public abstract class Booster extends Item {
     private double effectDuration;
     private BoosterId typeId;
 
-    /*
-    added effectDuration to the constructor to force children to set it
+    /**
+     * added effectDuration to the constructor to force children to set it
+     * @param game
+     * @param sprite
+     * @param effectDuration
+     * @param typeId
      */
     public Booster(Game game, Sprite sprite, double effectDuration, BoosterId typeId) {
         super(game, sprite);
@@ -25,18 +29,24 @@ public abstract class Booster extends Item {
         this.typeId = typeId;
     }
 
-    /*
-        This adds an effect to boostereffect list
-        Item class removes this from the game after this runs
-    */
+    /**
+     * This adds an effect to boostereffect list
+     * Item class removes this from the game after this runs
+     */
     @Override
-    public void pickUp(Player player) {game.addBoosterEffect(new BoosterEffect(this));}
+    public void pickUp(Player player) {
+        game.addBoosterEffect(new BoosterEffect(this));
+    }
 
-    public double getEffectDuration() {return effectDuration;}
+    public double getEffectDuration() {
+        return effectDuration;
+    }
 
     public abstract void startEffect();
 
     public abstract void endEffect();
 
-    public BoosterId getTypeId() {return typeId;}
+    public BoosterId getTypeId() {
+        return typeId;
+    }
 }
