@@ -1,8 +1,8 @@
 package me.main;
 
 /**
- * Central class and program entry point
- * Creates instances of Maze, Difficulty and ObjectSpawner to pass to other objects
+ * Central class and the program entry point.
+ * Creates instances of Maze, Difficulty and ObjectSpawner to pass to other objects.
  * Also handles a list of BoosterEffects
  */
 
@@ -48,16 +48,15 @@ public class Game extends GameEngine {
         //sets window size
         setWindowView(WIDTH, HEIGHT);
 
-        //sets gamefield Objects
+        //sets core game Objects
         tileMap = new Maze();
         objectSpawner = new ObjectSpawner(this, tileMap,hud);
         difficulty = new Difficulty(objectSpawner, StartingDifficulty.EASY.getDifficultyLevel());
         activeBoosterEffects = new ArrayList<>();
 
-        //spawns starting coins and the player
+        //spawns initial coins and the player
         objectSpawner.spawnStartingObjects(difficulty);
         player = findPlayer();
-
     }
 
     /**
@@ -72,10 +71,11 @@ public class Game extends GameEngine {
     }
 
     /**
-     * Casts the Vector of all GameObjects into an ArrayList
-     * Needed because Vector does not play nice with Alarm.
+     * Casts the Vector of all GameObjects into an ArrayList.
+     * This is needed because the Vector used in the GameEngine for this
+     * does not play nice with Alarm.
      *
-     * @return an arraylist of all GameObject in the game
+     * @return an arraylist of all GameObject in the game.
      */
     public ArrayList<GameObject> getAllGameObjects() {
         return new ArrayList<>(getGameObjectItems());
@@ -84,10 +84,10 @@ public class Game extends GameEngine {
 //BoosterEffects code:
 
     /**
-     * Adds a booster effect to the list of active booster effectsand starts the effect if
-     * there wasn't one of that type in the list yet
+     * Adds a booster effect to the list of active booster effects and starts the effect if
+     * there wasn't one of that type in the list yet.
      *
-     * @param boosterEffect The effect object to add to the list.
+     * @param boosterEffect The BoosterEffect to add to the list.
      */
     public void addBoosterEffect(BoosterEffect boosterEffect) {
         if (!isBooster(boosterEffect.booster.getTypeId())) {
