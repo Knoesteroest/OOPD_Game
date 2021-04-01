@@ -1,6 +1,5 @@
 package HUD;
 
-import enemy.Zombie;
 import me.main.Game;
 import nl.han.ica.oopg.dashboard.Dashboard;
 import nl.han.ica.oopg.objects.TextObject;
@@ -11,20 +10,26 @@ public class HUD extends Dashboard {
     private HealthBar HB;
     private TextObject displayScore;
     private TextObject displayBooster;
-    private int score;
     private Game game;
 
-    public HUD(int width, Game game) {
-        super(0, 0, width, 35);
+    private final int layerPosition = 1;
+    private int score;
+
+    public HUD(int width, int height, Game game) {
+        super(0, 0, width, height);
         this.game = game;
         HB = new HealthBar();
 
-        displayScore = new TextObject("Score: 0", 22);
-        displayBooster = new TextObject("Booster: ", 22);
+        final int fontSize = 22;
+        final int offsetDashBoardText = 225;
+        final int offsetDashBoardItemHeight = 3;
 
-        super.addGameObject(HB, 7, 3, 1);
-        super.addGameObject(displayScore, 225, 3, 2);
-        super.addGameObject(displayBooster, width - 225, 3, 3);
+        displayScore = new TextObject("Score: 0", fontSize);
+        displayBooster = new TextObject("Booster: ", fontSize);
+
+        super.addGameObject(HB, 7, offsetDashBoardItemHeight, layerPosition);
+        super.addGameObject(displayScore, offsetDashBoardText, offsetDashBoardItemHeight, layerPosition);
+        super.addGameObject(displayBooster, width - offsetDashBoardText, offsetDashBoardItemHeight, layerPosition);
         super.setBackground(255, 255, 255);
     }
 
@@ -34,6 +39,7 @@ public class HUD extends Dashboard {
         if (HB.getHEALTH() == 0) {
             deleteAllDashboardObjects();
             game.deleteAllGameOBjects();
+
             super.height = Game.HEIGHT;
             drawEndScreen();
             game.pauseGame();
@@ -46,11 +52,19 @@ public class HUD extends Dashboard {
     }
 
     private void drawEndScreen() {
-        TextObject title = new TextObject("Game Over", 50);
-        displayScore = new TextObject("Score: " + getScore(), 50);
+        final int fontSize = 50;
 
-        super.addGameObject(title, Game.WIDTH / 2 - 140, Game.HEIGHT / 4, 1);
-        super.addGameObject(displayScore, Game.WIDTH / 2 - 100, Game.HEIGHT / 2, 1);
+        final int offsetEndscreenTitle = 140;
+        final int offsetEndscreenScore = 100;
+
+        final int devideInHalf = 2;
+        final int devideInQuarter = 4;
+
+        TextObject title = new TextObject("Game Over", fontSize);
+        displayScore = new TextObject("Score: " + getScore(), fontSize);
+
+        super.addGameObject(title, Game.WIDTH / devideInHalf - offsetEndscreenTitle, Game.HEIGHT / devideInQuarter, layerPosition);
+        super.addGameObject(displayScore, Game.WIDTH / devideInHalf - offsetEndscreenScore, Game.HEIGHT / devideInHalf, layerPosition);
     }
 
     public void setScore(int addcoin) {
