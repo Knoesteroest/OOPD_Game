@@ -26,17 +26,20 @@ public class CircularSaw extends Enemy{
 //        testTrigonometry();
     }
 
-    public void turnLeft(){
+    private void turnLeft(){
         setDirection((getDirection() - 90) % 360);
 //        System.out.println("Turning left.");
     }
-    public void turnRight(){
+    private void turnRight(){
         setDirection((getDirection() + 90) % 360);
 //        System.out.println("Turning right.");
     }
-
+    private Tile getLeftTile() {
+        Tile tile = getAdjacentTile(getTile(), getDirection(), -90);
+        return tile;
+    }
     /**
-     * This runs every frame.
+     * Update runs every frame.
      * It checks if the saw is in the middle of the tile then,
      * turns left if there is an empty space there, if not,
      * turns right if there is a wall ahead.
@@ -77,11 +80,5 @@ public class CircularSaw extends Enemy{
         resultTile = getAdjacentTile(testTile, 180, -90);
         index = map.getTileIndex(resultTile);
         System.out.println("the tile  left of 5,5 going down is " + index.x +":"+ index.y);
-    }
-
-
-    private Tile getLeftTile() {
-        Tile tile = getAdjacentTile(getTile(), getDirection(), -90);
-        return tile;
     }
 }

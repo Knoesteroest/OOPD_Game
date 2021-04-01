@@ -14,7 +14,7 @@ public class HUD extends Dashboard {
     private int score;
     private Game game;
 
-    public HUD(int width, int height, Game game) {
+    public HUD(int width, Game game) {
         super(0, 0, width, 35);
         this.game = game;
         HB = new HealthBar();

@@ -28,7 +28,7 @@ import java.util.Random;
 
 public class Maze extends TileMap {
     /**
-     * The size of our tiles in pexels
+     * The size of our tiles in pixels
      */
     private final static int mazeTileSize = 35;
     private final static Sprite wallSprite = new Sprite(Game.MEDIA_URL.concat("wallTile.png"));
@@ -111,7 +111,7 @@ public class Maze extends TileMap {
                 }
             }
         }
-        System.out.println("Kan PlayerSpawn Tile niet vinden. Maze.findPlayerSpawn()");
+        System.out.println("Fout: Kan PlayerSpawn Tile niet vinden. Maze.findPlayerSpawn()");
         return null;
     }
 

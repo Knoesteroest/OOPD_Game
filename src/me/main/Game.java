@@ -39,7 +39,7 @@ public class Game extends GameEngine {
      */
     @Override
     public void setupGame() {
-        hud = new HUD(WIDTH, HEIGHT,this);
+        hud = new HUD(WIDTH, this);
         addDashboard(hud);
 
         setView(WIDTH, HEIGHT);
