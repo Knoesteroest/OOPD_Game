@@ -108,8 +108,6 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
      */
     @Override
     public void keyPressed(int keyCode, char key) {
-
-
         switch (keyCode) {
             case KEY_UP:
                 setySpeed(-speed);
