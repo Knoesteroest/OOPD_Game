@@ -46,7 +46,7 @@ public class Game extends GameEngine {
         addDashboard(hud);
 
         //sets window size
-        setView(WIDTH, HEIGHT);
+        setWindowView(WIDTH, HEIGHT);
 
         //sets gamefield Objects
         tileMap = new Maze();
@@ -66,7 +66,7 @@ public class Game extends GameEngine {
     @Override
     public void update() {}
 
-    public void setView(int width, int height) {
+    public void setWindowView(int width, int height) {
         setView(new View(width, height));
         size(width, height);
     }
