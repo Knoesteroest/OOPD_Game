@@ -36,7 +36,7 @@ public class Zombie extends Enemy {
         for (int direction: directionPreferences) {
             if (isDirectionPassable(direction)) {
                 setDirection(direction);
-                move(); //Super raar dat dit hiermee werkt. De GameEngine zou dit moeten doen.
+                move();
                 break;
             }
         }

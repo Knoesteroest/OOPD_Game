@@ -21,10 +21,13 @@ public class HealthBar extends GameObject {
 
     @Override
     public void draw(PGraphics g) {
+        //Black border of healthbar
         g.fill(BLACK);
         g.rect(8, 5, 205, 24);
+        //Filling healthbar
         g.fill(WHITE_CEMENT);
         g.rect(10, 7, 201, 20);
+        //Color of healthbar
         g.fill(75, (int) greenValue, 0);
         g.rect(10, 7, ((int) HEALTH * 2), 20);
         g.dispose();

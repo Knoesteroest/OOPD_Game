@@ -8,7 +8,6 @@ package items;
 import HUD.HUD;
 import enemy.Enemy;
 import me.main.Game;
-import me.main.ObjectTypeId;
 import nl.han.ica.oopg.objects.Sprite;
 
 import java.util.ArrayList;
@@ -17,10 +16,12 @@ public class FlashBomb extends Booster {
 
     private final static Sprite flashSprite = new Sprite(Game.MEDIA_URL.concat("flashbang.png"));
     private final static double initEffectDuration = 5;
+    private final float slowedSpeed = 0.5f;
+
     private HUD hud;
 
     public FlashBomb(Game game, HUD hud) {
-        super(game, flashSprite, initEffectDuration, ObjectTypeId.Flash);
+        super(game, flashSprite, initEffectDuration, BoosterId.Flash);
         this.hud = hud;
     }
 
@@ -29,7 +30,7 @@ public class FlashBomb extends Booster {
         ArrayList<Enemy> allEnemies = game.getAllEnemies();
         hud.setDisplayBooster(getTypeId().toString());
         for (Enemy enemy : allEnemies) {
-            enemy.setSpeed(0.5f);
+            enemy.setSpeed(slowedSpeed);
         }
     }
 
@@ -42,7 +43,7 @@ public class FlashBomb extends Booster {
         }
     }
 
-    //mandated by OOPG for some reason
+    //mandated by OOPG
     @Override
     public void update() {
     }

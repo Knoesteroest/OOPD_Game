@@ -11,7 +11,6 @@ package me.main;
 
 import HUD.HUD;
 import HUD.HealthBar;
-import HUD.scoreBoard;
 import enemy.Enemy;
 import items.Item;
 import nl.han.ica.oopg.collision.CollidedTile;
@@ -22,7 +21,6 @@ import nl.han.ica.oopg.exceptions.TileNotFoundException;
 import nl.han.ica.oopg.objects.AnimatedSpriteObject;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
-import nl.han.ica.oopg.objects.TextObject;
 import processing.core.PGraphics;
 import processing.core.PVector;
 import tiles.PlayerSpawnTile;
@@ -36,9 +34,6 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
     private Game game;
     private Maze map;
     private Difficulty difficulty;
-
-    private PGraphics g = new PGraphics();
-    private HealthBar HB = new HealthBar();
     private HUD hud;
 
     private boolean[] keyDown = new boolean[4];
@@ -48,6 +43,11 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
     private PlayerSpawnTile spawn;
     private boolean inSpawn;
 
+    final int KEY_UP = 87;
+    final int KEY_LEFT = 65;
+    final int KEY_DOWN = 83;
+    final int KEY_RIGHT = 68;
+
     /**
      * Creator for a Player object.
      *
@@ -56,17 +56,18 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
      * @param spawn      The PlayerSpawnTile, this is not used for the location of the created
      *                   Player object, only to check if the player has left the spawn.
      */
-    public Player(Game game, Difficulty difficulty, PlayerSpawnTile spawn,HUD hud) {
+    public Player(Game game, Difficulty difficulty, PlayerSpawnTile spawn, HUD hud) {
         super(new Sprite(Game.MEDIA_URL.concat("player_run.gif")), 2);
         this.game = game;
         this.map = (Maze) game.getTileMap();
         this.difficulty = difficulty;
+        this.spawn = spawn;
+        this.hud = hud;
+
         setCurrentFrameIndex(1);
         Arrays.fill(keyDown, false);
         speed = initialSpeed;
-        this.spawn = spawn;
         inSpawn = true;
-        this.hud = hud;
     }
 
     /**
@@ -76,13 +77,12 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
      */
     public void addScore(int points) {
         int previousScore = hud.getScore();
-        hud.setScore(points);
         difficulty.scoreThresholdCrossed(hud.getScore(), previousScore);
+        hud.setScore(points);
     }
 
     public void setSpeed(int speed) {
         this.speed = speed;
-//        System.out.println("Snelheid is nu: " + speed);
     }
 
     public void resetSpeed() {
@@ -103,31 +103,23 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
 
     @Override
     public void keyPressed(int keyCode, char key) {
-        /**
-         * W : 87
-         * A : 65
-         * S : 83
-         * D : 68
-         */
+
+
         switch (keyCode) {
-            case 87: // W
-                // setDirectionSpeed(0, speed);
+            case KEY_UP:
                 setySpeed(-speed);
                 keyDown[0] = true;
                 break;
-            case 65: // A
-                //setDirectionSpeed(270, speed);
+            case KEY_LEFT:
                 setCurrentFrameIndex(0);
                 setxSpeed(-speed);
                 keyDown[1] = true;
                 break;
-            case 83: // S
-                //setDirectionSpeed(180, speed);
+            case KEY_DOWN:
                 setySpeed(speed);
                 keyDown[2] = true;
                 break;
-            case 68: // D
-                //setDirectionSpeed(90, speed);
+            case KEY_RIGHT:
                 setxSpeed(speed);
                 keyDown[3] = true;
                 setCurrentFrameIndex(1);
@@ -137,10 +129,10 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
 
     @Override
     public void keyReleased(int keyCode, char key) {
-        if (keyCode == 87) keyDown[0] = false;
-        if (keyCode == 65) keyDown[1] = false;
-        if (keyCode == 83) keyDown[2] = false;
-        if (keyCode == 68) keyDown[3] = false;
+        if (keyCode == KEY_UP) keyDown[0] = false;
+        if (keyCode == KEY_LEFT) keyDown[1] = false;
+        if (keyCode == KEY_DOWN) keyDown[2] = false;
+        if (keyCode == KEY_RIGHT) keyDown[3] = false;
 
         if (!keyDown[0] && !keyDown[2]) setySpeed(0);
         if (!keyDown[1] && !keyDown[3]) setxSpeed(0);
@@ -204,6 +196,5 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
 
     private void takeDamage(float damage) {
         HealthBar.setHEALTH(damage);
-        HB.draw(g);
     }
 }

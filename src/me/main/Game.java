@@ -9,6 +9,7 @@ package me.main;
 import HUD.HUD;
 import enemy.Enemy;
 import items.BoosterEffect;
+import items.BoosterId;
 import items.Coin;
 import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.objects.GameObject;
@@ -39,11 +40,15 @@ public class Game extends GameEngine {
      */
     @Override
     public void setupGame() {
-        hud = new HUD(WIDTH, HEIGHT,this);
+        final int dashBoardHeight = 35;
+        //creates Dashboard
+        hud = new HUD(WIDTH, dashBoardHeight,this);
         addDashboard(hud);
 
+        //sets window size
         setView(WIDTH, HEIGHT);
 
+        //sets gamefield Objects
         tileMap = new Maze();
         objectSpawner = new ObjectSpawner(this, tileMap,hud);
         difficulty = new Difficulty(objectSpawner, StartingDifficulty.EASY.getDifficultyLevel());
@@ -59,8 +64,7 @@ public class Game extends GameEngine {
      * Mandated by GameEngine, but not used.
      */
     @Override
-    public void update() {
-    }
+    public void update() {}
 
     public void setView(int width, int height) {
         setView(new View(width, height));
@@ -97,7 +101,7 @@ public class Game extends GameEngine {
      *
      * @return true if the booster is already in effect, false if not
      */
-    private boolean isBooster(ObjectTypeId typeId) {
+    private boolean isBooster(BoosterId typeId) {
         for (BoosterEffect effect : activeBoosterEffects) {
             if (effect.booster.getTypeId().equals(typeId)) {
                 return true;

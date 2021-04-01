@@ -5,7 +5,6 @@ package items;
 
 import HUD.HUD;
 import me.main.Game;
-import me.main.ObjectTypeId;
 import nl.han.ica.oopg.objects.Sprite;
 
 public class SpeedBoost extends Booster {
@@ -16,7 +15,7 @@ public class SpeedBoost extends Booster {
     private HUD hud;
 
     public SpeedBoost(Game game, HUD hud) {
-        super(game, boltSprite, initEffectDuration, ObjectTypeId.Speed);
+        super(game, boltSprite, initEffectDuration, BoosterId.Speed);
         this.hud = hud;
     }
 
@@ -32,7 +31,7 @@ public class SpeedBoost extends Booster {
         hud.removeDisplayBooster();
     }
 
-    //mandatory by OOPG for some reason
+    //mandatory by OOPG
     @Override
     public void update() {
     }

@@ -9,38 +9,34 @@ package items;
  */
 
 import me.main.Game;
-import me.main.ObjectTypeId;
 import me.main.Player;
 import nl.han.ica.oopg.objects.Sprite;
 
-public abstract class Booster extends Item{
+public abstract class Booster extends Item {
     private double effectDuration;
-    private ObjectTypeId typeId;
+    private BoosterId typeId;
+
     /*
     added effectDuration to the constructor to force children to set it
      */
-    public Booster(Game game, Sprite sprite, double effectDuration, ObjectTypeId typeId) {
+    public Booster(Game game, Sprite sprite, double effectDuration, BoosterId typeId) {
         super(game, sprite);
         this.effectDuration = effectDuration;
-        this.typeId=typeId;
+        this.typeId = typeId;
     }
 
-/*
-    This adds an effect to boostereffect list
-    Item class removes this from the game after this runs
-*/
+    /*
+        This adds an effect to boostereffect list
+        Item class removes this from the game after this runs
+    */
     @Override
-    public void pickUp(Player player){
-        game.addBoosterEffect(new BoosterEffect(this));
-    }
+    public void pickUp(Player player) {game.addBoosterEffect(new BoosterEffect(this));}
 
-    public double getEffectDuration(){
-        return effectDuration;
-    }
+    public double getEffectDuration() {return effectDuration;}
+
     public abstract void startEffect();
+
     public abstract void endEffect();
 
-    public ObjectTypeId getTypeId(){
-        return typeId;
-    }
+    public BoosterId getTypeId() {return typeId;}
 }

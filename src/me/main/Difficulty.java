@@ -12,33 +12,31 @@ public class Difficulty {
     private final int scoreDifficultyThreshhold = 5;
     private ObjectSpawner objectSpawner;
 
-    public Difficulty(ObjectSpawner objectSpawner, int difficultyLevel)
-    {
+    public Difficulty(ObjectSpawner objectSpawner, int difficultyLevel) {
         this.objectSpawner = objectSpawner;
         this.difficultyLevel = difficultyLevel;
     }
 
     /**
-     Checks if the difficulty needs to go up.
-     Gets called when Player score increases.
+     * Checks if the difficulty needs to go up.
+     * Gets called when Player score increases.
      */
-    public void scoreThresholdCrossed (int score, int previousScore){
-        if (score / scoreDifficultyThreshhold > previousScore / scoreDifficultyThreshhold){
+    public void scoreThresholdCrossed(int score, int previousScore) {
+        if (score / scoreDifficultyThreshhold > previousScore / scoreDifficultyThreshhold) {
             difficultyLevel++;
             addEnemy();
-            System.out.println("Difficulty is now " + difficultyLevel);
         }
     }
 
     /**
-    Gets called when the score crosses a multiple of 10.
-    Spawns a saw at levels 3 and 5 at tile 1 or 2
-    (The first saw spawned at level 1)
+     * Gets called when the score crosses a multiple of 10.
+     * Spawns a saw at levels 3 and 5 at tile 1 or 2
+     * (The first saw spawned at level 1)
      */
     private void addEnemy() {
         if (difficultyLevel % 2 == 1 && difficultyLevel < 6) {
             objectSpawner.spawnSaw(difficultyLevel == 3 ? 1 : 2);
-        } else{
+        } else {
             objectSpawner.spawnZombie();
         }
     }

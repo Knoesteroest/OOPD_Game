@@ -23,23 +23,23 @@ import static processing.core.PApplet.round;
  * Makes sure sub-classes set damage and stay out of the walls
  */
 public abstract class Enemy extends AnimatedSpriteObject implements ICollidableWithTiles {
-    protected float damage;
     protected Game game;
     protected Maze map;
+
+    protected float damage;
     protected float initialSpeed;
+
     public Enemy(Sprite sprite, int totalFrames, Game game, float damage, float initialSpeed) {
         super(sprite, totalFrames);
         this.game = game;
         this.map = (Maze) game.getTileMap();
         this.damage = damage;
-        setSpeed(initialSpeed);
         this.initialSpeed = initialSpeed;
+        setSpeed(initialSpeed);
     }
 
-    public void resetSpeed(){
+    public void resetSpeed() {
         setSpeed(initialSpeed);
-        System.out.println(initialSpeed);
-        System.out.println("SPEED RESET");
     }
 
     public float getDamage() {
@@ -52,8 +52,10 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
 
         for (CollidedTile collidedTile : list) {
             Tile tile = collidedTile.getTile();
+
             if (tile instanceof WallTile || tile instanceof PlayerSpawnTile) {
                 CollisionSide collisionSide = collidedTile.getCollisionSide();
+
                 if (CollisionSide.TOP.equals(collisionSide)) {
                     try {
                         tileCoordinates = game.getTileMap().getTilePixelLocation(collidedTile.getTile());
@@ -95,16 +97,17 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
      */
     @Override
     public void update() {
-        if (isMiddleOfTile()){
+        if (isMiddleOfTile()) {
             choosePath();
         }
     }
 
     protected abstract void choosePath();
+
     /**
-     Gets the tile this enemy is on.
+     * Gets the tile this enemy is on.
      */
-    protected Tile getTile(){
+    protected Tile getTile() {
         Tile tile = map.getTileOnPosition((int) getCenterX(), (int) getCenterY());
         return tile;
     }
@@ -113,11 +116,13 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
         Tile tile = getAdjacentTile(getTile(), getDirection(), 0);
         return tile;
     }
+
     /**
      * This gets a tile adjacent to the given tile, to a specified side, relative to our movement direction.
-     * @param tile The tile this saw is on.
+     *
+     * @param tile    The tile this saw is on.
      * @param heading The direction (in degrees) the saw is moving in.
-     * @param side The direction (in degrees) of the tile to return, relative to your heading. (-90 for left, 90 for right)
+     * @param side    The direction (in degrees) of the tile to return, relative to your heading. (-90 for left, 90 for right)
      * @return The adjacent tile specified.
      */
     protected Tile getAdjacentTile(Tile tile, float heading, float side) {
@@ -126,21 +131,42 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
         index.y -= cos(radians(heading + side));
         return map.getTileOnIndex(round(index.x), round(index.y));
     }
+
     /**
-    Checks if this enemy is in the middle of the tile, ready to make decisions about its path
+     * Checks if this enemy is in the middle of the tile, ready to make decisions about its path
      */
-    protected boolean isMiddleOfTile(){
+    protected boolean isMiddleOfTile() {
 
         PVector tileCoordinates = map.getTilePixelLocation(getTile());
         tileCoordinates.x += map.getTileSize() / 2.0f;
         tileCoordinates.y += map.getTileSize() / 2.0f;
         float distance = PVector.dist(new PVector(getCenterX(), getCenterY()), tileCoordinates);
-        if (distance < getSpeed()){
+        if (distance < getSpeed()) {
             setX(tileCoordinates.x - getWidth() / 2.0f);
             setY(tileCoordinates.y - getHeight() / 2.0f);
             return true;
-        }else {
+        } else {
             return false;
         }
+    }
+
+    // TEST COMMENT
+    public void testGETAdjacontTile() {
+        Tile testTile = map.getTileOnIndex((int) 5.0, (int) 5.0);
+        Tile resultTile = getAdjacentTile(testTile, 180, 0);
+        PVector index = map.getTileIndex(resultTile);
+        System.out.println("the tile in front of 5,5 going down is " + index.x + ":" + index.y);
+
+        resultTile = getAdjacentTile(testTile, 0, -90);
+        index = map.getTileIndex(resultTile);
+        System.out.println("the tile  left of 5,5 going up is " + index.x + ":" + index.y);
+
+        resultTile = getAdjacentTile(testTile, 270, -90);
+        index = map.getTileIndex(resultTile);
+        System.out.println("the tile  left of 5,5 going left is " + index.x + ":" + index.y);
+
+        resultTile = getAdjacentTile(testTile, 180, -90);
+        index = map.getTileIndex(resultTile);
+        System.out.println("the tile  left of 5,5 going down is " + index.x + ":" + index.y);
     }
 }
