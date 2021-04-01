@@ -1,12 +1,12 @@
 package items;
-/**
- * This booster increases the player's speed to 4 for 5 seconds, then resets it.
- */
+
 
 import HUD.HUD;
 import me.main.Game;
 import nl.han.ica.oopg.objects.Sprite;
-
+/**
+ * This booster increases the player's speed to 4 for 5 seconds, then resets it.
+ */
 public class SpeedBoost extends Booster {
 
     private final static Sprite boltSprite = new Sprite(Game.MEDIA_URL.concat("lightningBolt.png"));
