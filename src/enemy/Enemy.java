@@ -151,7 +151,7 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     }
 
     // TEST COMMENT
-    public void testGETAdjacontTile() {
+    public void testGetAdjacentTile() {
         Tile testTile = map.getTileOnIndex((int) 5.0, (int) 5.0);
         Tile resultTile = getAdjacentTile(testTile, 180, 0);
         PVector index = map.getTileIndex(resultTile);

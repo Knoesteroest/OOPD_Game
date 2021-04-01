@@ -15,11 +15,20 @@ public abstract class Item extends SpriteObject {
 
     protected Game game;
 
+    /**
+     * Constructor
+     * @param game The game object.
+     * @param sprite The sprite used for this item.
+     */
     public Item(Game game, Sprite sprite){
         super(sprite);
-        this.game=game;
+        this.game = game;
     }
 
+    /**
+     * Gets called when a player touches this item. After this runs the Item is removed from the game.
+     * @param player The player object that touched this item.
+     */
     public abstract void pickUp(Player player);
 
     /**

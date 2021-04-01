@@ -67,7 +67,7 @@ public class ObjectSpawner implements IAlarmListener {
     }
 
     /**
-     * Spawns an object at a random empty tile.
+     * Spawns an object on a random empty tile.
      *
      * @param object The game object to spawn.
      */
@@ -102,7 +102,9 @@ public class ObjectSpawner implements IAlarmListener {
 
     public void spawnSaw(int spawnTilenr) {
         Tile tile = map.getSawSpawnTiles().get(spawnTilenr);
-        spawnObject(new CircularSaw(game), tile);
+        if (tile != null) {
+            spawnObject(new CircularSaw(game), tile);
+        }
     }
 
     public void spawnZombie() {
