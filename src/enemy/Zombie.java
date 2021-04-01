@@ -74,11 +74,9 @@ public class Zombie extends Enemy {
      * @return true if we can move in the direction, false if not
      */
     private boolean isDirectionPassable(int direction){
-        //System.out.println(lastCollidedSide + " isDirectionPassable()");
         Tile zombieTile = getTile();
         Tile otherTile = getAdjacentTile(zombieTile, direction,0);
         if (otherTile instanceof WallTile || otherTile instanceof PlayerSpawnTile){
-            //System.out.println("Detected wall ahead.");
             return false;
         }
         return true;

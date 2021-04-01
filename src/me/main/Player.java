@@ -77,8 +77,8 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
      */
     public void addScore(int points) {
         int previousScore = hud.getScore();
-        difficulty.scoreThresholdCrossed(hud.getScore(), previousScore);
         hud.setScore(points);
+        difficulty.scoreThresholdCrossed(hud.getScore(), previousScore);
     }
 
     public void setSpeed(int speed) {
